@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+
+<html class="dark scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AERIS Climate Systems | Precision Thermodynamic Architecture</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Space Grotesk & Inter & JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-surface-variant": "#bdc8d1",
+            "on-surface": "#dfe2ee",
+            "on-secondary-container": "#00275e",
+            "on-secondary-fixed": "#001a43",
+            "tertiary-container": "#36c2d2",
+            "outline-variant": "#3e484f",
+            "on-primary-fixed-variant": "#004c69",
+            "secondary": "#aec6ff",
+            "secondary-fixed-dim": "#aec6ff",
+            "on-tertiary": "#00363c",
+            "on-tertiary-fixed": "#001f23",
+            "primary-fixed": "#c4e7ff",
+            "on-tertiary-container": "#004c53",
+            "error-container": "#93000a",
+            "tertiary-fixed-dim": "#54d8e8",
+            "surface-tint": "#7bd0ff",
+            "tertiary-fixed": "#91f1ff",
+            "tertiary": "#5bdeef",
+            "surface-bright": "#353942",
+            "inverse-primary": "#00668a",
+            "surface-container-lowest": "#0a0e16",
+            "on-primary": "#00354a",
+            "primary-container": "#38bdf8",
+            "on-primary-fixed": "#001e2c",
+            "surface-container-low": "#181c24",
+            "on-secondary": "#002e6b",
+            "on-error-container": "#ffdad6",
+            "surface": "#0f131c",
+            "background": "#0f131c",
+            "on-background": "#dfe2ee",
+            "error": "#ffb4ab",
+            "on-error": "#690005",
+            "inverse-on-surface": "#2c3039",
+            "surface-container-highest": "#31353e",
+            "surface-dim": "#0f131c",
+            "surface-variant": "#31353e",
+            "secondary-container": "#508eff",
+            "primary": "#8ed5ff",
+            "on-tertiary-fixed-variant": "#004f57",
+            "on-secondary-fixed-variant": "#004397",
+            "surface-container-high": "#262a33",
+            "primary-fixed-dim": "#7bd0ff",
+            "on-primary-container": "#004965",
+            "inverse-surface": "#dfe2ee",
+            "outline": "#87929a",
+            "surface-container": "#1c2028",
+            "secondary-fixed": "#d8e2ff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "margin-mobile": "1.25rem",
+            "margin": "4rem",
+            "space-md": "1rem",
+            "space-sm": "0.5rem",
+            "gutter": "1.5rem",
+            "space-xl": "3rem",
+            "space-xs": "0.25rem",
+            "space-lg": "1.75rem",
+            "gutter-mobile": "1rem"
+          },
+          "fontFamily": {
+            "headline-lg": ["Space Grotesk"],
+            "headline-lg-mobile": ["Space Grotesk"],
+            "label-sm": ["JetBrains Mono"],
+            "body-md": ["Inter"],
+            "headline-xl": ["Space Grotesk"],
+            "headline-md": ["Space Grotesk"],
+            "headline-xl-mobile": ["Space Grotesk"],
+            "body-sm": ["Inter"],
+            "label-lg": ["JetBrains Mono"],
+            "body-lg": ["Inter"],
+            "label-md": ["JetBrains Mono"],
+            "headline-sm": ["Space Grotesk"]
+          },
+          "fontSize": {
+            "headline-lg": ["44px", { "lineHeight": "52px", "letterSpacing": "-0.03em", "fontWeight": "500" }],
+            "headline-lg-mobile": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "500" }],
+            "label-sm": ["10px", { "lineHeight": "14px", "letterSpacing": "0.1em", "fontWeight": "500" }],
+            "body-md": ["15px", { "lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "400" }],
+            "headline-xl": ["64px", { "lineHeight": "72px", "letterSpacing": "-0.04em", "fontWeight": "500" }],
+            "headline-md": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "500" }],
+            "headline-xl-mobile": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.03em", "fontWeight": "500" }],
+            "body-sm": ["13px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "label-lg": ["13px", { "lineHeight": "18px", "letterSpacing": "0.06em", "fontWeight": "500" }],
+            "body-lg": ["18px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "label-md": ["11px", { "lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "500" }],
+            "headline-sm": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "500" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .glass-card {
+      background: rgba(11, 15, 23, 0.72);
+      backdrop-filter: blur(24px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .glass-card:hover {
+      border-top-color: rgba(255, 255, 255, 0.28);
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 25px -4px rgba(56, 189, 248, 0.15);
+    }
+    .glow-cyan {
+      box-shadow: 0 0 35px -5px rgba(56, 189, 248, 0.38);
+    }
+    .ambient-air-radial {
+      background: radial-gradient(circle at 65% 35%, rgba(56, 189, 248, 0.12) 0%, rgba(0, 112, 243, 0.04) 45%, transparent 75%);
+    }
+  </style>
+</head>
+<body class="bg-surface-container-lowest text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container overflow-x-hidden min-h-screen">
+<!-- TOP APP BAR -->
+<header class="fixed top-0 left-0 w-full z-50 bg-surface/80 dark:bg-surface/80 backdrop-blur-md border-b border-outline-variant/30">
+<div class="flex justify-between items-center max-w-7xl mx-auto px-margin py-space-md w-full">
+<!-- Brand Logo Anchor -->
+<a class="flex items-center gap-space-sm group" href="#">
+<span class="w-2.5 h-2.5 rounded-full bg-primary-container shadow-[0_0_12px_#38bdf8] transition-transform duration-300 group-hover:scale-125"></span>
+<span class="font-headline-sm text-headline-sm tracking-widest text-on-surface dark:text-on-surface uppercase font-medium">AERIS</span>
+</a>
+<!-- Navigation Links Cluster (Desktop) -->
+<nav class="hidden md:flex items-center space-x-8">
+<a class="text-primary dark:text-primary font-medium tracking-wide hover:text-primary dark:hover:text-primary transition-colors duration-200 font-label-md text-label-md" href="#hero">Systems</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant font-medium tracking-wide hover:text-primary dark:hover:text-primary transition-colors duration-200 font-label-md text-label-md" href="#services">Engineering</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant font-medium tracking-wide hover:text-primary dark:hover:text-primary transition-colors duration-200 font-label-md text-label-md" href="#why-choose-us">Acoustics</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant font-medium tracking-wide hover:text-primary dark:hover:text-primary transition-colors duration-200 font-label-md text-label-md" href="#how-it-works">Telemetry</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant font-medium tracking-wide hover:text-primary dark:hover:text-primary transition-colors duration-200 font-label-md text-label-md" href="#testimonials">Concierge</a>
+</nav>
+<!-- Trailing Action Clustered Group -->
+<div class="flex items-center gap-space-sm">
+<a class="hidden sm:inline-flex items-center gap-space-xs text-on-surface-variant hover:text-primary dark:hover:text-primary transition-colors duration-200 font-label-md text-label-md pr-space-sm" href="#contact">
+<span>Client Portal</span>
+<span class="material-symbols-outlined text-[16px]">tune</span>
+</a>
+<a class="relative group inline-flex items-center gap-space-xs px-5 py-2.5 rounded-full bg-white text-surface-container-lowest font-headline-sm text-headline-sm text-[13px] tracking-tight hover:shadow-[0_0_30px_rgba(56,189,248,0.45)] transition-all duration-300 active:scale-95 font-medium" href="#cta">
+<span>Request Consultation</span>
+<span class="material-symbols-outlined text-[15px] group-hover:translate-x-0.5 transition-transform duration-200">arrow_forward</span>
+</a>
+</div>
+</div>
+</header>
+<!-- 1. FULL-SCREEN HERO SECTION -->
+<section class="relative min-h-screen w-full flex items-center pt-28 pb-16 overflow-hidden bg-surface-container-lowest" id="hero">
+<!-- Dedicated Video Mount Container Layer -->
+<div class="absolute inset-0 w-full h-full pointer-events-none z-0" id="hero-video-container">
+<!-- High-Performance Atmospheric Ambience Canvas Layer -->
+<div class="absolute inset-0 ambient-air-radial"></div>
+<!-- Architectural Micro-Airflow Particles Simulation Layer -->
+<div class="absolute inset-0 opacity-25" style="background-image: radial-gradient(rgba(142, 213, 255, 0.18) 1px, transparent 1px); background-size: 32px 32px;"></div>
+<!-- Photorealistic Chilled Climate System Backdrop Mount -->
+<div class="absolute inset-0 bg-cover bg-center opacity-40 mix-blend-screen scale-105 transition-transform duration-1000 ease-out" data-alt="An ultra-minimalist, sleek luxury architectural air conditioning unit engineered in matte anodized graphite titanium with razor-thin horizontal illuminated chilled airflow vents. The setting is a moody, ultra-modern penthouse gallery in dark midnight blues and cosmic blacks with soft cyan edge rim-lighting, illustrating silent laminar cooling in a serene high-end sanctuary." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDDDKT0lGRkhWRJknnfiXUnPYHWEmu8sa-rZuTfXoQLAgAZyh1krFZ8WcqwhEWftQEeV6LUKEB0SJ1SuqKjXxUzm0lPvOxYBxGDFqGX1mR7zHJ584aQV3fuj_BQw0FqDas7D15ZHjrMN5Jvhp5x0Lgmfl1n00QpVUOWdIuAwmTcJUC6c59AzNU3HuzYxyb1UemRrroIxDqIPHpXWZpXRYB_DKvo2SU905kBtL4_VD93');">
+</div>
+<!-- Deep Atmospheric Vignette & Contrast Control -->
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-surface-container-lowest/65 to-surface-container-lowest/20"></div>
+<div class="absolute inset-0 bg-gradient-to-r from-surface-container-lowest via-surface-container-lowest/80 to-transparent"></div>
+</div>
+<!-- Hero Content Layer -->
+<div class="relative z-10 max-w-7xl mx-auto px-margin-mobile md:px-margin w-full">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-center min-h-[calc(100vh-12rem)]">
+<!-- Left: Precision Information Core -->
+<div class="lg:col-span-8 flex flex-col justify-center space-y-7">
+<!-- Eyebrow Status Pill -->
+<div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-surface-container/80 border border-white/10 w-fit backdrop-blur-md">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-container opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+</span>
+<span class="font-label-md text-label-md text-primary tracking-widest uppercase">PRECISION THERMODYNAMICS &amp; CLIMATE CARE</span>
+</div>
+<!-- Hero Display Headline -->
+<h1 class="font-headline-xl text-headline-xl-mobile md:text-headline-xl text-on-surface font-light tracking-tight leading-none">
+            Breathe Better.<br/>
+<span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-primary to-primary-container font-medium">
+              Live Cooler.
+            </span>
+</h1>
+<!-- Supporting Text -->
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl font-light">
+            Expert AC servicing, bespoke installation, and surgical repairs. Whisper-quiet climate architecture calibrated for continuous purity and effortless thermal comfort.
+          </p>
+<!-- CTA Clustered Controls -->
+<div class="flex flex-wrap items-center gap-4 pt-3">
+<a class="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-surface-container-lowest font-headline-sm text-headline-sm text-sm tracking-tight font-medium hover:bg-primary-fixed hover:shadow-[0_0_35px_rgba(56,189,248,0.4)] transition-all duration-300 active:scale-95" href="#contact">
+<span>Book a Service</span>
+<span class="material-symbols-outlined text-[18px]">calendar_month</span>
+</a>
+<a class="inline-flex items-center gap-2 px-7 py-4 rounded-full bg-surface-container/50 hover:bg-surface-container text-on-surface border border-white/10 font-headline-sm text-headline-sm text-sm tracking-tight transition-all duration-300 backdrop-blur-md hover:border-white/20 active:scale-95" href="#services">
+<span>Explore Solutions</span>
+<span class="material-symbols-outlined text-[18px] text-primary">arrow_downward</span>
+</a>
+</div>
+<!-- Real-Time Telemetry Micro-Bar -->
+<div class="pt-8 border-t border-white/5 flex flex-wrap items-center gap-8 text-on-surface-variant font-label-md text-label-md">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">verified</span>
+<span>ISO 14644 PURITY LABS</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">volume_mute</span>
+<span>18.4 dB(A) LOW-RESONANCE</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">speed</span>
+<span>90-MIN EMERGENCY RESPONSE</span>
+</div>
+</div>
+</div>
+<!-- Right: Open Cinematic Void for Video Stream and Live Telemetry Dial -->
+<div class="lg:col-span-4 flex flex-col justify-end items-end space-y-4 pt-8 lg:pt-0">
+<div class="glass-card p-6 rounded-xl w-full max-w-sm border border-white/10 bg-surface-container/40">
+<div class="flex justify-between items-center pb-4 border-b border-white/10">
+<span class="font-label-sm text-label-sm text-primary tracking-widest uppercase">NODE // CENTRAL 01</span>
+<span class="flex items-center gap-1.5 font-label-sm text-label-sm text-secondary-fixed">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> OPTIMAL
+              </span>
+</div>
+<div class="py-4 flex items-baseline justify-between">
+<div>
+<div class="text-3xl font-headline-lg font-light text-white tracking-tight">20.5<span class="text-primary text-xl font-light">°C</span></div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">TARGET THERMAL CORE</div>
+</div>
+<div class="text-right">
+<div class="text-xl font-headline-md font-light text-tertiary">99.8<span class="text-xs font-normal">%</span></div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">AIR PURITY INDEX</div>
+</div>
+</div>
+<div class="space-y-2 pt-2">
+<div class="flex justify-between font-label-sm text-label-sm text-on-surface-variant">
+<span>R32 CHARGE INTEGRITY</span>
+<span class="text-white">100% NOMINAL</span>
+</div>
+<div class="w-full h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="w-full h-full bg-gradient-to-r from-primary to-primary-container"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 2. SERVICES SECTION -->
+<section class="py-24 relative bg-surface-container-lowest border-t border-white/5" id="services">
+<div class="max-w-7xl mx-auto px-margin-mobile md:px-margin">
+<!-- Section Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+<div>
+<div class="font-label-md text-label-md text-primary tracking-widest uppercase mb-3 flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+            SERVICES CATALOGUE
+          </div>
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-white font-light tracking-tight">
+            Complete Cooling Solutions.
+          </h2>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-md">
+          Architectural climate engineering calibrated for whisper-quiet efficiency, sterile hygiene standards, and uncompromising longevity.
+        </p>
+</div>
+<!-- Bento Grid Services -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<!-- 01 / AC Repair -->
+<div class="glass-card rounded-xl p-8 flex flex-col justify-between transition-all duration-300 group hover:-translate-y-1">
+<div>
+<div class="flex items-center justify-between mb-8">
+<span class="font-label-lg text-label-lg text-primary tracking-wider">01 // REPAIR</span>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors text-2xl">build_circle</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-white font-medium mb-3 group-hover:text-primary transition-colors">AC Repair</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-6">
+              Thermal camera leak diagnostics, emergency compressor recalibration, and sensor replacement with guaranteed zero operational downtime.
+            </p>
+</div>
+<div class="pt-6 border-t border-white/5 flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">DISPATCH &lt; 90 MIN</span>
+<a class="text-white group-hover:text-primary transition-colors font-label-sm flex items-center gap-1" href="#contact">
+<span>EXPLORE</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- 02 / AC Servicing -->
+<div class="glass-card rounded-xl p-8 flex flex-col justify-between transition-all duration-300 group hover:-translate-y-1 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-bl-full pointer-events-none"></div>
+<div>
+<div class="flex items-center justify-between mb-8">
+<span class="font-label-lg text-label-lg text-primary tracking-wider">02 // SERVICING</span>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors text-2xl">sanitizer</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-white font-medium mb-3 group-hover:text-primary transition-colors">AC Servicing</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-6">
+              Hydro-microbial deep coil washing, dual-stage turbine sanitization, air filter replacement, and static pressure balancing.
+            </p>
+</div>
+<div class="pt-6 border-t border-white/5 flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">BIO-CERTIFIED</span>
+<a class="text-white group-hover:text-primary transition-colors font-label-sm flex items-center gap-1" href="#contact">
+<span>EXPLORE</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- 03 / AC Installation -->
+<div class="glass-card rounded-xl p-8 flex flex-col justify-between transition-all duration-300 group hover:-translate-y-1">
+<div>
+<div class="flex items-center justify-between mb-8">
+<span class="font-label-lg text-label-lg text-primary tracking-wider">03 // INSTALL</span>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors text-2xl">architecture</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-white font-medium mb-3 group-hover:text-primary transition-colors">AC Installation</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-6">
+              Bespoke VRF, mini-split, and architectural concealed ducted systems engineered to integrate invisibly into luxury interior layouts.
+            </p>
+</div>
+<div class="pt-6 border-t border-white/5 flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">FLUSH INTEGRATION</span>
+<a class="text-white group-hover:text-primary transition-colors font-label-sm flex items-center gap-1" href="#contact">
+<span>EXPLORE</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- 04 / Gas Refilling -->
+<div class="glass-card rounded-xl p-8 flex flex-col justify-between transition-all duration-300 group hover:-translate-y-1">
+<div>
+<div class="flex items-center justify-between mb-8">
+<span class="font-label-lg text-label-lg text-primary tracking-wider">04 // RECHARGE</span>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors text-2xl">cyclone</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-white font-medium mb-3 group-hover:text-primary transition-colors">Gas Refilling</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-6">
+              Precision digital scale refrigerant charging with pure R32/R410A compounds, high-vacuum evacuation, and spectroscopic seal assurance.
+            </p>
+</div>
+<div class="pt-6 border-t border-white/5 flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">PURE COMPOSITION</span>
+<a class="text-white group-hover:text-primary transition-colors font-label-sm flex items-center gap-1" href="#contact">
+<span>EXPLORE</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. WHY CHOOSE US ("Comfort Without Compromise") -->
+<section class="py-24 relative bg-surface-container-lowest border-t border-white/5 overflow-hidden" id="why-choose-us">
+<div class="max-w-7xl mx-auto px-margin-mobile md:px-margin">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+<!-- Left: Text & Features -->
+<div class="lg:col-span-7 space-y-8">
+<div>
+<span class="font-label-md text-label-md text-primary tracking-widest uppercase mb-2 block">
+              ENGINEERED ADVANTAGE
+            </span>
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-white font-light tracking-tight">
+              Comfort Without Compromise.
+            </h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-4 font-light">
+              We replace guesswork and intrusive contractor visits with certified precision telemetry, surgically clean installation protocols, and bespoke mechanical mastery.
+            </p>
+</div>
+<!-- Feature Matrix -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2">
+<div class="p-5 rounded-lg bg-surface-container/30 border border-white/5">
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined text-primary text-[20px]">engineering</span>
+<h4 class="font-headline-sm text-headline-sm text-white font-medium">Master Engineers</h4>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                Master-certified thermodynamic specialists with 10+ years of high-end mechanical experience.
+              </p>
+</div>
+<div class="p-5 rounded-lg bg-surface-container/30 border border-white/5">
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined text-primary text-[20px]">receipt_long</span>
+<h4 class="font-headline-sm text-headline-sm text-white font-medium">Transparent Pricing</h4>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                Fixed upfront telemetry estimates generated digitally. Zero hidden surcharges or surprise billing.
+              </p>
+</div>
+<div class="p-5 rounded-lg bg-surface-container/30 border border-white/5">
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined text-primary text-[20px]">timer</span>
+<h4 class="font-headline-sm text-headline-sm text-white font-medium">Guaranteed Response</h4>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                Guaranteed rapid response window with real-time GPS technician tracking and telemetry updates.
+              </p>
+</div>
+<div class="p-5 rounded-lg bg-surface-container/30 border border-white/5">
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined text-primary text-[20px]">verified_user</span>
+<h4 class="font-headline-sm text-headline-sm text-white font-medium">Certified Warranty</h4>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                Every service visit includes an authoritative 12-month performance and parts guarantee.
+              </p>
+</div>
+</div>
+<!-- Highlight Metric Badge -->
+<div class="inline-flex items-center gap-6 p-4 rounded-xl glass-card border border-white/10">
+<div>
+<div class="text-3xl font-headline-lg font-light text-primary">99.4%</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">FIRST-VISIT RESOLUTION RATE</div>
+</div>
+<div class="h-10 w-[1px] bg-white/10"></div>
+<div>
+<div class="text-3xl font-headline-lg font-light text-white">12,000+</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">CHILLED UNITS CALIBRATED</div>
+</div>
+</div>
+</div>
+<!-- Right: Diagnostic Visual Pod -->
+<div class="lg:col-span-5 relative">
+<div class="glass-card rounded-2xl p-8 border border-white/15 relative overflow-hidden shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8)]">
+<div class="flex items-center justify-between pb-6 border-b border-white/10">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">analytics</span>
+<span class="font-headline-sm text-headline-sm text-white text-base">Acoustic Diagnostic Telemetry</span>
+</div>
+<span class="px-2 py-0.5 rounded text-[10px] font-label-sm bg-primary/20 text-primary border border-primary/30 uppercase">LIVE</span>
+</div>
+<!-- Rotary Thermal Ring Visual Simulation -->
+<div class="py-8 flex flex-col items-center justify-center relative">
+<div class="relative w-48 h-48 rounded-full border-4 border-dashed border-white/10 flex items-center justify-center">
+<div class="absolute inset-2 rounded-full border border-primary/40 animate-spin" style="animation-duration: 18s;"></div>
+<div class="text-center">
+<span class="font-label-sm text-label-sm text-primary tracking-widest">DECIBEL RATING</span>
+<div class="text-4xl font-headline-xl font-light text-white tracking-tight">&lt; 18.2</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">dB(A) WHISPER CLASS</span>
+</div>
+</div>
+</div>
+<!-- Diagnostic Sliders Status -->
+<div class="space-y-4 pt-4 border-t border-white/10">
+<div>
+<div class="flex justify-between font-label-sm text-label-sm text-on-surface-variant mb-1">
+<span>COMPRESSOR HARMONIC STABILITY</span>
+<span class="text-primary font-medium">99.2%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="w-[99.2%] h-full bg-primary-container"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-label-sm text-label-sm text-on-surface-variant mb-1">
+<span>EVAPORATOR PURITY INDEX</span>
+<span class="text-primary font-medium">99.8%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="w-[99.8%] h-full bg-gradient-to-r from-primary to-tertiary"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. HOW IT WORKS (Four-Step Process Timeline) -->
+<section class="py-24 relative bg-surface-container-lowest border-t border-white/5" id="how-it-works">
+<div class="max-w-7xl mx-auto px-margin-mobile md:px-margin">
+<div class="text-center max-w-2xl mx-auto mb-20">
+<span class="font-label-md text-label-md text-primary tracking-widest uppercase mb-2 inline-block">
+          SEAMLESS CONCIERGE WORKFLOW
+        </span>
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-white font-light tracking-tight">
+          How It Works.
+        </h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-3">
+          Four effortless steps to restore surgical airflow and pristine thermal calibration across your residence.
+        </p>
+</div>
+<!-- Horizontal Process Timeline -->
+<div class="relative">
+<!-- Continuous Desktop Connecting Line -->
+<div class="hidden lg:block absolute top-12 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-primary/30 to-transparent z-0"></div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
+<!-- Step 01 -->
+<div class="glass-card rounded-xl p-6 flex flex-col items-start relative group">
+<div class="w-12 h-12 rounded-full bg-surface-container-high border border-primary/40 flex items-center justify-center font-label-md text-primary text-base mb-6 shadow-[0_0_15px_rgba(56,189,248,0.2)] group-hover:border-primary transition-colors">
+              01
+            </div>
+<h4 class="font-headline-sm text-headline-sm text-white font-medium mb-2">Book Your Service</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Instant digital concierge booking. Select your architectural system type, symptoms, or maintenance schedule.
+            </p>
+</div>
+<!-- Step 02 -->
+<div class="glass-card rounded-xl p-6 flex flex-col items-start relative group">
+<div class="w-12 h-12 rounded-full bg-surface-container-high border border-primary/40 flex items-center justify-center font-label-md text-primary text-base mb-6 shadow-[0_0_15px_rgba(56,189,248,0.2)] group-hover:border-primary transition-colors">
+              02
+            </div>
+<h4 class="font-headline-sm text-headline-sm text-white font-medium mb-2">Choose Time Slot</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Select a dedicated 2-hour arrival window tailored to your routine. Live dispatch notifications via SMS.
+            </p>
+</div>
+<!-- Step 03 -->
+<div class="glass-card rounded-xl p-6 flex flex-col items-start relative group">
+<div class="w-12 h-12 rounded-full bg-surface-container-high border border-primary/40 flex items-center justify-center font-label-md text-primary text-base mb-6 shadow-[0_0_15px_rgba(56,189,248,0.2)] group-hover:border-primary transition-colors">
+              03
+            </div>
+<h4 class="font-headline-sm text-headline-sm text-white font-medium mb-2">Engineer Arrives</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Our master technician arrives equipped with acoustic decibel meters, spectroscopic leak sensors, and surgical tools.
+            </p>
+</div>
+<!-- Step 04 -->
+<div class="glass-card rounded-xl p-6 flex flex-col items-start relative group">
+<div class="w-12 h-12 rounded-full bg-surface-container-high border border-primary/40 flex items-center justify-center font-label-md text-primary text-base mb-6 shadow-[0_0_15px_rgba(56,189,248,0.2)] group-hover:border-primary transition-colors">
+              04
+            </div>
+<h4 class="font-headline-sm text-headline-sm text-white font-medium mb-2">Enjoy Cool Comfort</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Receive an authoritative digital purity report, verified warranty documentation, and whisper-quiet chilled air.
+            </p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 5. TRUST & TESTIMONIALS -->
+<section class="py-24 relative bg-surface-container-lowest border-t border-white/5" id="testimonials">
+<div class="max-w-7xl mx-auto px-margin-mobile md:px-margin">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+<div>
+<span class="font-label-md text-label-md text-primary tracking-widest uppercase mb-3 block">
+            CLIENT CREDENTIALS
+          </span>
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-white font-light tracking-tight">
+            Validated by Excellence.
+          </h2>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center text-primary">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<span class="font-label-lg text-label-lg text-white font-medium">4.9 / 5.0 RATING (2,400+ REVIEWS)</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Testimonial 01 -->
+<div class="glass-card rounded-xl p-8 flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-1 text-primary mb-6">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant font-light italic mb-8">
+              "AERIS transformed our private gallery space. The whisper-quiet acoustic balancing made the dual-zone VRF system virtually undetectable while keeping climate stability down to 0.2 degrees."
+            </p>
+</div>
+<div class="pt-6 border-t border-white/5 flex items-center justify-between">
+<div>
+<div class="font-headline-sm text-headline-sm text-white text-base">Marcus von Bern</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">RESIDENTIAL PENTHOUSE // ZÜRICH</div>
+</div>
+<span class="material-symbols-outlined text-primary text-[22px]">verified</span>
+</div>
+</div>
+<!-- Testimonial 02 -->
+<div class="glass-card rounded-xl p-8 flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-1 text-primary mb-6">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant font-light italic mb-8">
+              "Their response time during our midsummer chiller failure was under an hour. The master engineer identified a micro-leak that two previous contractors missed, re-charged R32, and restored perfect cold airflow."
+            </p>
+</div>
+<div class="pt-6 border-t border-white/5 flex items-center justify-between">
+<div>
+<div class="font-headline-sm text-headline-sm text-white text-base">Elena Rostova</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">MANAGING DIRECTOR // LUMEN STUDIO</div>
+</div>
+<span class="material-symbols-outlined text-primary text-[22px]">verified</span>
+</div>
+</div>
+<!-- Testimonial 03 -->
+<div class="glass-card rounded-xl p-8 flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-1 text-primary mb-6">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant font-light italic mb-8">
+              "The digital telemetry report provided after the coil overhaul is something I have never experienced with conventional contractors. Unbelievable professionalism, pure air, and surgical cleanliness."
+            </p>
+</div>
+<div class="pt-6 border-t border-white/5 flex items-center justify-between">
+<div>
+<div class="font-headline-sm text-headline-sm text-white text-base">David Thorne</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">PRIVATE ARCHITECT // SKYLINE APEX</div>
+</div>
+<span class="material-symbols-outlined text-primary text-[22px]">verified</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 6. FINAL CALL TO ACTION ("Your Comfort Starts Here") -->
+<section class="py-28 relative bg-surface-container-lowest border-t border-white/5 overflow-hidden" id="cta">
+<!-- Spotlight Cyan Radial Aura -->
+<div class="absolute inset-0 pointer-events-none flex items-center justify-center">
+<div class="w-[700px] h-[400px] bg-primary/10 rounded-full blur-[140px]"></div>
+</div>
+<div class="relative z-10 max-w-5xl mx-auto px-margin-mobile md:px-margin text-center">
+<div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surface-container border border-white/10 mb-6">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+<span class="font-label-md text-label-md text-primary tracking-widest uppercase">CONCIERGE DISPATCH ACTIVE</span>
+</div>
+<h2 class="font-headline-xl text-headline-xl-mobile md:text-headline-xl text-white font-light tracking-tight mb-6">
+        Your Comfort Starts Here.
+      </h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto mb-10 font-light">
+        Book your AC service today and experience the difference of surgical climate calibration, whisper-quiet performance, and certified pure air.
+      </p>
+<div class="flex flex-wrap items-center justify-center gap-5">
+<a class="inline-flex items-center gap-2 px-9 py-4 rounded-full bg-white text-surface-container-lowest font-headline-sm text-headline-sm text-sm tracking-tight font-medium hover:bg-primary-fixed hover:shadow-[0_0_35px_rgba(56,189,248,0.45)] transition-all duration-300 active:scale-95" href="#contact">
+<span>Schedule Your Service</span>
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+</a>
+<a class="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-surface-container/60 hover:bg-surface-container text-on-surface border border-white/10 font-headline-sm text-headline-sm text-sm tracking-tight transition-all duration-300 backdrop-blur-md hover:border-white/20 active:scale-95" href="tel:+18005550199">
+<span class="material-symbols-outlined text-primary text-[18px]">call</span>
+<span>+1 (800) 555-AERIS</span>
+</a>
+</div>
+<div class="mt-12 flex flex-wrap justify-center items-center gap-8 font-label-sm text-label-sm text-on-surface-variant">
+<span>NO HIDDEN TARIFFS</span>
+<span>•</span>
+<span>SAME-DAY DISPATCH AVAILABLE</span>
+<span>•</span>
+<span>100% SATISFACTION GUARANTEED</span>
+</div>
+</div>
+</section>
+<!-- 7. FOOTER COMPONENT -->
+<footer class="docked full-width bottom bg-surface-container-lowest dark:bg-surface-container-lowest border-t border-outline-variant/20">
+<div class="flex flex-col max-w-7xl mx-auto px-margin pt-space-xl pb-space-lg w-full gap-space-lg">
+<!-- Top Row Footer Grid -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8 pb-12 border-b border-white/5">
+<!-- Brand Col -->
+<div class="md:col-span-4 space-y-4">
+<a class="flex items-center gap-2" href="#">
+<span class="w-2.5 h-2.5 rounded-full bg-primary-container"></span>
+<span class="font-headline-md text-headline-md tracking-widest text-on-surface dark:text-on-surface uppercase font-medium">AERIS</span>
+</a>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-sm">
+            AERIS Climate Engineering SA. Precision thermodynamic architecture, whisper-quiet refrigeration systems, and advanced air purity diagnostics for elite spaces.
+          </p>
+</div>
+<!-- Links Col 1 -->
+<div class="md:col-span-3 space-y-3">
+<h5 class="font-label-sm text-label-sm text-primary tracking-widest uppercase">SYSTEM ARCHITECTURE</h5>
+<ul class="space-y-2">
+<li><a class="text-on-surface-variant dark:text-on-surface-variant font-label-sm text-label-sm hover:text-primary dark:hover:text-primary transition-colors duration-200" href="#">Architectural Systems</a></li>
+<li><a class="text-on-surface-variant dark:text-on-surface-variant font-label-sm text-label-sm hover:text-primary dark:hover:text-primary transition-colors duration-200" href="#">Bespoke Retrofit</a></li>
+<li><a class="text-on-surface-variant dark:text-on-surface-variant font-label-sm text-label-sm hover:text-primary dark:hover:text-primary transition-colors duration-200" href="#">Purity Diagnostics</a></li>
+</ul>
+</div>
+<!-- Links Col 2 -->
+<div class="md:col-span-3 space-y-3">
+<h5 class="font-label-sm text-label-sm text-primary tracking-widest uppercase">STANDARDS &amp; TELEMETRY</h5>
+<ul class="space-y-2">
+<li><a class="text-on-surface-variant dark:text-on-surface-variant font-label-sm text-label-sm hover:text-primary dark:hover:text-primary transition-colors duration-200" href="#">Acoustic Standards</a></li>
+<li><a class="text-on-surface-variant dark:text-on-surface-variant font-label-sm text-label-sm hover:text-primary dark:hover:text-primary transition-colors duration-200" href="#">Thermodynamic Telemetry</a></li>
+<li><a class="text-on-surface-variant dark:text-on-surface-variant font-label-sm text-label-sm hover:text-primary dark:hover:text-primary transition-colors duration-200" href="#">Privacy Architecture</a></li>
+<li><a class="text-on-surface-variant dark:text-on-surface-variant font-label-sm text-label-sm hover:text-primary dark:hover:text-primary transition-colors duration-200" href="#">Terms of Commission</a></li>
+</ul>
+</div>
+<!-- Coordinates Col -->
+<div class="md:col-span-2 space-y-3">
+<h5 class="font-label-sm text-label-sm text-primary tracking-widest uppercase">CONCIERGE DESK</h5>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            24/7 Priority Emergency<br/>
+            Zurich • London • New York<br/>
+<a class="text-white hover:text-primary transition-colors" href="mailto:concierge@aeris-climate.com">concierge@aeris.ch</a>
+</p>
+</div>
+</div>
+<!-- Bottom Row Copyright & Legal -->
+<div class="flex flex-col sm:flex-row items-center justify-between text-on-surface-variant font-body-sm text-body-sm gap-4">
+<p class="text-center sm:text-left">
+          © 2025 AERIS Climate Engineering SA. Precision Thermodynamic Architecture. All rights reserved.
+        </p>
+<div class="flex items-center space-x-6 font-label-sm text-label-sm">
+<a class="hover:text-primary transition-colors" href="#">STATUS: OPERATIONAL</a>
+<span>•</span>
+<a class="hover:text-primary transition-colors" href="#">ENCRYPTION: AES-256</a>
+</div>
+</div>
+</div>
+</footer>
+</body></html>
