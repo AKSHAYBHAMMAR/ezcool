@@ -6,6 +6,7 @@ import HowItWorks from '@/components/HowItWorks';
 import Testimonials from '@/components/Testimonials';
 import BookingSection from '@/components/BookingSection';
 import Footer from '@/components/Footer';
+import FloatingBookingButton from '@/components/FloatingBookingButton';
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
       <Testimonials />
       <BookingSection />
       <Footer />
+      <FloatingBookingButton />
     </main>
   );
 }
