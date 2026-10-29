@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useRef, useState, useEffect } from 'react';
+import Navbar from '@/components/Navbar';
 
 export default function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -57,6 +58,9 @@ export default function Hero() {
           style={{ backgroundImage: `url('/screen.png')` }}
         />
       )}
+
+      {/* Navbar positioned strictly inside the Hero section */}
+      <Navbar />
     </section>
   );
 }
