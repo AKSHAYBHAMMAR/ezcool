@@ -6,9 +6,9 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="fixed top-4 sm:top-6 inset-x-0 z-50 flex justify-center px-4 sm:px-6 pointer-events-none">
-      <div className="pointer-events-auto w-full max-w-5xl liquid-glass rounded-full sm:rounded-[32px] transition-all duration-300">
-        <div className="flex justify-between items-center px-4 sm:px-7 py-2.5 sm:py-3 w-full">
+    <header className="fixed top-4 sm:top-5 inset-x-0 z-50 flex justify-center px-4 pointer-events-none">
+      <div className="pointer-events-auto w-full md:w-[72%] max-w-[980px] liquid-glass rounded-full transition-all duration-300 shadow-2xl">
+        <div className="flex justify-between items-center px-6 sm:px-8 h-16 sm:h-[68px] w-full">
           {/* Brand Logo: ClimaCore */}
           <a
             className="flex items-center gap-2.5 group flex-shrink-0"
@@ -24,52 +24,39 @@ export default function Navbar() {
             </span>
           </a>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center space-x-1 sm:space-x-1.5 lg:space-x-2">
+          {/* Desktop Navigation Links — Centered & Spaced (No Book button in navbar) */}
+          <nav className="hidden md:flex items-center space-x-2 lg:space-x-4">
             <a
               href="#hero"
-              className="px-4 py-1.5 rounded-full text-xs font-mono tracking-wider uppercase font-medium text-white/95 hover:text-white hover:bg-white/[0.14] transition-all duration-200 [text-shadow:_0_1px_3px_rgba(0,0,0,0.7)]"
+              className="px-4 py-2 rounded-full text-xs font-mono tracking-wider uppercase font-medium text-white/95 hover:text-white hover:bg-white/[0.14] transition-all duration-200 [text-shadow:_0_1px_3px_rgba(0,0,0,0.7)]"
             >
               Home
             </a>
             <a
               href="#services"
-              className="px-4 py-1.5 rounded-full text-xs font-mono tracking-wider uppercase font-medium text-white/90 hover:text-white hover:bg-white/[0.14] transition-all duration-200 [text-shadow:_0_1px_3px_rgba(0,0,0,0.7)]"
+              className="px-4 py-2 rounded-full text-xs font-mono tracking-wider uppercase font-medium text-white/90 hover:text-white hover:bg-white/[0.14] transition-all duration-200 [text-shadow:_0_1px_3px_rgba(0,0,0,0.7)]"
             >
               Services
             </a>
             <a
               href="#why-choose-us"
-              className="px-4 py-1.5 rounded-full text-xs font-mono tracking-wider uppercase font-medium text-white/90 hover:text-white hover:bg-white/[0.14] transition-all duration-200 [text-shadow:_0_1px_3px_rgba(0,0,0,0.7)]"
+              className="px-4 py-2 rounded-full text-xs font-mono tracking-wider uppercase font-medium text-white/90 hover:text-white hover:bg-white/[0.14] transition-all duration-200 [text-shadow:_0_1px_3px_rgba(0,0,0,0.7)]"
             >
               About
             </a>
             <a
               href="#booking"
-              className="px-4 py-1.5 rounded-full text-xs font-mono tracking-wider uppercase font-medium text-white/90 hover:text-white hover:bg-white/[0.14] transition-all duration-200 [text-shadow:_0_1px_3px_rgba(0,0,0,0.7)]"
+              className="px-4 py-2 rounded-full text-xs font-mono tracking-wider uppercase font-medium text-white/90 hover:text-white hover:bg-white/[0.14] transition-all duration-200 [text-shadow:_0_1px_3px_rgba(0,0,0,0.7)]"
             >
               Contact
             </a>
           </nav>
 
-          {/* Right Action: Book a Service CTA */}
-          <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-            <a
-              href="#booking"
-              className="group relative inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-[13px] font-headline font-semibold text-white tracking-tight transition-all duration-300 active:scale-95 shadow-[0_4px_16px_rgba(56,189,248,0.25)] border border-[#8ed5ff]/45 bg-gradient-to-r from-[#38bdf8]/25 via-[#38bdf8]/20 to-[#0284c7]/35 backdrop-blur-md hover:from-[#38bdf8]/40 hover:to-[#0284c7]/50 hover:border-[#8ed5ff]/80 hover:shadow-[0_0_24px_rgba(56,189,248,0.45)]"
-            >
-              <span className="[text-shadow:_0_1px_2px_rgba(0,0,0,0.6)]">
-                Book a Service
-              </span>
-              <span className="material-symbols-outlined text-[16px] text-[#8ed5ff] group-hover:translate-x-0.5 transition-transform duration-200">
-                calendar_month
-              </span>
-            </a>
-
-            {/* Mobile Menu Button */}
+          {/* Mobile Menu Button */}
+          <div className="md:hidden flex items-center">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 text-white hover:text-[#38bdf8] transition-colors focus:outline-none"
+              className="p-2 text-white hover:text-[#38bdf8] transition-colors focus:outline-none focus:ring-2 focus:ring-[#8ed5ff]/50 rounded-full"
               aria-label="Toggle navigation menu"
             >
               <span className="material-symbols-outlined text-2xl [text-shadow:_0_1px_3px_rgba(0,0,0,0.7)]">
@@ -81,7 +68,7 @@ export default function Navbar() {
 
         {/* Mobile Dropdown Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-t border-white/[0.18] px-6 py-4 rounded-b-[24px]">
+          <div className="md:hidden border-t border-white/[0.18] px-6 py-4 rounded-b-[28px]">
             <nav className="flex flex-col space-y-2.5 font-mono text-xs uppercase">
               <a
                 onClick={() => setMobileMenuOpen(false)}
@@ -111,14 +98,6 @@ export default function Navbar() {
                 href="#booking"
               >
                 Contact
-              </a>
-              <a
-                onClick={() => setMobileMenuOpen(false)}
-                className="text-[#8ed5ff] hover:text-[#38bdf8] py-2 flex items-center justify-between transition-colors font-semibold border-t border-white/[0.12] mt-1 pt-2.5"
-                href="#booking"
-              >
-                <span>Book a Service</span>
-                <span className="material-symbols-outlined text-sm">calendar_month</span>
               </a>
             </nav>
           </div>
