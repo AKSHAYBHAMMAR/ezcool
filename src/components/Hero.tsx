@@ -57,6 +57,17 @@ export default function Hero() {
           style={{ backgroundImage: `url('/screen.png')` }}
         />
       )}
+
+      {/* Small, subtle, light-blue mask positioned precisely over the bottom-right watermark area */}
+      <div
+        className="pointer-events-none absolute bottom-3 right-3 sm:bottom-5 sm:right-5 z-20 w-8 h-8 sm:w-10 sm:h-10 rounded-xl backdrop-blur-xl"
+        style={{
+          background:
+            'radial-gradient(circle at center, rgba(186, 230, 253, 0.85) 0%, rgba(142, 213, 255, 0.6) 65%, rgba(186, 230, 253, 0.3) 100%)',
+          boxShadow: '0 0 14px 4px rgba(186, 230, 253, 0.35)',
+        }}
+        aria-hidden="true"
+      />
     </section>
   );
 }
