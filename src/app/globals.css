@@ -62,18 +62,6 @@ body {
     inset 0 -1px 1px 0 rgba(0, 0, 0, 0.08);
 }
 
-/* Targeted rule to hide any external injected Gemini floating badge/widget */
-[class*="gemini-badge"],
-[id*="gemini-badge"],
-[class*="gemini-watermark"],
-[id*="gemini-watermark"],
-[aria-label*="Gemini"],
-[data-testid*="gemini"] {
-  display: none !important;
-  opacity: 0 !important;
-  pointer-events: none !important;
-}
-
 .glow-cyan {
   box-shadow: 0 0 35px -5px rgba(56, 189, 248, 0.38);
 }
