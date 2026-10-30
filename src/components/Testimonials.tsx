@@ -7,19 +7,16 @@ const testimonials = [
     quote:
       '"EZCOOL provided exceptional AC servicing at our home. The technician arrived on time, thoroughly cleaned the indoor and outdoor units, checked the refrigerant levels, and restored the cooling performance. The entire experience was smooth, professional, and hassle-free."',
     author: 'Rahul Mehta',
-    role: 'RESIDENTIAL PENTHOUSE // ZÜRICH',
   },
   {
     quote:
       '"Their response time during our midsummer chiller failure was under an hour. The master engineer identified a micro-leak that two previous contractors missed, re-charged R32, and restored perfect cold airflow."',
     author: 'Priya Sharma',
-    role: 'MANAGING DIRECTOR // LUMEN STUDIO',
   },
   {
     quote:
       '"The digital telemetry report provided after the coil overhaul is something I have never experienced with conventional contractors. Unbelievable professionalism, pure air, and surgical cleanliness."',
     author: 'Arjun Desai',
-    role: 'PRIVATE ARCHITECT // SKYLINE APEX',
   },
 ];
 
@@ -82,15 +79,10 @@ export default function Testimonials() {
                   {item.quote}
                 </p>
               </div>
-              <div className="pt-6 border-t border-[#e2eef8] flex items-center justify-between">
-                <div>
-                  <div className="font-headline text-[#0f2744] text-base font-semibold">
-                    {item.author}
-                  </div>
-                  <div className="font-mono text-[10px] text-[#627d98] tracking-wider mt-0.5 font-medium">
-                    {item.role}
-                  </div>
-                </div>
+              <div className="pt-5 border-t border-[#e2eef8] flex items-center justify-between">
+                <span className="font-headline text-[#0f2744] text-base font-semibold">
+                  {item.author}
+                </span>
                 <span className="material-symbols-outlined text-[#0284c7] text-[22px]">
                   verified
                 </span>
