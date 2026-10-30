@@ -40,8 +40,8 @@ export default function Hero() {
           muted
           loop
           playsInline
+          preload="auto"
           onError={() => setVideoError(true)}
-          poster="/screen.png"
           className="w-full h-full object-cover object-center block m-0 p-0"
           style={{
             width: '100%',
@@ -50,6 +50,8 @@ export default function Hero() {
             objectPosition: 'center',
           }}
         >
+          <source src="/videos/hero section video.mp4" type="video/mp4" />
+          <source src="/hero section video.mp4" type="video/mp4" />
           <source src="/videos/hero.mp4" type="video/mp4" />
         </video>
       ) : (

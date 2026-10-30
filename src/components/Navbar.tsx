@@ -25,28 +25,40 @@ export default function Navbar() {
           </a>
 
           {/* Desktop Navigation Links — Generous, Balanced Spacing */}
-          <nav className="hidden md:flex items-center space-x-3 lg:space-x-6 xl:space-x-8">
+          <nav className="hidden md:flex items-center space-x-2 lg:space-x-4 xl:space-x-5">
             <a
               href="#hero"
-              className="px-5 py-2.5 rounded-full text-xs sm:text-sm font-mono tracking-wider uppercase font-medium text-white/95 hover:text-white hover:bg-white/[0.14] transition-all duration-200 [text-shadow:_0_1px_3px_rgba(0,0,0,0.7)]"
+              className="px-4 lg:px-5 py-2.5 rounded-full text-xs sm:text-sm font-mono tracking-wider uppercase font-medium text-white/95 hover:text-white hover:bg-white/[0.14] transition-all duration-200 [text-shadow:_0_1px_3px_rgba(0,0,0,0.7)]"
             >
               Home
             </a>
             <a
               href="#services"
-              className="px-5 py-2.5 rounded-full text-xs sm:text-sm font-mono tracking-wider uppercase font-medium text-white/90 hover:text-white hover:bg-white/[0.14] transition-all duration-200 [text-shadow:_0_1px_3px_rgba(0,0,0,0.7)]"
+              className="px-4 lg:px-5 py-2.5 rounded-full text-xs sm:text-sm font-mono tracking-wider uppercase font-medium text-white/90 hover:text-white hover:bg-white/[0.14] transition-all duration-200 [text-shadow:_0_1px_3px_rgba(0,0,0,0.7)]"
+            >
+              Systems
+            </a>
+            <a
+              href="#why-choose-us"
+              className="px-4 lg:px-5 py-2.5 rounded-full text-xs sm:text-sm font-mono tracking-wider uppercase font-medium text-white/90 hover:text-white hover:bg-white/[0.14] transition-all duration-200 [text-shadow:_0_1px_3px_rgba(0,0,0,0.7)]"
+            >
+              Engineering
+            </a>
+            <a
+              href="#services"
+              className="px-4 lg:px-5 py-2.5 rounded-full text-xs sm:text-sm font-mono tracking-wider uppercase font-medium text-white/90 hover:text-white hover:bg-white/[0.14] transition-all duration-200 [text-shadow:_0_1px_3px_rgba(0,0,0,0.7)]"
             >
               Services
             </a>
             <a
               href="#why-choose-us"
-              className="px-5 py-2.5 rounded-full text-xs sm:text-sm font-mono tracking-wider uppercase font-medium text-white/90 hover:text-white hover:bg-white/[0.14] transition-all duration-200 [text-shadow:_0_1px_3px_rgba(0,0,0,0.7)]"
+              className="px-4 lg:px-5 py-2.5 rounded-full text-xs sm:text-sm font-mono tracking-wider uppercase font-medium text-white/90 hover:text-white hover:bg-white/[0.14] transition-all duration-200 [text-shadow:_0_1px_3px_rgba(0,0,0,0.7)]"
             >
               About
             </a>
             <a
               href="#booking"
-              className="px-5 py-2.5 rounded-full text-xs sm:text-sm font-mono tracking-wider uppercase font-medium text-white/90 hover:text-white hover:bg-white/[0.14] transition-all duration-200 [text-shadow:_0_1px_3px_rgba(0,0,0,0.7)]"
+              className="px-4 lg:px-5 py-2.5 rounded-full text-xs sm:text-sm font-mono tracking-wider uppercase font-medium text-white/90 hover:text-white hover:bg-white/[0.14] transition-all duration-200 [text-shadow:_0_1px_3px_rgba(0,0,0,0.7)]"
             >
               Contact
             </a>
@@ -77,6 +89,20 @@ export default function Navbar() {
               >
                 <span>Home</span>
                 <span className="w-1.5 h-1.5 rounded-full bg-[#38bdf8]" />
+              </a>
+              <a
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-white/90 hover:text-[#8ed5ff] py-2 transition-colors"
+                href="#services"
+              >
+                Systems
+              </a>
+              <a
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-white/90 hover:text-[#8ed5ff] py-2 transition-colors"
+                href="#why-choose-us"
+              >
+                Engineering
               </a>
               <a
                 onClick={() => setMobileMenuOpen(false)}
