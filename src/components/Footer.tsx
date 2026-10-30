@@ -1,134 +1,192 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 
 export default function Footer() {
+  const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, hash: string) => {
+    if (typeof window !== 'undefined' && window.location.pathname === '/') {
+      e.preventDefault();
+      const targetId = hash.replace('#', '');
+      const element =
+        document.getElementById(targetId) ||
+        (targetId === 'systems' ? document.getElementById('services') : null) ||
+        (targetId === 'engineering' || targetId === 'about'
+          ? document.getElementById('why-choose-us')
+          : null) ||
+        (targetId === 'contact' ? document.getElementById('booking') : null);
+
+      if (element) {
+        const navOffset = 100;
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - navOffset;
+        window.scrollTo({
+          top: offsetPosition > 0 ? offsetPosition : 0,
+          behavior: 'smooth',
+        });
+        if (window.history.pushState) {
+          window.history.pushState(null, '', `#${targetId}`);
+        }
+      }
+    }
+  };
+
   return (
-    <footer className="w-full bg-gradient-to-b from-[#f4f9fd] to-[#e6f1fa] border-t border-[#d0e6f7]">
+    <footer className="w-full bg-gradient-to-b from-[#f4f9fd] via-[#edf5fc] to-[#e4f0fa] border-t border-[#d0e6f7]">
       <div className="flex flex-col max-w-7xl mx-auto px-5 sm:px-8 lg:px-16 pt-16 pb-12 w-full gap-12">
-        {/* Top Row Footer Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 pb-12 border-b border-[#d0e6f7]">
-          {/* Brand Col */}
-          <div className="md:col-span-4 space-y-4">
-            <a className="flex items-center gap-2.5" href="#hero">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#0284c7] shadow-[0_0_10px_#38bdf8]" />
+        {/* Three Column Layout on Desktop */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-12 pb-12 border-b border-[#d0e6f7]">
+          {/* Column 1 – Brand */}
+          <div className="lg:col-span-5 space-y-4">
+            <a
+              className="flex items-center gap-2.5 group w-fit"
+              href="/#hero"
+              onClick={(e) => handleScrollTo(e, '#hero')}
+              aria-label="EZCOOL Home"
+            >
+              <span className="w-2.5 h-2.5 rounded-full bg-[#0284c7] shadow-[0_0_10px_#38bdf8] transition-transform duration-300 group-hover:scale-125" />
               <div className="flex flex-col">
-                <span className="font-headline text-xl tracking-wider text-[#0f2744] uppercase font-bold leading-none">
+                <span className="font-headline text-2xl tracking-wider text-[#0f2744] uppercase font-bold leading-none group-hover:text-[#0284c7] transition-colors">
                   EZCOOL
                 </span>
                 <span className="font-mono text-[9px] tracking-widest text-[#0284c7] uppercase font-semibold mt-0.5">
-                  AC SERVICING
+                  AIR CONDITIONING SERVICES
                 </span>
               </div>
             </a>
+            <p className="font-headline text-sm sm:text-base text-[#0f2744] font-medium pt-1">
+              Precision cooling. Exceptional comfort.
+            </p>
             <p className="font-sans text-xs sm:text-[13px] text-[#486581] max-w-sm font-normal leading-relaxed">
-              EZCOOL AC Servicing. Premium AC Service. Exceptional Comfort.
-              Precision thermodynamic engineering, whisper-quiet refrigeration systems,
-              and advanced air purity diagnostics for elite spaces.
+              Expert AC solutions engineered for your comfort, efficiency and indoor air quality.
             </p>
           </div>
 
-          {/* Links Col 1 */}
-          <div className="md:col-span-3 space-y-3">
+          {/* Column 2 – Our Services */}
+          <div className="lg:col-span-4 space-y-4">
             <h5 className="font-mono text-xs text-[#0369a1] tracking-widest uppercase font-semibold">
-              SYSTEM ARCHITECTURE
+              OUR SERVICES
             </h5>
-            <ul className="space-y-2 font-mono text-xs text-[#486581]">
+            <ul className="space-y-2.5 font-sans text-xs sm:text-sm text-[#486581]">
               <li>
                 <a
-                  className="hover:text-[#0284c7] transition-colors duration-200"
-                  href="#services"
+                  className="hover:text-[#0284c7] transition-all duration-200 hover:translate-x-1 inline-flex items-center gap-2 group"
+                  href="/#services"
+                  onClick={(e) => handleScrollTo(e, '#services')}
                 >
-                  Architectural Systems
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#bae6fd] group-hover:bg-[#0284c7] transition-colors" />
+                  <span>AC Installation</span>
                 </a>
               </li>
               <li>
                 <a
-                  className="hover:text-[#0284c7] transition-colors duration-200"
-                  href="#services"
+                  className="hover:text-[#0284c7] transition-all duration-200 hover:translate-x-1 inline-flex items-center gap-2 group"
+                  href="/#services"
+                  onClick={(e) => handleScrollTo(e, '#services')}
                 >
-                  Bespoke Retrofit
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#bae6fd] group-hover:bg-[#0284c7] transition-colors" />
+                  <span>AC Repair</span>
                 </a>
               </li>
               <li>
                 <a
-                  className="hover:text-[#0284c7] transition-colors duration-200"
-                  href="#why-choose-us"
+                  className="hover:text-[#0284c7] transition-all duration-200 hover:translate-x-1 inline-flex items-center gap-2 group"
+                  href="/#services"
+                  onClick={(e) => handleScrollTo(e, '#services')}
                 >
-                  Purity Diagnostics
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#bae6fd] group-hover:bg-[#0284c7] transition-colors" />
+                  <span>AC Maintenance</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  className="hover:text-[#0284c7] transition-all duration-200 hover:translate-x-1 inline-flex items-center gap-2 group"
+                  href="/#services"
+                  onClick={(e) => handleScrollTo(e, '#services')}
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#bae6fd] group-hover:bg-[#0284c7] transition-colors" />
+                  <span>AC Deep Cleaning</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  className="hover:text-[#0284c7] transition-all duration-200 hover:translate-x-1 inline-flex items-center gap-2 group"
+                  href="/#why-choose-us"
+                  onClick={(e) => handleScrollTo(e, '#why-choose-us')}
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#bae6fd] group-hover:bg-[#0284c7] transition-colors" />
+                  <span>System Diagnostics</span>
                 </a>
               </li>
             </ul>
           </div>
 
-          {/* Links Col 2 */}
-          <div className="md:col-span-3 space-y-3">
+          {/* Column 3 – Company */}
+          <div className="lg:col-span-3 space-y-4">
             <h5 className="font-mono text-xs text-[#0369a1] tracking-widest uppercase font-semibold">
-              STANDARDS &amp; TELEMETRY
+              COMPANY
             </h5>
-            <ul className="space-y-2 font-mono text-xs text-[#486581]">
+            <ul className="space-y-2.5 font-sans text-xs sm:text-sm text-[#486581]">
               <li>
                 <a
-                  className="hover:text-[#0284c7] transition-colors duration-200"
-                  href="#why-choose-us"
+                  className="hover:text-[#0284c7] transition-all duration-200 hover:translate-x-1 inline-flex items-center gap-2 group"
+                  href="/#about"
+                  onClick={(e) => handleScrollTo(e, '#about')}
                 >
-                  Acoustic Standards
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#bae6fd] group-hover:bg-[#0284c7] transition-colors" />
+                  <span>About EZCOOL</span>
                 </a>
               </li>
               <li>
                 <a
-                  className="hover:text-[#0284c7] transition-colors duration-200"
-                  href="#how-it-works"
+                  className="hover:text-[#0284c7] transition-all duration-200 hover:translate-x-1 inline-flex items-center gap-2 group"
+                  href="/#engineering"
+                  onClick={(e) => handleScrollTo(e, '#engineering')}
                 >
-                  Thermodynamic Telemetry
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#bae6fd] group-hover:bg-[#0284c7] transition-colors" />
+                  <span>Our Expertise</span>
                 </a>
               </li>
               <li>
                 <a
-                  className="hover:text-[#0284c7] transition-colors duration-200"
-                  href="#"
+                  className="hover:text-[#0284c7] transition-all duration-200 hover:translate-x-1 inline-flex items-center gap-2 group"
+                  href="/#why-choose-us"
+                  onClick={(e) => handleScrollTo(e, '#why-choose-us')}
                 >
-                  Privacy Architecture
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#bae6fd] group-hover:bg-[#0284c7] transition-colors" />
+                  <span>Why Choose Us</span>
                 </a>
               </li>
               <li>
                 <a
-                  className="hover:text-[#0284c7] transition-colors duration-200"
-                  href="#"
+                  className="hover:text-[#0284c7] transition-all duration-200 hover:translate-x-1 inline-flex items-center gap-2 group"
+                  href="/#contact"
+                  onClick={(e) => handleScrollTo(e, '#contact')}
                 >
-                  Terms of Commission
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#bae6fd] group-hover:bg-[#0284c7] transition-colors" />
+                  <span>Contact Us</span>
                 </a>
+              </li>
+              <li>
+                <Link
+                  className="hover:text-[#0284c7] transition-all duration-200 hover:translate-x-1 inline-flex items-center gap-2 group"
+                  href="/privacy"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#bae6fd] group-hover:bg-[#0284c7] transition-colors" />
+                  <span>Privacy Policy</span>
+                </Link>
               </li>
             </ul>
-          </div>
-
-          {/* Coordinates Col */}
-          <div className="md:col-span-2 space-y-3">
-            <h5 className="font-mono text-xs text-[#0369a1] tracking-widest uppercase font-semibold">
-              CONCIERGE DESK
-            </h5>
-            <p className="font-sans text-xs text-[#486581] leading-relaxed">
-              24/7 Priority Emergency
-              <br />
-              <a
-                className="text-[#0284c7] hover:text-[#0369a1] font-semibold transition-colors font-mono text-[11px] block mt-1"
-                href="mailto:contact@ezcool.com"
-              >
-                contact@ezcool.com
-              </a>
-            </p>
           </div>
         </div>
 
-        {/* Bottom Row Copyright & Legal */}
+        {/* Bottom Row Copyright & Tagline */}
         <div className="flex flex-col sm:flex-row items-center justify-between text-[#627d98] font-sans text-xs gap-4 font-medium">
           <p className="text-center sm:text-left">
-            © {new Date().getFullYear()} EZCOOL AC Servicing. Premium AC Service. Exceptional Comfort. All rights reserved.
+            © 2026 EZCOOL. All rights reserved.
           </p>
-          <div className="flex items-center space-x-6 font-mono text-[10px] text-[#486581]">
-            <span className="text-emerald-600 font-semibold">● STATUS: OPERATIONAL</span>
-            <span className="text-[#bae6fd]">•</span>
-            <span>ENCRYPTION: AES-256</span>
+          <div className="font-mono text-[11px] text-[#0284c7] font-semibold tracking-widest uppercase">
+            ENGINEERED FOR COMFORT.
           </div>
         </div>
       </div>
