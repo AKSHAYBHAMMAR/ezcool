@@ -24,7 +24,7 @@ export default function FloatingBookingButton() {
     >
       <a
         href="#booking"
-        className="group relative flex items-center justify-center gap-2.5 select-none transition-all duration-200 hover:scale-[1.03] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-[#38bdf8] focus:ring-offset-2 focus:ring-offset-[#0a0e16]"
+        className="group relative flex items-center justify-center gap-2.5 select-none transition-all duration-200 hover:scale-[1.03] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-[#38bdf8] focus:ring-offset-2 focus:ring-offset-[#f4f9fd]"
         style={{
           width: '240px',
           height: '60px',

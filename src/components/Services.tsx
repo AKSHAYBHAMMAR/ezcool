@@ -45,21 +45,23 @@ export default function Services() {
   return (
     <section
       id="services"
-      className="py-24 relative bg-[#0a0e16] border-t border-white/5"
+      className="py-24 relative bg-gradient-to-b from-[#f4f9fd] via-[#eaf3fa] to-[#f4f9fd] border-t border-[#d0e6f7]"
     >
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-16">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div>
-            <div className="font-mono text-xs text-[#8ed5ff] tracking-widest uppercase mb-3 flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#8ed5ff]" />
-              SERVICES CATALOGUE
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#e0f2fe] border border-[#bae6fd] mb-3">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#0284c7]" />
+              <span className="font-mono text-xs text-[#0284c7] tracking-widest uppercase font-semibold">
+                SERVICES CATALOGUE
+              </span>
             </div>
-            <h2 className="font-headline text-3xl sm:text-4xl md:text-[44px] text-white font-light tracking-tight leading-tight">
+            <h2 className="font-headline text-3xl sm:text-4xl md:text-[44px] text-[#0f2744] font-light tracking-tight leading-tight">
               Complete Cooling Solutions.
             </h2>
           </div>
-          <p className="font-sans text-sm sm:text-base text-[#bdc8d1] max-w-md font-light leading-relaxed">
+          <p className="font-sans text-sm sm:text-base text-[#486581] max-w-md font-normal leading-relaxed">
             Architectural climate engineering calibrated for whisper-quiet
             efficiency, sterile hygiene standards, and uncompromising
             longevity.
@@ -71,40 +73,40 @@ export default function Services() {
           {services.map((service, idx) => (
             <div
               key={idx}
-              className="glass-card rounded-2xl p-7 flex flex-col justify-between transition-all duration-300 group hover:-translate-y-1 relative overflow-hidden"
+              className="glass-card rounded-2xl p-7 flex flex-col justify-between transition-all duration-300 group hover:-translate-y-1 relative overflow-hidden bg-white/95 border border-[#d0e6f7] hover:border-[#38bdf8] shadow-[0_8px_20px_-4px_rgba(2,132,199,0.08)] hover:shadow-[0_16px_30px_-6px_rgba(2,132,199,0.18)]"
             >
-              <div className="absolute top-0 right-0 w-24 h-24 bg-[#38bdf8]/5 rounded-bl-full pointer-events-none transition-opacity duration-300 group-hover:bg-[#38bdf8]/10" />
+              <div className="absolute top-0 right-0 w-24 h-24 bg-[#38bdf8]/10 rounded-bl-full pointer-events-none transition-all duration-300 group-hover:bg-[#38bdf8]/20" />
 
               <div>
                 <div className="flex items-center justify-between mb-6">
-                  <span className="font-mono text-xs text-[#8ed5ff] tracking-wider font-medium">
+                  <span className="font-mono text-xs text-[#0284c7] tracking-wider font-semibold">
                     {service.num}
                   </span>
-                  <span className="material-symbols-outlined text-[#bdc8d1] group-hover:text-[#38bdf8] transition-colors text-2xl">
+                  <span className="material-symbols-outlined text-[#0284c7] group-hover:text-[#0369a1] transition-colors text-2xl">
                     {service.icon}
                   </span>
                 </div>
 
                 <div className="mb-2">
-                  <span className="inline-block px-2 py-0.5 rounded text-[10px] font-mono text-[#5bdeef] bg-[#5bdeef]/10 border border-[#5bdeef]/20 mb-2">
+                  <span className="inline-block px-2.5 py-0.5 rounded text-[10px] font-mono font-medium text-[#0369a1] bg-[#e0f2fe] border border-[#bae6fd] mb-2">
                     {service.highlight}
                   </span>
-                  <h3 className="font-headline text-2xl text-white font-medium group-hover:text-[#8ed5ff] transition-colors">
+                  <h3 className="font-headline text-2xl text-[#0f2744] font-medium group-hover:text-[#0284c7] transition-colors">
                     {service.title}
                   </h3>
                 </div>
 
-                <p className="font-sans text-xs sm:text-[13px] text-[#bdc8d1] mb-6 leading-relaxed font-light">
+                <p className="font-sans text-xs sm:text-[13px] text-[#486581] mb-6 leading-relaxed font-normal">
                   {service.description}
                 </p>
               </div>
 
-              <div className="pt-5 border-t border-white/5 flex items-center justify-between">
-                <span className="font-mono text-[10px] text-[#87929a] tracking-wider uppercase">
+              <div className="pt-5 border-t border-[#e2eef8] flex items-center justify-between">
+                <span className="font-mono text-[10px] text-[#627d98] tracking-wider uppercase font-medium">
                   {service.tag}
                 </span>
                 <a
-                  className="text-white group-hover:text-[#38bdf8] transition-colors font-mono text-xs flex items-center gap-1 font-medium"
+                  className="text-[#0284c7] group-hover:text-[#0369a1] transition-colors font-mono text-xs flex items-center gap-1 font-semibold"
                   href="#booking"
                 >
                   <span>BOOK</span>

@@ -3,21 +3,27 @@
 @tailwind utilities;
 
 :root {
-  --color-surface-container-lowest: #0a0e16;
-  --color-surface: #0f131c;
-  --color-primary: #8ed5ff;
-  --color-primary-container: #38bdf8;
+  --color-surface-container-lowest: #f4f9fd;
+  --color-surface: #ffffff;
+  --color-primary: #0284c7;
+  --color-primary-light: #38bdf8;
+  --color-primary-ice: #bdebff;
+  --color-secondary: #0369a1;
+  --color-text-navy: #0f2744;
+  --color-text-body: #1e3a5f;
+  --color-text-muted: #486581;
+  --color-border: #d0e6f7;
 }
 
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 2rem;
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 body {
-  background-color: #0a0e16;
-  color: #dfe2ee;
+  background-color: #f4f9fd;
+  color: #0f2744;
   font-family: var(--font-inter), Inter, sans-serif;
   overflow-x: hidden;
 }
@@ -30,36 +36,41 @@ body {
   line-height: 1;
 }
 
-/* Glassmorphism card styles from Stitch design system */
+/* Premium Light Blue Glassmorphism Card System */
 .glass-card {
-  background: rgba(11, 15, 23, 0.72);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgba(186, 230, 253, 0.85);
+  box-shadow:
+    0 10px 25px -5px rgba(2, 132, 199, 0.08),
+    0 4px 12px -2px rgba(15, 39, 68, 0.04);
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass-card:hover {
-  border-top-color: rgba(255, 255, 255, 0.28);
-  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 25px -4px rgba(56, 189, 248, 0.15);
+  border-color: #38bdf8;
+  box-shadow:
+    0 20px 35px -8px rgba(2, 132, 199, 0.16),
+    0 0 20px -3px rgba(56, 189, 248, 0.25);
 }
 
 /* Apple iPhone & visionOS-inspired Liquid Glass Navigation Bar */
 .liquid-glass {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.16);
   background-image: radial-gradient(
     ellipse at 50% 0%,
-    rgba(186, 230, 253, 0.18) 0%,
-    rgba(255, 255, 255, 0.04) 75%
+    rgba(186, 230, 253, 0.28) 0%,
+    rgba(255, 255, 255, 0.08) 75%
   );
   backdrop-filter: blur(28px) saturate(190%);
   -webkit-backdrop-filter: blur(28px) saturate(190%);
-  border: 1px solid rgba(255, 255, 255, 0.24);
+  border: 1px solid rgba(255, 255, 255, 0.4);
   box-shadow:
-    0 12px 36px -4px rgba(0, 0, 0, 0.35),
-    0 4px 16px 0 rgba(56, 189, 248, 0.08),
-    inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.5),
-    inset 0 -1px 1px 0 rgba(0, 0, 0, 0.08);
+    0 12px 36px -4px rgba(2, 132, 199, 0.18),
+    0 4px 16px 0 rgba(56, 189, 248, 0.12),
+    inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.8),
+    inset 0 -1px 1px 0 rgba(0, 0, 0, 0.05);
 }
 
 /* Permanent viewport-fixed floating booking button overlay */
@@ -76,18 +87,18 @@ body {
 }
 
 .ambient-air-radial {
-  background: radial-gradient(circle at 65% 35%, rgba(56, 189, 248, 0.12) 0%, rgba(0, 112, 243, 0.04) 45%, transparent 75%);
+  background: radial-gradient(circle at 65% 35%, rgba(56, 189, 248, 0.15) 0%, rgba(2, 132, 199, 0.05) 45%, transparent 75%);
 }
 
-/* Custom scrollbar to match sleek dark theme */
+/* Custom scrollbar to match sleek light blue theme */
 ::-webkit-scrollbar {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #0a0e16;
+  background: #f4f9fd;
 }
 ::-webkit-scrollbar-thumb {
-  background: #262a33;
+  background: #bae6fd;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {

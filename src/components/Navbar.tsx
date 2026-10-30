@@ -80,47 +80,47 @@ export default function Navbar() {
 
         {/* Mobile Dropdown Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-t border-white/[0.18] px-8 py-5 rounded-b-[36px]">
+          <div className="md:hidden border-t border-[#bae6fd]/50 bg-white/95 backdrop-blur-2xl px-8 py-5 rounded-b-[36px] shadow-2xl">
             <nav className="flex flex-col space-y-3 font-mono text-xs uppercase">
               <a
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-[#8ed5ff] font-semibold py-2 flex items-center justify-between"
+                className="text-[#0284c7] font-semibold py-2 flex items-center justify-between"
                 href="#hero"
               >
                 <span>Home</span>
-                <span className="w-1.5 h-1.5 rounded-full bg-[#38bdf8]" />
+                <span className="w-1.5 h-1.5 rounded-full bg-[#0284c7]" />
               </a>
               <a
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-white/90 hover:text-[#8ed5ff] py-2 transition-colors"
+                className="text-[#1e3a5f] hover:text-[#0284c7] py-2 transition-colors font-medium"
                 href="#services"
               >
                 Systems
               </a>
               <a
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-white/90 hover:text-[#8ed5ff] py-2 transition-colors"
+                className="text-[#1e3a5f] hover:text-[#0284c7] py-2 transition-colors font-medium"
                 href="#why-choose-us"
               >
                 Engineering
               </a>
               <a
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-white/90 hover:text-[#8ed5ff] py-2 transition-colors"
+                className="text-[#1e3a5f] hover:text-[#0284c7] py-2 transition-colors font-medium"
                 href="#services"
               >
                 Services
               </a>
               <a
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-white/90 hover:text-[#8ed5ff] py-2 transition-colors"
+                className="text-[#1e3a5f] hover:text-[#0284c7] py-2 transition-colors font-medium"
                 href="#why-choose-us"
               >
                 About
               </a>
               <a
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-white/90 hover:text-[#8ed5ff] py-2 transition-colors"
+                className="text-[#1e3a5f] hover:text-[#0284c7] py-2 transition-colors font-medium"
                 href="#booking"
               >
                 Contact

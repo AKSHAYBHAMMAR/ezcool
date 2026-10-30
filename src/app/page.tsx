@@ -10,7 +10,7 @@ import FloatingBookingButton from '@/components/FloatingBookingButton';
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#0a0e16] text-[#dfe2ee]">
+    <main className="min-h-screen bg-[#f4f9fd] text-[#0f2744]">
       <Hero />
       <Services />
       <WhyChooseUs />
