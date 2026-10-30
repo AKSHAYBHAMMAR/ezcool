@@ -31,8 +31,9 @@ export default function BookingSection() {
   return (
     <section
       id="booking"
-      className="py-28 relative bg-gradient-to-b from-[#f4f9fd] via-[#eaf4fc] to-[#f4f9fd] border-t border-[#d0e6f7] overflow-hidden"
+      className="py-28 relative bg-gradient-to-b from-[#f4f9fd] via-[#eaf4fc] to-[#f4f9fd] border-t border-[#d0e6f7] overflow-hidden scroll-mt-28"
     >
+      <div id="contact" className="scroll-mt-28 absolute -top-24 pointer-events-none" />
       {/* Spotlight Cyan Radial Aura */}
       <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
         <div className="w-[700px] h-[400px] bg-[#38bdf8]/15 rounded-full blur-[130px]" />

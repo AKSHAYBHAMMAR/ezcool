@@ -29,7 +29,7 @@ export default function HowItWorks() {
   return (
     <section
       id="how-it-works"
-      className="py-24 relative bg-gradient-to-b from-[#f4f9fd] via-[#edf5fc] to-[#f4f9fd] border-t border-[#d0e6f7]"
+      className="py-24 relative bg-gradient-to-b from-[#f4f9fd] via-[#edf5fc] to-[#f4f9fd] border-t border-[#d0e6f7] scroll-mt-28"
     >
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-16">
         <div className="text-center max-w-2xl mx-auto mb-20">

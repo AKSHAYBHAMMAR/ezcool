@@ -29,8 +29,10 @@ export default function WhyChooseUs() {
   return (
     <section
       id="why-choose-us"
-      className="py-24 relative bg-[#f4f9fd] border-t border-[#d0e6f7] overflow-hidden"
+      className="py-24 relative bg-[#f4f9fd] border-t border-[#d0e6f7] overflow-hidden scroll-mt-28"
     >
+      <div id="engineering" className="scroll-mt-28 absolute -top-24 pointer-events-none" />
+      <div id="about" className="scroll-mt-28 absolute -top-24 pointer-events-none" />
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-16">
         {/* Section Header */}
         <div className="max-w-3xl mb-12">

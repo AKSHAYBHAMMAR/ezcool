@@ -45,8 +45,9 @@ export default function Services() {
   return (
     <section
       id="services"
-      className="py-24 relative bg-gradient-to-b from-[#f4f9fd] via-[#eaf3fa] to-[#f4f9fd] border-t border-[#d0e6f7]"
+      className="py-24 relative bg-gradient-to-b from-[#f4f9fd] via-[#eaf3fa] to-[#f4f9fd] border-t border-[#d0e6f7] scroll-mt-28"
     >
+      <div id="systems" className="scroll-mt-28 absolute -top-24 pointer-events-none" />
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-16">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
