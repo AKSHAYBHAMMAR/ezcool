@@ -56,7 +56,20 @@ module.exports = {
         'background': '#f4f9fd',
         'on-background': '#0f2744',
         'surface-variant': '#eaf3fa',
-        // ClimaCore Light Blue Engineering Palette
+        // EZCOOL Light Blue Engineering Palette
+        'ezcool': {
+          50: '#f0f7fc',
+          100: '#e0f2fe',
+          200: '#bae6fd',
+          300: '#7dd3fc',
+          400: '#38bdf8',
+          500: '#0ea5e9',
+          600: '#0284c7',
+          700: '#0369a1',
+          800: '#075985',
+          900: '#0c4a6e',
+          950: '#082f49',
+        },
         'climacore': {
           50: '#f0f7fc',
           100: '#e0f2fe',

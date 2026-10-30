@@ -5,7 +5,7 @@ import React from 'react';
 const testimonials = [
   {
     quote:
-      '"ClimaCore provided exceptional AC servicing at our home. The technician arrived on time, thoroughly cleaned the indoor and outdoor units, checked the refrigerant levels, and restored the cooling performance. The entire experience was smooth, professional, and hassle-free."',
+      '"EZCOOL provided exceptional AC servicing at our home. The technician arrived on time, thoroughly cleaned the indoor and outdoor units, checked the refrigerant levels, and restored the cooling performance. The entire experience was smooth, professional, and hassle-free."',
     author: 'Rahul Mehta',
     role: 'RESIDENTIAL PENTHOUSE // ZÜRICH',
   },

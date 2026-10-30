@@ -9,19 +9,24 @@ export default function Navbar() {
     <header className="absolute top-6 sm:top-8 inset-x-0 z-20 flex justify-center px-4 sm:px-8 pointer-events-none">
       <div className="pointer-events-auto w-[94%] sm:w-[88%] md:w-[84%] max-w-[1300px] liquid-glass rounded-full sm:rounded-[42px] transition-all duration-300 shadow-2xl">
         <div className="flex justify-between items-center px-6 sm:px-10 h-20 sm:h-[84px] w-full">
-          {/* Brand Logo: ClimaCore */}
+          {/* Brand Logo: EZCOOL */}
           <a
             className="flex items-center gap-3 group flex-shrink-0"
             href="#hero"
-            aria-label="ClimaCore Home"
+            aria-label="EZCOOL AC Servicing Home"
           >
             <span className="relative flex h-3 w-3">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#38bdf8] opacity-75" />
               <span className="relative inline-flex rounded-full h-3 w-3 bg-[#8ed5ff] shadow-[0_0_12px_#38bdf8]" />
             </span>
-            <span className="font-headline text-xl sm:text-2xl tracking-tight text-white font-semibold [text-shadow:_0_1px_3px_rgba(0,0,0,0.65)] group-hover:text-[#c4e7ff] transition-colors duration-200">
-              ClimaCore
-            </span>
+            <div className="flex flex-col">
+              <span className="font-headline text-xl sm:text-2xl tracking-tight text-white font-bold [text-shadow:_0_1px_3px_rgba(0,0,0,0.65)] group-hover:text-[#c4e7ff] transition-colors duration-200 leading-none">
+                EZCOOL
+              </span>
+              <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-[#bae6fd] uppercase font-semibold leading-tight mt-0.5 [text-shadow:_0_1px_2px_rgba(0,0,0,0.7)]">
+                AC SERVICING
+              </span>
+            </div>
           </a>
 
           {/* Desktop Navigation Links — Generous, Balanced Spacing */}

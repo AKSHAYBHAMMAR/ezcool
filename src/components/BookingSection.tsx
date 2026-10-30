@@ -15,7 +15,7 @@ export default function BookingSection() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const generatedRef = `AERIS-${Math.floor(100000 + Math.random() * 900000)}`;
+    const generatedRef = `EZCOOL-${Math.floor(100000 + Math.random() * 900000)}`;
     setBookingRef(generatedRef);
     setBookingSuccess(true);
   };
@@ -69,12 +69,12 @@ export default function BookingSection() {
           </a>
           <a
             className="inline-flex items-center gap-2.5 px-8 py-4 rounded-full bg-white/95 hover:bg-white text-[#0f2744] border border-[#d0e6f7] font-headline text-sm tracking-tight transition-all duration-300 shadow-sm hover:border-[#0284c7] hover:shadow-md active:scale-95"
-            href="tel:+18005550199"
+            href="tel:+18005553926"
           >
             <span className="material-symbols-outlined text-[#0284c7] text-[18px]">
               call
             </span>
-            <span className="font-semibold">+1 (800) 555-AERIS</span>
+            <span className="font-semibold">+1 (800) 555-EZCOOL</span>
           </a>
         </div>
 
@@ -249,7 +249,7 @@ export default function BookingSection() {
                   <input
                     type="text"
                     required
-                    placeholder="Marcus von Bern"
+                    placeholder="Rahul Mehta"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     className="w-full px-4 py-3 rounded-xl bg-[#f8fbfe] border border-[#d0e6f7] text-[#0f2744] placeholder-[#87929a] font-sans text-sm focus:outline-none focus:border-[#0284c7] focus:ring-1 focus:ring-[#0284c7] focus:bg-white transition-colors"

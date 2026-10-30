@@ -10,16 +10,21 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 pb-12 border-b border-[#d0e6f7]">
           {/* Brand Col */}
           <div className="md:col-span-4 space-y-4">
-            <a className="flex items-center gap-2" href="#">
+            <a className="flex items-center gap-2.5" href="#hero">
               <span className="w-2.5 h-2.5 rounded-full bg-[#0284c7] shadow-[0_0_10px_#38bdf8]" />
-              <span className="font-headline text-xl tracking-widest text-[#0f2744] uppercase font-semibold">
-                AERIS
-              </span>
+              <div className="flex flex-col">
+                <span className="font-headline text-xl tracking-wider text-[#0f2744] uppercase font-bold leading-none">
+                  EZCOOL
+                </span>
+                <span className="font-mono text-[9px] tracking-widest text-[#0284c7] uppercase font-semibold mt-0.5">
+                  AC SERVICING
+                </span>
+              </div>
             </a>
             <p className="font-sans text-xs sm:text-[13px] text-[#486581] max-w-sm font-normal leading-relaxed">
-              AERIS Climate Engineering SA. Precision thermodynamic architecture,
-              whisper-quiet refrigeration systems, and advanced air purity
-              diagnostics for elite spaces.
+              EZCOOL AC Servicing. Premium AC Service. Exceptional Comfort.
+              Precision thermodynamic engineering, whisper-quiet refrigeration systems,
+              and advanced air purity diagnostics for elite spaces.
             </p>
           </div>
 
@@ -105,13 +110,11 @@ export default function Footer() {
             <p className="font-sans text-xs text-[#486581] leading-relaxed">
               24/7 Priority Emergency
               <br />
-              Zurich • London • New York
-              <br />
               <a
                 className="text-[#0284c7] hover:text-[#0369a1] font-semibold transition-colors font-mono text-[11px] block mt-1"
-                href="mailto:concierge@aeris.ch"
+                href="mailto:contact@ezcool.com"
               >
-                concierge@aeris.ch
+                contact@ezcool.com
               </a>
             </p>
           </div>
@@ -120,8 +123,7 @@ export default function Footer() {
         {/* Bottom Row Copyright & Legal */}
         <div className="flex flex-col sm:flex-row items-center justify-between text-[#627d98] font-sans text-xs gap-4 font-medium">
           <p className="text-center sm:text-left">
-            © 2025 AERIS Climate Engineering SA. Precision Thermodynamic
-            Architecture. All rights reserved.
+            © {new Date().getFullYear()} EZCOOL AC Servicing. Premium AC Service. Exceptional Comfort. All rights reserved.
           </p>
           <div className="flex items-center space-x-6 font-mono text-[10px] text-[#486581]">
             <span className="text-emerald-600 font-semibold">● STATUS: OPERATIONAL</span>

@@ -23,9 +23,45 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'AERIS Climate Systems | Precision Thermodynamic Architecture',
+  title: 'EZCOOL AC Servicing | Premium AC Service. Exceptional Comfort.',
   description:
-    'Expert AC servicing, bespoke architectural installation, surgical repairs, and certified air purity diagnostics. Whisper-quiet climate engineering.',
+    'EZCOOL AC Servicing — Premium AC Service. Exceptional Comfort. Expert AC repair, sanitization, installation, refrigerant charging, and precision thermodynamic diagnostics.',
+  applicationName: 'EZCOOL AC Servicing',
+  keywords: [
+    'EZCOOL',
+    'EZCOOL AC Servicing',
+    'AC Service',
+    'AC Repair',
+    'Air Conditioning Servicing',
+    'HVAC Maintenance',
+    'AC Installation',
+    'Cooling Services',
+  ],
+  authors: [{ name: 'EZCOOL AC Servicing' }],
+  creator: 'EZCOOL AC Servicing',
+  publisher: 'EZCOOL AC Servicing',
+  formatDetection: {
+    telephone: true,
+  },
+  openGraph: {
+    title: 'EZCOOL AC Servicing | Premium AC Service. Exceptional Comfort.',
+    description:
+      'EZCOOL AC Servicing — Premium AC Service. Exceptional Comfort. Expert AC repair, sanitization, installation, and precision cooling diagnostics.',
+    siteName: 'EZCOOL AC Servicing',
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'EZCOOL AC Servicing | Premium AC Service. Exceptional Comfort.',
+    description:
+      'EZCOOL AC Servicing — Premium AC Service. Exceptional Comfort. Expert AC repair, sanitization, installation, and precision cooling diagnostics.',
+  },
+  icons: {
+    icon: '/icon.svg',
+    shortcut: '/icon.svg',
+    apple: '/icon.svg',
+  },
 };
 
 export default function RootLayout({
@@ -43,6 +79,7 @@ export default function RootLayout({
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         />
+        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
       </head>
       <body className="bg-[#f4f9fd] text-[#0f2744] antialiased selection:bg-[#38bdf8] selection:text-[#0f2744] overflow-x-hidden min-h-screen">
         {children}
