@@ -5,20 +5,20 @@ import React from 'react';
 const testimonials = [
   {
     quote:
-      '"AERIS transformed our private gallery space. The whisper-quiet acoustic balancing made the dual-zone VRF system virtually undetectable while keeping climate stability down to 0.2 degrees."',
-    author: 'Marcus von Bern',
+      '"ClimaCore provided exceptional AC servicing at our home. The technician arrived on time, thoroughly cleaned the indoor and outdoor units, checked the refrigerant levels, and restored the cooling performance. The entire experience was smooth, professional, and hassle-free."',
+    author: 'Rahul Mehta',
     role: 'RESIDENTIAL PENTHOUSE // ZÜRICH',
   },
   {
     quote:
       '"Their response time during our midsummer chiller failure was under an hour. The master engineer identified a micro-leak that two previous contractors missed, re-charged R32, and restored perfect cold airflow."',
-    author: 'Elena Rostova',
+    author: 'Priya Sharma',
     role: 'MANAGING DIRECTOR // LUMEN STUDIO',
   },
   {
     quote:
       '"The digital telemetry report provided after the coil overhaul is something I have never experienced with conventional contractors. Unbelievable professionalism, pure air, and surgical cleanliness."',
-    author: 'David Thorne',
+    author: 'Arjun Desai',
     role: 'PRIVATE ARCHITECT // SKYLINE APEX',
   },
 ];
