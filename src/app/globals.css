@@ -17,8 +17,14 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 6.5rem;
+  scroll-padding-top: 5rem;
   color-scheme: light;
+}
+
+@media (min-width: 640px) {
+  html {
+    scroll-padding-top: 6.5rem;
+  }
 }
 
 body {
@@ -26,6 +32,7 @@ body {
   color: #0f2744;
   font-family: var(--font-inter), Inter, sans-serif;
   overflow-x: hidden;
+  width: 100%;
 }
 
 /* Material Symbols configuration */
@@ -76,10 +83,24 @@ body {
 /* Permanent viewport-fixed floating booking button overlay */
 #floating-booking-container {
   position: fixed !important;
-  right: 24px !important;
-  bottom: 30px !important;
+  right: 16px !important;
+  bottom: 16px !important;
   z-index: 99999 !important;
   pointer-events: auto !important;
+}
+
+@media (min-width: 640px) {
+  #floating-booking-container {
+    right: 20px !important;
+    bottom: 24px !important;
+  }
+}
+
+@media (min-width: 768px) {
+  #floating-booking-container {
+    right: 24px !important;
+    bottom: 30px !important;
+  }
 }
 
 .glow-cyan {

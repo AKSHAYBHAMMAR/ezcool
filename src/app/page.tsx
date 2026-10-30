@@ -11,7 +11,7 @@ import FloatingBookingButton from '@/components/FloatingBookingButton';
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#f4f9fd] text-[#0f2744] relative">
+    <main className="min-h-screen bg-[#f4f9fd] text-[#0f2744] relative overflow-x-hidden w-full">
       <Navbar />
       <Hero />
       <Services />

@@ -33,11 +33,11 @@ export default function Footer() {
 
   return (
     <footer className="w-full bg-gradient-to-b from-[#f4f9fd] via-[#edf5fc] to-[#e4f0fa] border-t border-[#d0e6f7]">
-      <div className="flex flex-col max-w-7xl mx-auto px-5 sm:px-8 lg:px-16 pt-16 pb-12 w-full gap-12">
-        {/* Three Column Layout on Desktop */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-12 pb-12 border-b border-[#d0e6f7]">
+      <div className="flex flex-col max-w-7xl mx-auto px-4 sm:px-8 lg:px-16 pt-12 sm:pt-16 pb-10 sm:pb-12 w-full gap-8 sm:gap-12">
+        {/* Three Column Layout on Desktop, Stacks Vertically on Mobile */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-12 pb-8 sm:pb-12 border-b border-[#d0e6f7]">
           {/* Column 1 – Brand */}
-          <div className="lg:col-span-5 space-y-4">
+          <div className="lg:col-span-5 space-y-3.5 sm:space-y-4">
             <a
               className="flex items-center gap-2.5 group w-fit"
               href="/#hero"
@@ -46,10 +46,10 @@ export default function Footer() {
             >
               <span className="w-2.5 h-2.5 rounded-full bg-[#0284c7] shadow-[0_0_10px_#38bdf8] transition-transform duration-300 group-hover:scale-125" />
               <div className="flex flex-col">
-                <span className="font-headline text-2xl tracking-wider text-[#0f2744] uppercase font-bold leading-none group-hover:text-[#0284c7] transition-colors">
+                <span className="font-headline text-xl sm:text-2xl tracking-wider text-[#0f2744] uppercase font-bold leading-none group-hover:text-[#0284c7] transition-colors">
                   EZCOOL
                 </span>
-                <span className="font-mono text-[9px] tracking-widest text-[#0284c7] uppercase font-semibold mt-0.5">
+                <span className="font-mono text-[8px] sm:text-[9px] tracking-widest text-[#0284c7] uppercase font-semibold mt-0.5">
                   AIR CONDITIONING SERVICES
                 </span>
               </div>
@@ -63,14 +63,14 @@ export default function Footer() {
           </div>
 
           {/* Column 2 – Our Services */}
-          <div className="lg:col-span-4 space-y-4">
-            <h5 className="font-mono text-xs text-[#0369a1] tracking-widest uppercase font-semibold">
+          <div className="lg:col-span-4 space-y-3.5 sm:space-y-4">
+            <h5 className="font-mono text-[11px] sm:text-xs text-[#0369a1] tracking-widest uppercase font-semibold">
               OUR SERVICES
             </h5>
-            <ul className="space-y-2.5 font-sans text-xs sm:text-sm text-[#486581]">
+            <ul className="space-y-2 sm:space-y-2.5 font-sans text-xs sm:text-sm text-[#486581]">
               <li>
                 <a
-                  className="hover:text-[#0284c7] transition-all duration-200 hover:translate-x-1 inline-flex items-center gap-2 group"
+                  className="hover:text-[#0284c7] transition-all duration-200 hover:translate-x-1 inline-flex items-center gap-2 group py-1 min-h-[36px]"
                   href="/#services"
                   onClick={(e) => handleScrollTo(e, '#services')}
                 >
@@ -80,7 +80,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  className="hover:text-[#0284c7] transition-all duration-200 hover:translate-x-1 inline-flex items-center gap-2 group"
+                  className="hover:text-[#0284c7] transition-all duration-200 hover:translate-x-1 inline-flex items-center gap-2 group py-1 min-h-[36px]"
                   href="/#services"
                   onClick={(e) => handleScrollTo(e, '#services')}
                 >
@@ -90,7 +90,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  className="hover:text-[#0284c7] transition-all duration-200 hover:translate-x-1 inline-flex items-center gap-2 group"
+                  className="hover:text-[#0284c7] transition-all duration-200 hover:translate-x-1 inline-flex items-center gap-2 group py-1 min-h-[36px]"
                   href="/#services"
                   onClick={(e) => handleScrollTo(e, '#services')}
                 >
@@ -100,7 +100,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  className="hover:text-[#0284c7] transition-all duration-200 hover:translate-x-1 inline-flex items-center gap-2 group"
+                  className="hover:text-[#0284c7] transition-all duration-200 hover:translate-x-1 inline-flex items-center gap-2 group py-1 min-h-[36px]"
                   href="/#services"
                   onClick={(e) => handleScrollTo(e, '#services')}
                 >
@@ -110,7 +110,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  className="hover:text-[#0284c7] transition-all duration-200 hover:translate-x-1 inline-flex items-center gap-2 group"
+                  className="hover:text-[#0284c7] transition-all duration-200 hover:translate-x-1 inline-flex items-center gap-2 group py-1 min-h-[36px]"
                   href="/#why-choose-us"
                   onClick={(e) => handleScrollTo(e, '#why-choose-us')}
                 >
@@ -122,14 +122,14 @@ export default function Footer() {
           </div>
 
           {/* Column 3 – Company */}
-          <div className="lg:col-span-3 space-y-4">
-            <h5 className="font-mono text-xs text-[#0369a1] tracking-widest uppercase font-semibold">
+          <div className="lg:col-span-3 space-y-3.5 sm:space-y-4">
+            <h5 className="font-mono text-[11px] sm:text-xs text-[#0369a1] tracking-widest uppercase font-semibold">
               COMPANY
             </h5>
-            <ul className="space-y-2.5 font-sans text-xs sm:text-sm text-[#486581]">
+            <ul className="space-y-2 sm:space-y-2.5 font-sans text-xs sm:text-sm text-[#486581]">
               <li>
                 <a
-                  className="hover:text-[#0284c7] transition-all duration-200 hover:translate-x-1 inline-flex items-center gap-2 group"
+                  className="hover:text-[#0284c7] transition-all duration-200 hover:translate-x-1 inline-flex items-center gap-2 group py-1 min-h-[36px]"
                   href="/#about"
                   onClick={(e) => handleScrollTo(e, '#about')}
                 >
@@ -139,7 +139,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  className="hover:text-[#0284c7] transition-all duration-200 hover:translate-x-1 inline-flex items-center gap-2 group"
+                  className="hover:text-[#0284c7] transition-all duration-200 hover:translate-x-1 inline-flex items-center gap-2 group py-1 min-h-[36px]"
                   href="/#engineering"
                   onClick={(e) => handleScrollTo(e, '#engineering')}
                 >
@@ -149,7 +149,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  className="hover:text-[#0284c7] transition-all duration-200 hover:translate-x-1 inline-flex items-center gap-2 group"
+                  className="hover:text-[#0284c7] transition-all duration-200 hover:translate-x-1 inline-flex items-center gap-2 group py-1 min-h-[36px]"
                   href="/#why-choose-us"
                   onClick={(e) => handleScrollTo(e, '#why-choose-us')}
                 >
@@ -159,7 +159,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  className="hover:text-[#0284c7] transition-all duration-200 hover:translate-x-1 inline-flex items-center gap-2 group"
+                  className="hover:text-[#0284c7] transition-all duration-200 hover:translate-x-1 inline-flex items-center gap-2 group py-1 min-h-[36px]"
                   href="/#contact"
                   onClick={(e) => handleScrollTo(e, '#contact')}
                 >
@@ -169,7 +169,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  className="hover:text-[#0284c7] transition-all duration-200 hover:translate-x-1 inline-flex items-center gap-2 group"
+                  className="hover:text-[#0284c7] transition-all duration-200 hover:translate-x-1 inline-flex items-center gap-2 group py-1 min-h-[36px]"
                   href="/privacy"
                 >
                   <span className="w-1.5 h-1.5 rounded-full bg-[#bae6fd] group-hover:bg-[#0284c7] transition-colors" />
@@ -181,11 +181,11 @@ export default function Footer() {
         </div>
 
         {/* Bottom Row Copyright & Tagline */}
-        <div className="flex flex-col sm:flex-row items-center justify-between text-[#627d98] font-sans text-xs gap-4 font-medium">
+        <div className="flex flex-col sm:flex-row items-center justify-between text-[#627d98] font-sans text-xs gap-3 sm:gap-4 font-medium">
           <p className="text-center sm:text-left">
             © 2026 EZCOOL. All rights reserved.
           </p>
-          <div className="font-mono text-[11px] text-[#0284c7] font-semibold tracking-widest uppercase">
+          <div className="font-mono text-[10px] sm:text-[11px] text-[#0284c7] font-semibold tracking-widest uppercase">
             ENGINEERED FOR COMFORT.
           </div>
         </div>

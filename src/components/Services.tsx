@@ -45,41 +45,41 @@ export default function Services() {
   return (
     <section
       id="services"
-      className="py-24 relative bg-gradient-to-b from-[#f4f9fd] via-[#eaf3fa] to-[#f4f9fd] border-t border-[#d0e6f7] scroll-mt-28"
+      className="py-16 sm:py-24 relative bg-gradient-to-b from-[#f4f9fd] via-[#eaf3fa] to-[#f4f9fd] border-t border-[#d0e6f7] scroll-mt-24 sm:scroll-mt-28"
     >
-      <div id="systems" className="scroll-mt-28 absolute -top-24 pointer-events-none" />
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-16">
+      <div id="systems" className="scroll-mt-24 sm:scroll-mt-28 absolute -top-20 sm:-top-24 pointer-events-none" />
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 sm:mb-16 gap-4 sm:gap-6">
           <div>
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#e0f2fe] border border-[#bae6fd] mb-3">
               <span className="w-1.5 h-1.5 rounded-full bg-[#0284c7]" />
-              <span className="font-mono text-xs text-[#0284c7] tracking-widest uppercase font-semibold">
+              <span className="font-mono text-[11px] sm:text-xs text-[#0284c7] tracking-widest uppercase font-semibold">
                 SERVICES CATALOGUE
               </span>
             </div>
-            <h2 className="font-headline text-3xl sm:text-4xl md:text-[44px] text-[#0f2744] font-light tracking-tight leading-tight">
+            <h2 className="font-headline text-2xl xs:text-3xl sm:text-4xl md:text-[44px] text-[#0f2744] font-light tracking-tight leading-tight">
               Complete Cooling Solutions.
             </h2>
           </div>
-          <p className="font-sans text-sm sm:text-base text-[#486581] max-w-md font-normal leading-relaxed">
+          <p className="font-sans text-xs sm:text-sm md:text-base text-[#486581] max-w-md font-normal leading-relaxed">
             Architectural climate engineering calibrated for whisper-quiet
             efficiency, sterile hygiene standards, and uncompromising
             longevity.
           </p>
         </div>
 
-        {/* Bento Grid Services */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Bento Grid Services: Single Column on Mobile, 2 on Tablet, 4 on Desktop */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
           {services.map((service, idx) => (
             <div
               key={idx}
-              className="glass-card rounded-2xl p-7 flex flex-col justify-between transition-all duration-300 group hover:-translate-y-1 relative overflow-hidden bg-white/95 border border-[#d0e6f7] hover:border-[#38bdf8] shadow-[0_8px_20px_-4px_rgba(2,132,199,0.08)] hover:shadow-[0_16px_30px_-6px_rgba(2,132,199,0.18)]"
+              className="glass-card rounded-2xl p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 group hover:-translate-y-1 relative overflow-hidden bg-white/95 border border-[#d0e6f7] hover:border-[#38bdf8] shadow-[0_8px_20px_-4px_rgba(2,132,199,0.08)] hover:shadow-[0_16px_30px_-6px_rgba(2,132,199,0.18)]"
             >
               <div className="absolute top-0 right-0 w-24 h-24 bg-[#38bdf8]/10 rounded-bl-full pointer-events-none transition-all duration-300 group-hover:bg-[#38bdf8]/20" />
 
               <div>
-                <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center justify-between mb-5 sm:mb-6">
                   <span className="font-mono text-xs text-[#0284c7] tracking-wider font-semibold">
                     {service.num}
                   </span>
@@ -92,22 +92,22 @@ export default function Services() {
                   <span className="inline-block px-2.5 py-0.5 rounded text-[10px] font-mono font-medium text-[#0369a1] bg-[#e0f2fe] border border-[#bae6fd] mb-2">
                     {service.highlight}
                   </span>
-                  <h3 className="font-headline text-2xl text-[#0f2744] font-medium group-hover:text-[#0284c7] transition-colors">
+                  <h3 className="font-headline text-xl sm:text-2xl text-[#0f2744] font-medium group-hover:text-[#0284c7] transition-colors">
                     {service.title}
                   </h3>
                 </div>
 
-                <p className="font-sans text-xs sm:text-[13px] text-[#486581] mb-6 leading-relaxed font-normal">
+                <p className="font-sans text-xs sm:text-[13px] text-[#486581] mb-5 sm:mb-6 leading-relaxed font-normal">
                   {service.description}
                 </p>
               </div>
 
-              <div className="pt-5 border-t border-[#e2eef8] flex items-center justify-between">
+              <div className="pt-4 sm:pt-5 border-t border-[#e2eef8] flex items-center justify-between">
                 <span className="font-mono text-[10px] text-[#627d98] tracking-wider uppercase font-medium">
                   {service.tag}
                 </span>
                 <a
-                  className="text-[#0284c7] group-hover:text-[#0369a1] transition-colors font-mono text-xs flex items-center gap-1 font-semibold"
+                  className="text-[#0284c7] group-hover:text-[#0369a1] transition-colors font-mono text-xs flex items-center gap-1 font-semibold min-h-[44px] min-w-[60px] justify-end"
                   href="#booking"
                 >
                   <span>BOOK</span>

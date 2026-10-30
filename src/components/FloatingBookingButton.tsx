@@ -14,21 +14,11 @@ export default function FloatingBookingButton() {
     <div
       id="floating-booking-container"
       aria-label="Permanent Service Booking Action"
-      style={{
-        position: 'fixed',
-        right: '24px',
-        bottom: '30px',
-        zIndex: 99999,
-        pointerEvents: 'auto',
-      }}
     >
       <a
         href="#booking"
-        className="group relative flex items-center justify-center gap-2.5 select-none transition-all duration-200 hover:scale-[1.03] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-[#38bdf8] focus:ring-offset-2 focus:ring-offset-[#f4f9fd]"
+        className="group relative flex items-center justify-center gap-1.5 sm:gap-2.5 select-none transition-all duration-200 hover:scale-[1.03] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-[#38bdf8] focus:ring-offset-2 focus:ring-offset-[#f4f9fd] w-[170px] xs:w-[190px] sm:w-[210px] md:w-[240px] h-[46px] xs:h-[48px] sm:h-[54px] md:h-[60px] rounded-xl sm:rounded-2xl"
         style={{
-          width: '240px',
-          height: '60px',
-          borderRadius: '18px',
           backgroundColor: '#BDEBFF',
           color: '#102A43',
           border: '1px solid rgba(255, 255, 255, 0.85)',
@@ -36,7 +26,6 @@ export default function FloatingBookingButton() {
             '0 10px 25px -4px rgba(16, 42, 67, 0.28), 0 4px 12px rgba(0, 0, 0, 0.2), inset 0 1px 1.5px rgba(255, 255, 255, 0.95)',
           textDecoration: 'none',
           fontFamily: 'var(--font-space-grotesk), sans-serif',
-          fontSize: '16px',
           fontWeight: 600,
           letterSpacing: '-0.01em',
           cursor: 'pointer',
@@ -44,9 +33,8 @@ export default function FloatingBookingButton() {
         aria-label="Book a Service"
       >
         <span
-          className="material-symbols-outlined transition-transform duration-200 group-hover:rotate-6"
+          className="material-symbols-outlined transition-transform duration-200 group-hover:rotate-6 text-[18px] sm:text-[20px] md:text-[21px]"
           style={{
-            fontSize: '21px',
             color: '#102A43',
             lineHeight: 1,
             display: 'inline-block',
@@ -54,7 +42,12 @@ export default function FloatingBookingButton() {
         >
           calendar_month
         </span>
-        <span style={{ color: '#102A43', fontWeight: 600 }}>Book a Service</span>
+        <span
+          className="text-xs xs:text-sm md:text-base font-semibold"
+          style={{ color: '#102A43' }}
+        >
+          Book a Service
+        </span>
       </a>
     </div>
   );
