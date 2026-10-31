@@ -82,28 +82,64 @@ body {
     inset 0 -1px 1px 0 rgba(0, 0, 0, 0.05);
 }
 
+/* Hero Section Viewport Container with 100svh and fallbacks */
+#hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  height: 100svh;
+  min-height: 100vh;
+  min-height: 100dvh;
+  min-height: 100svh;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  background-color: #0a0e16;
+}
+
 /* Responsive Hero Video Framing — Keeps AC Unit and airflow visible on mobile */
 .hero-video {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 72% 20%;
+  object-position: 70% center;
+  display: block;
+  margin: 0;
+  padding: 0;
 }
 
+/* Tablet framing */
 @media (min-width: 640px) {
   .hero-video {
-    object-position: 68% 28%;
+    object-position: 65% center;
   }
 }
 
+/* Desktop framing — Preserve exact original desktop appearance */
 @media (min-width: 768px) {
   .hero-video {
     object-position: center;
   }
 }
 
+/* Landscape orientation on mobile screens */
+@media (orientation: landscape) and (max-height: 500px) {
+  .hero-video {
+    object-position: center;
+  }
+}
+
 .hero-fallback-bg {
-  background-position: 72% 20%;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: 70% center;
+  background-repeat: no-repeat;
 }
 
 @media (min-width: 768px) {

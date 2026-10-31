@@ -32,7 +32,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative w-full h-[100svh] min-h-[100svh] overflow-hidden m-0 p-0 bg-[#0a0e16]"
+      className="relative w-full h-screen min-h-screen h-[100svh] min-h-[100svh] overflow-hidden m-0 p-0 bg-[#0a0e16]"
     >
       {!videoError && !reducedMotion ? (
         <video
@@ -43,7 +43,7 @@ export default function Hero() {
           playsInline
           preload="auto"
           onError={() => setVideoError(true)}
-          className="hero-video block m-0 p-0"
+          className="hero-video"
         >
           <source src="/videos/hero section video.mp4" type="video/mp4" />
           <source src="/hero section video.mp4" type="video/mp4" />
@@ -51,7 +51,7 @@ export default function Hero() {
         </video>
       ) : (
         <div
-          className="w-full h-full bg-cover hero-fallback-bg bg-[#0a0e16] m-0 p-0"
+          className="hero-fallback-bg bg-[#0a0e16]"
           style={{ backgroundImage: `url('/screen.png')` }}
         />
       )}
