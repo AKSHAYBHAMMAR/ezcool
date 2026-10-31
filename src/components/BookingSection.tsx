@@ -35,14 +35,14 @@ export default function BookingSection() {
     >
       <div id="contact" className="scroll-mt-24 sm:scroll-mt-28 absolute -top-20 sm:-top-24 pointer-events-none" />
       {/* Spotlight Cyan Radial Aura */}
-      <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-        <div className="w-[700px] h-[400px] bg-[#38bdf8]/15 rounded-full blur-[130px]" />
+      <div className="absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden">
+        <div className="w-[90vw] max-w-[700px] h-[350px] sm:h-[400px] bg-[#38bdf8]/15 rounded-full blur-[130px]" />
       </div>
 
-      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-8 lg:px-16 text-center">
+      <div className="relative z-10 max-w-5xl mx-auto px-3.5 xs:px-4 sm:px-8 lg:px-16 text-center">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#e0f2fe] border border-[#bae6fd] mb-4 sm:mb-6">
           <span className="w-2 h-2 rounded-full bg-[#0284c7] animate-pulse" />
-          <span className="font-mono text-[11px] sm:text-xs text-[#0284c7] tracking-widest uppercase font-semibold">
+          <span className="font-mono text-[10px] xs:text-[11px] sm:text-xs text-[#0284c7] tracking-widest uppercase font-semibold">
             CONCIERGE DISPATCH ACTIVE
           </span>
         </div>
@@ -51,7 +51,7 @@ export default function BookingSection() {
           Your Comfort Starts Here.
         </h2>
 
-        <p className="font-sans text-sm sm:text-base md:text-lg text-[#486581] max-w-2xl mx-auto mb-8 sm:mb-12 font-normal leading-relaxed">
+        <p className="font-sans text-xs xs:text-sm sm:text-base md:text-lg text-[#486581] max-w-2xl mx-auto mb-8 sm:mb-12 font-normal leading-relaxed px-1">
           Book your AC service today and experience the difference of surgical
           climate calibration, whisper-quiet performance, and certified pure
           air.
@@ -60,7 +60,7 @@ export default function BookingSection() {
         {/* Quick CTA Options */}
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 mb-10 sm:mb-16">
           <a
-            className="inline-flex items-center justify-center gap-2.5 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full bg-[#0284c7] text-white font-headline text-sm tracking-tight font-semibold hover:bg-[#0369a1] hover:shadow-[0_6px_22px_rgba(2,132,199,0.35)] transition-all duration-300 active:scale-95 min-h-[48px]"
+            className="inline-flex items-center justify-center gap-2.5 px-5 xs:px-6 sm:px-8 py-3.5 sm:py-4 rounded-full bg-[#0284c7] text-white font-headline text-xs xs:text-sm tracking-tight font-semibold hover:bg-[#0369a1] hover:shadow-[0_6px_22px_rgba(2,132,199,0.35)] transition-all duration-300 active:scale-95 min-h-[48px]"
             href="#booking-form"
           >
             <span>Schedule Online Now</span>
@@ -69,7 +69,7 @@ export default function BookingSection() {
             </span>
           </a>
           <a
-            className="inline-flex items-center justify-center gap-2.5 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full bg-white/95 hover:bg-white text-[#0f2744] border border-[#d0e6f7] font-headline text-sm tracking-tight transition-all duration-300 shadow-sm hover:border-[#0284c7] hover:shadow-md active:scale-95 min-h-[48px]"
+            className="inline-flex items-center justify-center gap-2.5 px-5 xs:px-6 sm:px-8 py-3.5 sm:py-4 rounded-full bg-white/95 hover:bg-white text-[#0f2744] border border-[#d0e6f7] font-headline text-xs xs:text-sm tracking-tight transition-all duration-300 shadow-sm hover:border-[#0284c7] hover:shadow-md active:scale-95 min-h-[48px]"
             href="tel:+18005553926"
           >
             <span className="material-symbols-outlined text-[#0284c7] text-[18px]">
@@ -82,7 +82,7 @@ export default function BookingSection() {
         {/* Interactive Booking Console */}
         <div
           id="booking-form"
-          className="glass-card rounded-2xl sm:rounded-3xl p-4 xs:p-6 sm:p-10 border border-[#d0e6f7] bg-white/95 max-w-3xl mx-auto text-left relative shadow-[0_20px_50px_-10px_rgba(2,132,199,0.14)]"
+          className="glass-card rounded-2xl sm:rounded-3xl p-3.5 xs:p-5 sm:p-8 md:p-10 border border-[#d0e6f7] bg-white/95 max-w-3xl mx-auto text-left relative shadow-[0_20px_50px_-10px_rgba(2,132,199,0.14)]"
         >
           {bookingSuccess ? (
             <div className="py-6 sm:py-8 text-center space-y-5 sm:space-y-6">
@@ -95,7 +95,7 @@ export default function BookingSection() {
                 <span className="font-mono text-[10px] sm:text-xs text-[#0284c7] tracking-widest uppercase font-semibold">
                   DISPATCH CONFIRMATION
                 </span>
-                <h3 className="font-headline text-2xl sm:text-3xl text-[#0f2744] font-medium mt-1">
+                <h3 className="font-headline text-xl xs:text-2xl sm:text-3xl text-[#0f2744] font-medium mt-1">
                   Concierge Service Scheduled
                 </h3>
                 <p className="font-sans text-xs sm:text-sm text-[#486581] max-w-md mx-auto mt-2 font-normal">
@@ -104,7 +104,7 @@ export default function BookingSection() {
                 </p>
               </div>
 
-              <div className="p-3.5 sm:p-4 rounded-xl bg-[#f4f9fd] border border-[#d0e6f7] max-w-md mx-auto font-mono text-[11px] sm:text-xs space-y-2 text-left">
+              <div className="p-3.5 sm:p-4 rounded-xl bg-[#f4f9fd] border border-[#d0e6f7] max-w-md mx-auto font-mono text-[10px] xs:text-[11px] sm:text-xs space-y-2 text-left">
                 <div className="flex justify-between gap-2">
                   <span className="text-[#627d98]">DISPATCH REF:</span>
                   <span className="text-[#0284c7] font-semibold">{bookingRef}</span>
@@ -136,8 +136,8 @@ export default function BookingSection() {
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-[#e2eef8] gap-2">
+            <form onSubmit={handleSubmit} className="space-y-4 xs:space-y-5 sm:space-y-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 sm:pb-4 border-b border-[#e2eef8] gap-2">
                 <div>
                   <h3 className="font-headline text-lg sm:text-2xl text-[#0f2744] font-medium">
                     Priority Service Reservation
@@ -146,14 +146,14 @@ export default function BookingSection() {
                     Direct access to master thermodynamic engineers.
                   </p>
                 </div>
-                <span className="font-mono text-[10px] text-[#0284c7] bg-[#e0f2fe] px-3 py-1 rounded-full border border-[#bae6fd] font-semibold self-start sm:self-auto">
+                <span className="font-mono text-[9px] xs:text-[10px] text-[#0284c7] bg-[#e0f2fe] px-2.5 xs:px-3 py-1 rounded-full border border-[#bae6fd] font-semibold self-start sm:self-auto">
                   EST. RESPONSE &lt; 90 MIN
                 </span>
               </div>
 
               {/* Step 1: Service Type Selection */}
               <div>
-                <label className="block font-mono text-[11px] sm:text-xs text-[#0369a1] uppercase tracking-wider mb-2 font-semibold">
+                <label className="block font-mono text-[10px] xs:text-[11px] sm:text-xs text-[#0369a1] uppercase tracking-wider mb-2 font-semibold">
                   1. Select Architectural Service
                 </label>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-2.5">
@@ -167,13 +167,13 @@ export default function BookingSection() {
                       key={srv}
                       type="button"
                       onClick={() => setSelectedService(srv)}
-                      className={`min-h-[44px] p-2.5 sm:p-3 rounded-xl border text-[11px] sm:text-xs font-mono text-center font-medium transition-all flex items-center justify-center ${
+                      className={`min-h-[44px] p-2 xs:p-2.5 sm:p-3 rounded-xl border text-[11px] sm:text-xs font-mono text-center font-medium transition-all flex items-center justify-center leading-tight break-words ${
                         selectedService === srv
                           ? 'bg-[#0284c7] border-[#0284c7] text-white shadow-[0_2px_10px_rgba(2,132,199,0.3)]'
                           : 'bg-[#f4f9fd] border-[#d0e6f7] text-[#334e68] hover:border-[#0284c7]/50 hover:bg-white'
                       }`}
                     >
-                      {srv}
+                      <span>{srv}</span>
                     </button>
                   ))}
                 </div>
@@ -181,7 +181,7 @@ export default function BookingSection() {
 
               {/* Step 2: System Type */}
               <div>
-                <label className="block font-mono text-[11px] sm:text-xs text-[#0369a1] uppercase tracking-wider mb-2 font-semibold">
+                <label className="block font-mono text-[10px] xs:text-[11px] sm:text-xs text-[#0369a1] uppercase tracking-wider mb-2 font-semibold">
                   2. System Configuration
                 </label>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-2.5">
@@ -197,22 +197,22 @@ export default function BookingSection() {
                       key={sys}
                       type="button"
                       onClick={() => setSystemType(sys)}
-                      className={`min-h-[44px] p-2.5 rounded-xl border text-[11px] sm:text-xs font-mono text-center font-medium transition-all flex items-center justify-center ${
+                      className={`min-h-[44px] p-2 xs:p-2.5 rounded-xl border text-[10px] xs:text-[11px] sm:text-xs font-mono text-center font-medium transition-all flex items-center justify-center leading-snug break-words ${
                         systemType === sys
                           ? 'bg-[#0284c7] border-[#0284c7] text-white shadow-[0_2px_10px_rgba(2,132,199,0.3)]'
                           : 'bg-[#f4f9fd] border-[#d0e6f7] text-[#334e68] hover:border-[#0284c7]/50 hover:bg-white'
                       }`}
                     >
-                      {sys}
+                      <span className="px-0.5">{sys}</span>
                     </button>
                   ))}
                 </div>
               </div>
 
               {/* Step 3: Date & Time Window */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
                 <div>
-                  <label className="block font-mono text-[11px] sm:text-xs text-[#0369a1] uppercase tracking-wider mb-2 font-semibold">
+                  <label className="block font-mono text-[10px] xs:text-[11px] sm:text-xs text-[#0369a1] uppercase tracking-wider mb-1.5 sm:mb-2 font-semibold">
                     Preferred Date
                   </label>
                   <input
@@ -220,17 +220,17 @@ export default function BookingSection() {
                     required
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
-                    className="w-full min-h-[44px] px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-[#f8fbfe] border border-[#d0e6f7] text-[#0f2744] font-sans text-sm focus:outline-none focus:border-[#0284c7] focus:ring-1 focus:ring-[#0284c7] focus:bg-white transition-colors"
+                    className="w-full min-w-0 max-w-full min-h-[44px] px-3 xs:px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-[#f8fbfe] border border-[#d0e6f7] text-[#0f2744] font-sans text-xs xs:text-sm focus:outline-none focus:border-[#0284c7] focus:ring-1 focus:ring-[#0284c7] focus:bg-white transition-colors"
                   />
                 </div>
                 <div>
-                  <label className="block font-mono text-[11px] sm:text-xs text-[#0369a1] uppercase tracking-wider mb-2 font-semibold">
+                  <label className="block font-mono text-[10px] xs:text-[11px] sm:text-xs text-[#0369a1] uppercase tracking-wider mb-1.5 sm:mb-2 font-semibold">
                     Arrival Window
                   </label>
                   <select
                     value={timeSlot}
                     onChange={(e) => setTimeSlot(e.target.value)}
-                    className="w-full min-h-[44px] px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-[#f8fbfe] border border-[#d0e6f7] text-[#0f2744] font-sans text-sm focus:outline-none focus:border-[#0284c7] focus:ring-1 focus:ring-[#0284c7] focus:bg-white transition-colors"
+                    className="w-full min-w-0 max-w-full min-h-[44px] px-3 xs:px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-[#f8fbfe] border border-[#d0e6f7] text-[#0f2744] font-sans text-xs xs:text-sm focus:outline-none focus:border-[#0284c7] focus:ring-1 focus:ring-[#0284c7] focus:bg-white transition-colors"
                   >
                     <option value="09:00 - 11:00 AM">09:00 - 11:00 AM (Morning)</option>
                     <option value="11:00 - 01:00 PM">11:00 AM - 01:00 PM (Midday)</option>
@@ -242,9 +242,9 @@ export default function BookingSection() {
               </div>
 
               {/* Step 4: Contact Information */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
                 <div>
-                  <label className="block font-mono text-[11px] sm:text-xs text-[#0369a1] uppercase tracking-wider mb-2 font-semibold">
+                  <label className="block font-mono text-[10px] xs:text-[11px] sm:text-xs text-[#0369a1] uppercase tracking-wider mb-1.5 sm:mb-2 font-semibold">
                     Full Name
                   </label>
                   <input
@@ -253,11 +253,11 @@ export default function BookingSection() {
                     placeholder="Akshay Bhammer"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full min-h-[44px] px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-[#f8fbfe] border border-[#d0e6f7] text-[#0f2744] placeholder-[#87929a] font-sans text-sm focus:outline-none focus:border-[#0284c7] focus:ring-1 focus:ring-[#0284c7] focus:bg-white transition-colors"
+                    className="w-full min-w-0 max-w-full min-h-[44px] px-3 xs:px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-[#f8fbfe] border border-[#d0e6f7] text-[#0f2744] placeholder-[#87929a] font-sans text-xs xs:text-sm focus:outline-none focus:border-[#0284c7] focus:ring-1 focus:ring-[#0284c7] focus:bg-white transition-colors"
                   />
                 </div>
                 <div>
-                  <label className="block font-mono text-[11px] sm:text-xs text-[#0369a1] uppercase tracking-wider mb-2 font-semibold">
+                  <label className="block font-mono text-[10px] xs:text-[11px] sm:text-xs text-[#0369a1] uppercase tracking-wider mb-1.5 sm:mb-2 font-semibold">
                     Phone Number (SMS Telemetry)
                   </label>
                   <input
@@ -266,13 +266,13 @@ export default function BookingSection() {
                     placeholder="+91 98765 43210"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    className="w-full min-h-[44px] px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-[#f8fbfe] border border-[#d0e6f7] text-[#0f2744] placeholder-[#87929a] font-sans text-sm focus:outline-none focus:border-[#0284c7] focus:ring-1 focus:ring-[#0284c7] focus:bg-white transition-colors"
+                    className="w-full min-w-0 max-w-full min-h-[44px] px-3 xs:px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-[#f8fbfe] border border-[#d0e6f7] text-[#0f2744] placeholder-[#87929a] font-sans text-xs xs:text-sm focus:outline-none focus:border-[#0284c7] focus:ring-1 focus:ring-[#0284c7] focus:bg-white transition-colors"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block font-mono text-[11px] sm:text-xs text-[#0369a1] uppercase tracking-wider mb-2 font-semibold">
+                <label className="block font-mono text-[10px] xs:text-[11px] sm:text-xs text-[#0369a1] uppercase tracking-wider mb-1.5 sm:mb-2 font-semibold">
                   Service Property Address
                 </label>
                 <input
@@ -281,13 +281,13 @@ export default function BookingSection() {
                   placeholder="Apartment / Villa / Penthouse, Street, City"
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
-                  className="w-full min-h-[44px] px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-[#f8fbfe] border border-[#d0e6f7] text-[#0f2744] placeholder-[#87929a] font-sans text-sm focus:outline-none focus:border-[#0284c7] focus:ring-1 focus:ring-[#0284c7] focus:bg-white transition-colors"
+                  className="w-full min-w-0 max-w-full min-h-[44px] px-3 xs:px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-[#f8fbfe] border border-[#d0e6f7] text-[#0f2744] placeholder-[#87929a] font-sans text-xs xs:text-sm focus:outline-none focus:border-[#0284c7] focus:ring-1 focus:ring-[#0284c7] focus:bg-white transition-colors"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full min-h-[50px] py-3.5 sm:py-4 rounded-full bg-gradient-to-r from-[#0284c7] to-[#0ea5e9] text-white font-headline text-sm tracking-tight font-semibold hover:from-[#0369a1] hover:to-[#0284c7] hover:shadow-[0_6px_22px_rgba(2,132,199,0.35)] transition-all duration-300 active:scale-[0.98] flex items-center justify-center gap-2"
+                className="w-full min-h-[50px] py-3.5 sm:py-4 rounded-full bg-gradient-to-r from-[#0284c7] to-[#0ea5e9] text-white font-headline text-xs xs:text-sm tracking-tight font-semibold hover:from-[#0369a1] hover:to-[#0284c7] hover:shadow-[0_6px_22px_rgba(2,132,199,0.35)] transition-all duration-300 active:scale-[0.98] flex items-center justify-center gap-2"
               >
                 <span>Confirm Service Reservation</span>
                 <span className="material-symbols-outlined text-[18px]">
@@ -299,7 +299,7 @@ export default function BookingSection() {
         </div>
 
         {/* Guarantee Micro-Bar */}
-        <div className="mt-10 sm:mt-12 flex flex-wrap justify-center items-center gap-3 sm:gap-8 font-mono text-[10px] sm:text-xs text-[#627d98] font-medium">
+        <div className="mt-8 xs:mt-10 sm:mt-12 flex flex-wrap justify-center items-center gap-2.5 xs:gap-3 sm:gap-8 font-mono text-[9px] xs:text-[10px] sm:text-xs text-[#627d98] font-medium px-2">
           <span>NO HIDDEN TARIFFS</span>
           <span className="text-[#bae6fd]">•</span>
           <span>SAME-DAY DISPATCH AVAILABLE</span>

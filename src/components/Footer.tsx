@@ -35,9 +35,9 @@ export default function Footer() {
     <footer className="w-full bg-gradient-to-b from-[#f4f9fd] via-[#edf5fc] to-[#e4f0fa] border-t border-[#d0e6f7]">
       <div className="flex flex-col max-w-7xl mx-auto px-4 sm:px-8 lg:px-16 pt-12 sm:pt-16 pb-10 sm:pb-12 w-full gap-8 sm:gap-12">
         {/* Three Column Layout on Desktop, Stacks Vertically on Mobile */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-12 pb-8 sm:pb-12 border-b border-[#d0e6f7]">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-12 pb-8 sm:pb-12 border-b border-[#d0e6f7]">
           {/* Column 1 – Brand */}
-          <div className="lg:col-span-5 space-y-3.5 sm:space-y-4">
+          <div className="md:col-span-1 lg:col-span-5 space-y-3.5 sm:space-y-4">
             <a
               className="flex items-center gap-2.5 group w-fit"
               href="/#hero"
@@ -63,7 +63,7 @@ export default function Footer() {
           </div>
 
           {/* Column 2 – Our Services */}
-          <div className="lg:col-span-4 space-y-3.5 sm:space-y-4">
+          <div className="md:col-span-1 lg:col-span-4 space-y-3.5 sm:space-y-4">
             <h5 className="font-mono text-[11px] sm:text-xs text-[#0369a1] tracking-widest uppercase font-semibold">
               OUR SERVICES
             </h5>
@@ -122,7 +122,7 @@ export default function Footer() {
           </div>
 
           {/* Column 3 – Company */}
-          <div className="lg:col-span-3 space-y-3.5 sm:space-y-4">
+          <div className="md:col-span-1 lg:col-span-3 space-y-3.5 sm:space-y-4">
             <h5 className="font-mono text-[11px] sm:text-xs text-[#0369a1] tracking-widest uppercase font-semibold">
               COMPANY
             </h5>

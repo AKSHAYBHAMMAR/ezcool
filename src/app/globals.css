@@ -19,6 +19,8 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: 5rem;
   color-scheme: light;
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 @media (min-width: 640px) {
@@ -80,11 +82,41 @@ body {
     inset 0 -1px 1px 0 rgba(0, 0, 0, 0.05);
 }
 
+/* Responsive Hero Video Framing — Keeps AC Unit and airflow visible on mobile */
+.hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 72% 20%;
+}
+
+@media (min-width: 640px) {
+  .hero-video {
+    object-position: 68% 28%;
+  }
+}
+
+@media (min-width: 768px) {
+  .hero-video {
+    object-position: center;
+  }
+}
+
+.hero-fallback-bg {
+  background-position: 72% 20%;
+}
+
+@media (min-width: 768px) {
+  .hero-fallback-bg {
+    background-position: center;
+  }
+}
+
 /* Permanent viewport-fixed floating booking button overlay */
 #floating-booking-container {
   position: fixed !important;
-  right: 16px !important;
-  bottom: 16px !important;
+  right: calc(16px + env(safe-area-inset-right, 0px)) !important;
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px)) !important;
   z-index: 99999 !important;
   pointer-events: auto !important;
 }

@@ -51,6 +51,15 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Close mobile menu on Escape key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMobileMenuOpen(false);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   // Handle browser back/forward history navigation smoothly
   useEffect(() => {
     const handleHashChange = () => {
@@ -113,29 +122,33 @@ export default function Navbar() {
   };
 
   return (
-    <header className="fixed top-0 inset-x-0 z-[1000] flex justify-center pt-3 sm:pt-6 px-3 sm:px-8 pointer-events-none transition-all duration-300">
+    <header className="fixed top-0 inset-x-0 z-[1000] flex justify-center pt-2.5 xs:pt-3 sm:pt-6 px-2.5 xs:px-3 sm:px-8 pointer-events-none transition-all duration-300">
       <div
-        className={`pointer-events-auto w-[96%] sm:w-[90%] md:w-[84%] max-w-[1300px] rounded-full transition-all duration-300 shadow-2xl ${
+        className={`pointer-events-auto w-[96%] sm:w-[92%] md:w-[90%] lg:w-[84%] max-w-[1300px] transition-all duration-300 shadow-2xl ${
+          mobileMenuOpen
+            ? 'rounded-[26px] sm:rounded-[36px]'
+            : 'rounded-full'
+        } ${
           scrolled
-            ? 'bg-white/85 backdrop-blur-2xl border border-[#bae6fd]/90 shadow-[0_12px_36px_-4px_rgba(2,132,199,0.18),0_4px_16px_0_rgba(56,189,248,0.12)]'
+            ? 'bg-white/90 backdrop-blur-2xl border border-[#bae6fd]/90 shadow-[0_12px_36px_-4px_rgba(2,132,199,0.18),0_4px_16px_0_rgba(56,189,248,0.12)]'
             : 'liquid-glass'
         }`}
       >
-        <div className="flex justify-between items-center px-4 sm:px-8 md:px-10 h-16 sm:h-20 md:h-[84px] w-full">
+        <div className="flex justify-between items-center px-3.5 xs:px-5 sm:px-8 md:px-10 h-14 xs:h-16 sm:h-20 md:h-[84px] w-full">
           {/* Brand Logo: EZCOOL */}
           <a
-            className="flex items-center gap-2.5 sm:gap-3 group flex-shrink-0"
+            className="flex items-center gap-2 xs:gap-2.5 sm:gap-3 group flex-shrink-0"
             href="#hero"
             onClick={(e) => handleNavClick(e, '#hero', 'hero')}
             aria-label="EZCOOL AC Servicing Home"
           >
-            <span className="relative flex h-2.5 w-2.5 sm:h-3 sm:w-3">
+            <span className="relative flex h-2.5 w-2.5 sm:h-3 sm:w-3 flex-shrink-0">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#38bdf8] opacity-75" />
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 sm:h-3 sm:w-3 bg-[#8ed5ff] shadow-[0_0_12px_#38bdf8]" />
             </span>
             <div className="flex flex-col">
               <span
-                className={`font-headline text-lg sm:text-xl md:text-2xl tracking-tight font-bold transition-colors duration-200 leading-none ${
+                className={`font-headline text-base xs:text-lg sm:text-xl md:text-2xl tracking-tight font-bold transition-colors duration-200 leading-none ${
                   scrolled
                     ? 'text-[#0f2744] group-hover:text-[#0284c7]'
                     : 'text-white [text-shadow:_0_1px_3px_rgba(0,0,0,0.65)] group-hover:text-[#c4e7ff]'
@@ -144,7 +157,7 @@ export default function Navbar() {
                 EZCOOL
               </span>
               <span
-                className={`font-mono text-[8px] sm:text-[9px] md:text-[10px] tracking-widest uppercase font-semibold leading-tight mt-0.5 transition-colors duration-200 ${
+                className={`font-mono text-[7px] xs:text-[8px] sm:text-[9px] md:text-[10px] tracking-widest uppercase font-semibold leading-tight mt-0.5 transition-colors duration-200 ${
                   scrolled
                     ? 'text-[#0284c7]'
                     : 'text-[#bae6fd] [text-shadow:_0_1px_2px_rgba(0,0,0,0.7)]'
@@ -156,7 +169,7 @@ export default function Navbar() {
           </a>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center space-x-1 lg:space-x-2.5 xl:space-x-3.5">
+          <nav className="hidden md:flex items-center space-x-0.5 md:space-x-1 lg:space-x-2 xl:space-x-3.5">
             {navItems.map((item) => {
               const isActive = activeSection === item.sectionId;
               return (
@@ -164,7 +177,7 @@ export default function Navbar() {
                   key={item.label}
                   href={item.href}
                   onClick={(e) => handleNavClick(e, item.href, item.sectionId)}
-                  className={`px-3.5 lg:px-4 py-2 rounded-full text-xs sm:text-[13px] font-mono tracking-wider uppercase transition-all duration-200 ${
+                  className={`px-2.5 md:px-3 lg:px-4 py-1.5 md:py-2 rounded-full text-xs lg:text-[13px] font-mono tracking-wider uppercase transition-all duration-200 ${
                     isActive
                       ? scrolled
                         ? 'bg-[#e0f2fe] text-[#0284c7] font-semibold border border-[#bae6fd]'
@@ -190,6 +203,7 @@ export default function Navbar() {
                   : 'text-white hover:text-[#38bdf8]'
               }`}
               aria-label="Toggle navigation menu"
+              aria-expanded={mobileMenuOpen}
             >
               <span
                 className={`material-symbols-outlined text-2xl ${
@@ -202,9 +216,9 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Mobile Dropdown Menu with 44px tap targets */}
+        {/* Mobile Dropdown Menu with 44px tap targets & safe viewport scroll */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-t border-[#bae6fd]/50 bg-white/95 backdrop-blur-2xl px-5 sm:px-8 py-3.5 sm:py-5 rounded-b-[28px] sm:rounded-b-[36px] shadow-2xl">
+          <div className="md:hidden border-t border-[#bae6fd]/50 bg-white/95 backdrop-blur-2xl px-4 xs:px-6 sm:px-8 py-3 xs:py-3.5 sm:py-5 rounded-b-[26px] sm:rounded-b-[34px] shadow-2xl max-h-[calc(100svh-5.5rem)] overflow-y-auto">
             <nav className="flex flex-col space-y-1 font-mono text-xs uppercase">
               {navItems.map((item) => {
                 const isActive = activeSection === item.sectionId;

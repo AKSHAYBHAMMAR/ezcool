@@ -39,19 +39,19 @@ export default function Testimonials() {
               Validated by Excellence.
             </h2>
           </div>
-          <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-4 bg-white/95 px-4 sm:px-5 py-2.5 sm:py-3 rounded-full border border-[#d0e6f7] shadow-sm w-fit">
-            <div className="flex items-center text-[#0284c7]">
+          <div className="flex items-center gap-2 xs:gap-3 sm:gap-4 bg-white/95 px-3 xs:px-4 sm:px-5 py-2 xs:py-2.5 sm:py-3 rounded-full border border-[#d0e6f7] shadow-sm max-w-full">
+            <div className="flex items-center text-[#0284c7] flex-shrink-0">
               {[...Array(5)].map((_, i) => (
                 <span
                   key={i}
-                  className="material-symbols-outlined text-[16px] sm:text-[18px]"
+                  className="material-symbols-outlined text-[14px] xs:text-[16px] sm:text-[18px]"
                   style={{ fontVariationSettings: "'FILL' 1" }}
                 >
                   star
                 </span>
               ))}
             </div>
-            <span className="font-mono text-[11px] sm:text-xs text-[#0f2744] font-semibold tracking-wide">
+            <span className="font-mono text-[9px] xs:text-[11px] sm:text-xs text-[#0f2744] font-semibold tracking-tight sm:tracking-wide">
               4.9 / 5.0 RATING (2,400+ REVIEWS)
             </span>
           </div>

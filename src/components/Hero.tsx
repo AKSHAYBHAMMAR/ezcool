@@ -32,7 +32,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative w-full h-screen min-h-[100svh] overflow-hidden m-0 p-0 bg-[#0a0e16]"
+      className="relative w-full h-[100svh] min-h-[100svh] overflow-hidden m-0 p-0 bg-[#0a0e16]"
     >
       {!videoError && !reducedMotion ? (
         <video
@@ -43,13 +43,7 @@ export default function Hero() {
           playsInline
           preload="auto"
           onError={() => setVideoError(true)}
-          className="w-full h-full object-cover object-center block m-0 p-0"
-          style={{
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            objectPosition: 'center',
-          }}
+          className="hero-video block m-0 p-0"
         >
           <source src="/videos/hero section video.mp4" type="video/mp4" />
           <source src="/hero section video.mp4" type="video/mp4" />
@@ -57,36 +51,32 @@ export default function Hero() {
         </video>
       ) : (
         <div
-          className="w-full h-full bg-cover bg-center bg-[#0a0e16] m-0 p-0"
+          className="w-full h-full bg-cover hero-fallback-bg bg-[#0a0e16] m-0 p-0"
           style={{ backgroundImage: `url('/screen.png')` }}
         />
       )}
 
       {/* Brand Messaging Overlay — Center-Right Open Area */}
-      <div className="absolute inset-0 pointer-events-none z-10 flex items-center justify-end px-5 xs:px-6 sm:px-12 md:px-16 lg:px-24">
+      <div className="absolute inset-0 pointer-events-none z-10 flex items-center justify-center sm:justify-end px-4 xs:px-6 sm:px-12 md:px-16 lg:px-24">
         <div
-          className={`pointer-events-auto max-w-[290px] xs:max-w-[320px] sm:max-w-[420px] md:max-w-[480px] lg:max-w-[520px] text-left relative md:top-[50px] transition-all duration-1000 ease-out transform ${
+          className={`pointer-events-auto max-w-[290px] xs:max-w-[340px] sm:max-w-[420px] md:max-w-[480px] lg:max-w-[520px] text-left relative md:top-[50px] transition-all duration-1000 ease-out transform ${
             mounted && !reducedMotion
               ? 'opacity-100 translate-y-0'
               : mounted && reducedMotion
               ? 'opacity-100 translate-y-0'
               : 'opacity-0 translate-y-8'
-          }`}
-          style={{
-            marginTop: '1.5rem',
-            marginBottom: '3.5rem',
-          }}
+          } mt-2 sm:mt-0 mb-14 xs:mb-16 sm:mb-0`}
         >
           {/* Eyebrow text */}
           <div className="inline-flex items-center gap-2 mb-2 sm:mb-3">
-            <span className="w-2 h-2 rounded-full bg-[#0284c7] shadow-[0_0_8px_#38bdf8]" />
-            <span className="font-mono text-[9px] xs:text-[10px] sm:text-xs text-[#0369a1] tracking-[0.2em] sm:tracking-[0.22em] uppercase font-bold [text-shadow:_0_1px_3px_rgba(255,255,255,0.9)]">
+            <span className="w-2 h-2 rounded-full bg-[#0284c7] shadow-[0_0_8px_#38bdf8] flex-shrink-0" />
+            <span className="font-mono text-[9px] xs:text-[10px] sm:text-xs text-[#0369a1] tracking-[0.18em] xs:tracking-[0.22em] uppercase font-bold [text-shadow:_0_1px_3px_rgba(255,255,255,0.9)] truncate">
               EZCOOL · PREMIUM AC SERVICES
             </span>
           </div>
 
           {/* Main Headline */}
-          <h1 className="font-headline text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-[54px] text-[#0f2744] font-medium tracking-tight leading-[1.08] [text-shadow:_0_1px_4px_rgba(255,255,255,0.85)]">
+          <h1 className="font-headline text-[26px] xs:text-3xl sm:text-4xl md:text-5xl lg:text-[54px] text-[#0f2744] font-medium tracking-tight leading-[1.08] [text-shadow:_0_1px_4px_rgba(255,255,255,0.85)]">
             Breathe Better.
             <br />
             <span className="text-[#0284c7] font-semibold">Live Cooler.</span>

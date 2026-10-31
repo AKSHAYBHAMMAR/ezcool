@@ -8,6 +8,10 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        'xs': '375px',
+        'sm-mob': '430px',
+      },
       colors: {
         'surface': '#ffffff',
         'surface-dim': '#f4f9fd',

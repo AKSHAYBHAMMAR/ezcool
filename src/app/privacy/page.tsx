@@ -12,39 +12,39 @@ export default function PrivacyPage() {
   return (
     <div className="min-h-screen bg-[#f4f9fd] text-[#0f2744] flex flex-col justify-between">
       {/* Top Header Bar */}
-      <header className="w-full bg-white/90 backdrop-blur-xl border-b border-[#d0e6f7] sticky top-0 z-50 py-4 px-6 sm:px-12">
+      <header className="w-full bg-white/90 backdrop-blur-xl border-b border-[#d0e6f7] sticky top-0 z-50 py-3 sm:py-4 px-3.5 xs:px-4 sm:px-12">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2.5 group">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#0284c7] shadow-[0_0_10px_#38bdf8]" />
+          <Link href="/" className="flex items-center gap-2 xs:gap-2.5 group">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#0284c7] shadow-[0_0_10px_#38bdf8] flex-shrink-0" />
             <div className="flex flex-col">
-              <span className="font-headline text-xl tracking-wider text-[#0f2744] uppercase font-bold leading-none">
+              <span className="font-headline text-lg sm:text-xl tracking-wider text-[#0f2744] uppercase font-bold leading-none">
                 EZCOOL
               </span>
-              <span className="font-mono text-[9px] tracking-widest text-[#0284c7] uppercase font-semibold mt-0.5">
-                AIR CONDITIONING SERVICES
+              <span className="font-mono text-[8px] sm:text-[9px] tracking-widest text-[#0284c7] uppercase font-semibold mt-0.5">
+                AC SERVICING
               </span>
             </div>
           </Link>
           <Link
             href="/"
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#e0f2fe] text-[#0284c7] hover:bg-[#bae6fd] font-mono text-xs font-semibold transition-colors"
+            className="inline-flex items-center gap-1.5 px-3 xs:px-4 py-1.5 sm:py-2 rounded-full bg-[#e0f2fe] text-[#0284c7] hover:bg-[#bae6fd] font-mono text-[11px] sm:text-xs font-semibold transition-colors min-h-[38px]"
           >
-            <span className="material-symbols-outlined text-[16px]">arrow_back</span>
+            <span className="material-symbols-outlined text-[15px] sm:text-[16px]">arrow_back</span>
             <span>Back to Home</span>
           </Link>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="max-w-4xl mx-auto px-5 sm:px-8 py-16 w-full">
-        <div className="mb-10">
+      <main className="max-w-4xl mx-auto px-3.5 xs:px-4 sm:px-8 py-10 sm:py-16 w-full">
+        <div className="mb-8 sm:mb-10">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#e0f2fe] border border-[#bae6fd] mb-3">
             <span className="w-1.5 h-1.5 rounded-full bg-[#0284c7]" />
-            <span className="font-mono text-xs text-[#0284c7] tracking-widest uppercase font-semibold">
+            <span className="font-mono text-[10px] xs:text-xs text-[#0284c7] tracking-widest uppercase font-semibold">
               DATA INTEGRITY &amp; TRUST
             </span>
           </div>
-          <h1 className="font-headline text-3xl sm:text-4xl text-[#0f2744] font-medium tracking-tight">
+          <h1 className="font-headline text-2xl xs:text-3xl sm:text-4xl text-[#0f2744] font-medium tracking-tight">
             Privacy Policy
           </h1>
           <p className="font-sans text-xs sm:text-sm text-[#486581] mt-2">
@@ -52,7 +52,7 @@ export default function PrivacyPage() {
           </p>
         </div>
 
-        <div className="glass-card rounded-2xl p-6 sm:p-10 border border-[#d0e6f7] bg-white/95 space-y-8 font-sans text-sm text-[#334e68] leading-relaxed shadow-sm">
+        <div className="glass-card rounded-2xl p-4 xs:p-6 sm:p-10 border border-[#d0e6f7] bg-white/95 space-y-6 sm:space-y-8 font-sans text-xs xs:text-sm text-[#334e68] leading-relaxed shadow-sm">
           <section className="space-y-3">
             <h2 className="font-headline text-lg sm:text-xl text-[#0f2744] font-semibold">
               1. Information We Collect
