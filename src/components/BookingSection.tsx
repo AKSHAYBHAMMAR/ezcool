@@ -250,7 +250,7 @@ export default function BookingSection() {
                   <input
                     type="text"
                     required
-                    placeholder="Akshay Bhammer"
+                    placeholder="Enter your name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     className="w-full min-w-0 max-w-full min-h-[44px] px-3 xs:px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-[#f8fbfe] border border-[#d0e6f7] text-[#0f2744] placeholder-[#87929a] font-sans text-xs xs:text-sm focus:outline-none focus:border-[#0284c7] focus:ring-1 focus:ring-[#0284c7] focus:bg-white transition-colors"
