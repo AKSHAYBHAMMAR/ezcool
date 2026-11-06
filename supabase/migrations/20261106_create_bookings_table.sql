@@ -110,7 +110,13 @@ create trigger tr_update_booking_timestamp
   for each row
   execute function public.update_booking_timestamp();
 
--- 7. Row Level Security (RLS) Configuration
+-- 7. Grant table access to Supabase API roles (RLS policies below enforce row-level security)
+grant usage on schema public to anon, authenticated, service_role;
+grant all on table public.bookings to anon, authenticated, service_role;
+grant all on all sequences in schema public to anon, authenticated, service_role;
+grant all on all functions in schema public to anon, authenticated, service_role;
+
+-- 8. Row Level Security (RLS) Configuration
 alter table public.bookings enable row level security;
 
 -- Policy A: Allow anonymous / public users to insert new bookings
@@ -138,7 +144,7 @@ create policy "Allow authenticated staff to update bookings"
   using (true)
   with check (true);
 
--- 8. Performance Indexes
+-- 9. Performance Indexes
 create index if not exists idx_bookings_booking_ref on public.bookings(booking_ref);
 create index if not exists idx_bookings_customer_phone on public.bookings(customer_phone);
 create index if not exists idx_bookings_preferred_date on public.bookings(preferred_date);

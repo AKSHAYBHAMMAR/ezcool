@@ -95,8 +95,7 @@ export async function POST(request: NextRequest) {
 
     // 2. Insert into Supabase
     const adminClient = createAdminClient();
-    const serverClient = createClient();
-    const supabase = adminClient || serverClient;
+    const supabase = adminClient || createClient();
 
     if (supabase) {
       const insertPayload: BookingInsert = {
@@ -121,7 +120,10 @@ export async function POST(request: NextRequest) {
       if (error) {
         console.error('Supabase booking insert error:', error);
         return NextResponse.json(
-          { error: 'Unable to schedule booking in database. Please try again.' },
+          {
+            error: error.message || 'Unable to schedule booking in database. Please try again.',
+            code: error.code,
+          },
           { status: 500 }
         );
       }
@@ -173,11 +175,23 @@ export async function POST(request: NextRequest) {
 
 export async function GET(request: NextRequest) {
   try {
-    const adminClient = createAdminClient();
-    const serverClient = createClient();
-    const supabase = adminClient || serverClient;
+    // Enforce Requirement 10: Protect customer booking records from public access
+    const authHeader = request.headers.get('authorization') || '';
+    const adminApiKey = request.headers.get('x-admin-key') || '';
+    const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
 
-    if (!supabase) {
+    const isAuthorized =
+      (serviceRoleKey && (authHeader === `Bearer ${serviceRoleKey}` || adminApiKey === serviceRoleKey));
+
+    if (!isAuthorized) {
+      return NextResponse.json(
+        { error: 'Unauthorized. Public access to customer booking records is restricted.' },
+        { status: 401 }
+      );
+    }
+
+    const adminClient = createAdminClient();
+    if (!adminClient) {
       return NextResponse.json(
         { error: 'Database service is currently unconfigured.' },
         { status: 503 }
@@ -188,7 +202,7 @@ export async function GET(request: NextRequest) {
     const limit = Math.min(parseInt(searchParams.get('limit') || '20', 10), 100);
     const status = searchParams.get('status');
 
-    let query = supabase
+    let query = (adminClient as any)
       .from('bookings')
       .select('*')
       .order('created_at', { ascending: false })

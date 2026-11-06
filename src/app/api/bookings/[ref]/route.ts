@@ -19,9 +19,16 @@ export async function GET(
     const { searchParams } = new URL(request.url);
     const phone = searchParams.get('phone')?.replace(/\D/g, '');
 
+    // Requirement 10: Enforce customer phone verification to prevent unauthorized enumeration
+    if (!phone || phone.length !== 10) {
+      return NextResponse.json(
+        { error: 'Valid 10-digit registered phone number is required to verify booking details.' },
+        { status: 400 }
+      );
+    }
+
     const adminClient = createAdminClient();
-    const serverClient = createClient();
-    const supabase = adminClient || serverClient;
+    const supabase: any = adminClient || createClient();
 
     if (!supabase) {
       return NextResponse.json(
@@ -30,18 +37,14 @@ export async function GET(
       );
     }
 
-    let query = supabase
+    const { data, error } = await supabase
       .from('bookings')
       .select(
         'booking_ref, customer_name, service_type, system_type, preferred_date, arrival_window, status, created_at'
       )
-      .eq('booking_ref', bookingRef);
-
-    if (phone) {
-      query = query.eq('customer_phone', phone);
-    }
-
-    const { data, error } = await query.maybeSingle();
+      .eq('booking_ref', bookingRef)
+      .eq('customer_phone', phone)
+      .maybeSingle();
 
     if (error) {
       console.error('Error querying booking by ref:', error);
