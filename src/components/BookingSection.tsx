@@ -12,12 +12,47 @@ export default function BookingSection() {
   const [address, setAddress] = useState('');
   const [bookingSuccess, setBookingSuccess] = useState(false);
   const [bookingRef, setBookingRef] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const generatedRef = `EZCOOL-${Math.floor(100000 + Math.random() * 900000)}`;
-    setBookingRef(generatedRef);
-    setBookingSuccess(true);
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      const response = await fetch('/api/bookings', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name,
+          phone,
+          address,
+          service_type: selectedService,
+          system_type: systemType,
+          preferred_date: date,
+          arrival_window: timeSlot,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to schedule reservation. Please try again.');
+      }
+
+      const confirmedRef = data.booking?.booking_ref || `EZCOOL-${Math.floor(100000 + Math.random() * 900000)}`;
+      setBookingRef(confirmedRef);
+      setBookingSuccess(true);
+    } catch (err: unknown) {
+      console.error('Booking submission error:', err);
+      const message = err instanceof Error ? err.message : 'An unexpected error occurred while booking. Please try again.';
+      setSubmitError(message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleReset = () => {
@@ -26,6 +61,8 @@ export default function BookingSection() {
     setName('');
     setPhone('');
     setAddress('');
+    setSubmitError(null);
+    setIsSubmitting(false);
   };
 
   return (
@@ -150,6 +187,16 @@ export default function BookingSection() {
                   EST. RESPONSE &lt; 90 MIN
                 </span>
               </div>
+
+              {/* Error Notice */}
+              {submitError && (
+                <div className="p-3.5 rounded-xl bg-red-50/90 border border-red-200 text-red-700 text-xs flex items-center gap-2.5">
+                  <span className="material-symbols-outlined text-[20px] text-red-600 flex-shrink-0">
+                    error
+                  </span>
+                  <span className="font-sans leading-normal">{submitError}</span>
+                </div>
+              )}
 
               {/* Step 1: Service Type Selection */}
               <div>
@@ -295,11 +342,16 @@ export default function BookingSection() {
 
               <button
                 type="submit"
-                className="w-full min-h-[50px] py-3.5 sm:py-4 rounded-full bg-gradient-to-r from-[#0284c7] to-[#0ea5e9] text-white font-headline text-xs xs:text-sm tracking-tight font-semibold hover:from-[#0369a1] hover:to-[#0284c7] hover:shadow-[0_6px_22px_rgba(2,132,199,0.35)] transition-all duration-300 active:scale-[0.98] flex items-center justify-center gap-2"
+                disabled={isSubmitting}
+                className={`w-full min-h-[50px] py-3.5 sm:py-4 rounded-full bg-gradient-to-r from-[#0284c7] to-[#0ea5e9] text-white font-headline text-xs xs:text-sm tracking-tight font-semibold hover:from-[#0369a1] hover:to-[#0284c7] hover:shadow-[0_6px_22px_rgba(2,132,199,0.35)] transition-all duration-300 active:scale-[0.98] flex items-center justify-center gap-2 ${
+                  isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
+                }`}
               >
-                <span>Confirm Service Reservation</span>
-                <span className="material-symbols-outlined text-[18px]">
-                  arrow_forward
+                <span>
+                  {isSubmitting ? 'Securing Dispatch Telemetry...' : 'Confirm Service Reservation'}
+                </span>
+                <span className={`material-symbols-outlined text-[18px] ${isSubmitting ? 'animate-spin' : ''}`}>
+                  {isSubmitting ? 'progress_activity' : 'arrow_forward'}
                 </span>
               </button>
             </form>
