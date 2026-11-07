@@ -7,14 +7,24 @@ export default function Hero() {
   const [videoError, setVideoError] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     setMounted(true);
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
     setReducedMotion(mq.matches);
     const handler = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
     mq.addEventListener('change', handler);
-    return () => mq.removeEventListener('change', handler);
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+      mq.removeEventListener('change', handler);
+    };
   }, []);
 
   useEffect(() => {
@@ -27,7 +37,7 @@ export default function Hero() {
     if (videoRef.current && reducedMotion) {
       videoRef.current.pause();
     }
-  }, [reducedMotion]);
+  }, [reducedMotion, isMobile]);
 
   return (
     <section
@@ -36,6 +46,7 @@ export default function Hero() {
     >
       {!videoError && !reducedMotion ? (
         <video
+          key={isMobile ? 'hero-mobile' : 'hero-desktop'}
           ref={videoRef}
           autoPlay
           muted
@@ -44,15 +55,27 @@ export default function Hero() {
           preload="auto"
           onError={() => setVideoError(true)}
           className="hero-video"
+          poster={isMobile ? '/screen-mobile.png' : '/screen.png'}
         >
-          <source src="/videos/hero section video.mp4" type="video/mp4" />
-          <source src="/hero section video.mp4" type="video/mp4" />
-          <source src="/videos/hero.mp4" type="video/mp4" />
+          {isMobile ? (
+            <>
+              <source src="/videos/hero-mobile.mp4" type="video/mp4" />
+              <source src="/hero-mobile.mp4" type="video/mp4" />
+            </>
+          ) : (
+            <>
+              <source src="/videos/hero section video.mp4" type="video/mp4" />
+              <source src="/hero section video.mp4" type="video/mp4" />
+              <source src="/videos/hero.mp4" type="video/mp4" />
+            </>
+          )}
         </video>
       ) : (
         <div
           className="hero-fallback-bg bg-[#0a0e16]"
-          style={{ backgroundImage: `url('/screen.png')` }}
+          style={{
+            backgroundImage: `url('${isMobile ? '/screen-mobile.png' : '/screen.png'}')`,
+          }}
         />
       )}
 

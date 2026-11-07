@@ -112,7 +112,7 @@ export default function BookingSection() {
             <span className="material-symbols-outlined text-[#0284c7] text-[18px]">
               call
             </span>
-            <span className="font-semibold">+1 (800) 555-EZCOOL</span>
+            <span className="font-semibold">Call Us</span>
           </a>
         </div>
 
@@ -231,26 +231,25 @@ export default function BookingSection() {
                 <label className="block font-mono text-[10px] xs:text-[11px] sm:text-xs text-[#0369a1] uppercase tracking-wider mb-2 font-semibold">
                   2. System Configuration
                 </label>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-2.5">
+                <div className="grid grid-cols-2 sm:grid-cols-6 gap-2 sm:gap-2.5">
                   {[
-                    'Ducted Central / VRF',
-                    'High-Wall Split',
-                    'Multi-Zone Split',
-                    'Concealed Cassette',
-                    'Chiller System',
-                    'Other / Not Sure',
+                    { name: 'Ducted Central / VRF', span: 'col-span-1 sm:col-span-2' },
+                    { name: 'High-Wall Split', span: 'col-span-1 sm:col-span-2' },
+                    { name: 'Multi-Zone Split', span: 'col-span-1 sm:col-span-2' },
+                    { name: 'Concealed Cassette', span: 'col-span-1 sm:col-span-3' },
+                    { name: 'Other / Not Sure', span: 'col-span-2 sm:col-span-3' },
                   ].map((sys) => (
                     <button
-                      key={sys}
+                      key={sys.name}
                       type="button"
-                      onClick={() => setSystemType(sys)}
-                      className={`min-h-[44px] p-2 xs:p-2.5 rounded-xl border text-[10px] xs:text-[11px] sm:text-xs font-mono text-center font-medium transition-all flex items-center justify-center leading-snug break-words ${
-                        systemType === sys
+                      onClick={() => setSystemType(sys.name)}
+                      className={`min-h-[44px] p-2 xs:p-2.5 rounded-xl border text-[10px] xs:text-[11px] sm:text-xs font-mono text-center font-medium transition-all flex items-center justify-center leading-snug break-words ${sys.span} ${
+                        systemType === sys.name
                           ? 'bg-[#0284c7] border-[#0284c7] text-white shadow-[0_2px_10px_rgba(2,132,199,0.3)]'
                           : 'bg-[#f4f9fd] border-[#d0e6f7] text-[#334e68] hover:border-[#0284c7]/50 hover:bg-white'
                       }`}
                     >
-                      <span className="px-0.5">{sys}</span>
+                      <span className="px-0.5">{sys.name}</span>
                     </button>
                   ))}
                 </div>

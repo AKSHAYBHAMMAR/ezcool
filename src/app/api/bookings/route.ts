@@ -15,7 +15,6 @@ const VALID_SYSTEMS: SystemConfiguration[] = [
   'High-Wall Split',
   'Multi-Zone Split',
   'Concealed Cassette',
-  'Chiller System',
   'Other / Not Sure',
 ];
 
