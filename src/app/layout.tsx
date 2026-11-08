@@ -83,6 +83,21 @@ export default function RootLayout({
       className={`scroll-smooth ${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable}`}
     >
       <head>
+        {/* Preload first-frame hero posters for instant paint without blank/black flash */}
+        <link
+          rel="preload"
+          as="image"
+          href="/hero-poster.jpg"
+          media="(min-width: 768px)"
+          fetchPriority="high"
+        />
+        <link
+          rel="preload"
+          as="image"
+          href="/hero-poster-mobile.jpg"
+          media="(max-width: 767px)"
+          fetchPriority="high"
+        />
         <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"

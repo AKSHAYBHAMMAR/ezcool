@@ -5,6 +5,7 @@ import React, { useRef, useState, useEffect } from 'react';
 export default function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [videoError, setVideoError] = useState(false);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -28,53 +29,95 @@ export default function Hero() {
   }, []);
 
   useEffect(() => {
-    if (videoRef.current && !reducedMotion) {
-      videoRef.current.playbackRate = 1.0;
-      videoRef.current.play().catch(() => {
-        // Fallback handled automatically via poster / fallback div
-      });
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (!reducedMotion) {
+      video.playbackRate = 1.0;
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // Autoplay policy prevented playback, poster layer seamlessly continues
+        });
+      }
+    } else {
+      video.pause();
     }
-    if (videoRef.current && reducedMotion) {
-      videoRef.current.pause();
-    }
-  }, [reducedMotion, isMobile]);
+  }, [reducedMotion]);
+
+  const handlePlaying = () => {
+    setIsVideoPlaying(true);
+  };
 
   return (
     <section
       id="hero"
-      className="relative w-full h-screen min-h-screen h-[100svh] min-h-[100svh] overflow-hidden m-0 p-0 bg-[#0a0e16]"
+      className="relative w-full h-screen min-h-screen h-[100svh] min-h-[100svh] overflow-hidden m-0 p-0 bg-[#8fadbe]"
     >
-      {!videoError && !reducedMotion ? (
+      {/* 1. Instant First-Frame Poster Layer: Visible immediately on initial paint */}
+      <picture className="absolute inset-0 w-full h-full pointer-events-none z-0">
+        <source media="(max-width: 767px)" srcSet="/hero-poster-mobile.jpg" />
+        <source media="(min-width: 768px)" srcSet="/hero-poster.jpg" />
+        <img
+          src="/hero-poster.jpg"
+          alt="EZCOOL Premium Climate Control"
+          fetchPriority="high"
+          loading="eager"
+          decoding="async"
+          className="w-full h-full object-cover object-center"
+        />
+      </picture>
+
+      {/* 2. Video Element: Smoothly fades in once playing, eliminating black/blank flash */}
+      {!videoError && !reducedMotion && (
         <video
-          key={isMobile ? 'hero-mobile' : 'hero-desktop'}
           ref={videoRef}
           autoPlay
           muted
           loop
           playsInline
           preload="auto"
+          onPlaying={handlePlaying}
           onError={() => setVideoError(true)}
-          className="hero-video"
-          poster={isMobile ? '/screen-mobile.png' : '/screen.png'}
+          className={`hero-video z-[1] transition-opacity duration-700 ease-out ${
+            isVideoPlaying ? 'opacity-100' : 'opacity-0'
+          }`}
+          poster={isMobile ? '/hero-poster-mobile.jpg' : '/hero-poster.jpg'}
         >
-          {isMobile ? (
-            <>
-              <source src="/videos/hero-mobile.mp4" type="video/mp4" />
-              <source src="/hero-mobile.mp4" type="video/mp4" />
-            </>
-          ) : (
-            <>
-              <source src="/videos/hero section video.mp4" type="video/mp4" />
-              <source src="/hero section video.mp4" type="video/mp4" />
-              <source src="/videos/hero.mp4" type="video/mp4" />
-            </>
-          )}
+          {/* Mobile-optimized 720x1560 portrait video */}
+          <source
+            src="/videos/hero-mobile.mp4"
+            type="video/mp4"
+            media="(max-width: 767px)"
+          />
+          <source
+            src="/hero-mobile.mp4"
+            type="video/mp4"
+            media="(max-width: 767px)"
+          />
+          {/* Desktop original 1280x720 landscape video */}
+          <source
+            src="/videos/hero section video.mp4"
+            type="video/mp4"
+            media="(min-width: 768px)"
+          />
+          <source
+            src="/hero section video.mp4"
+            type="video/mp4"
+            media="(min-width: 768px)"
+          />
+          {/* Standard fallbacks */}
+          <source src="/hero section video.mp4" type="video/mp4" />
+          <source src="/videos/hero.mp4" type="video/mp4" />
         </video>
-      ) : (
+      )}
+
+      {/* 3. Static fallback for reduced motion or error */}
+      {(videoError || reducedMotion) && (
         <div
-          className="hero-fallback-bg bg-[#0a0e16]"
+          className="hero-fallback-bg z-[1]"
           style={{
-            backgroundImage: `url('${isMobile ? '/screen-mobile.png' : '/screen.png'}')`,
+            backgroundImage: `url('${isMobile ? '/hero-poster-mobile.jpg' : '/hero-poster.jpg'}')`,
           }}
         />
       )}
