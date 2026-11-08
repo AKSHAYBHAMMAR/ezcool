@@ -92,74 +92,89 @@ export async function POST(request: NextRequest) {
     const sanitizedAddress = address.trim();
     const candidateRef = generateFallbackRef();
 
-    // 2. Insert into Supabase
+    // 2. Resolve Supabase Client
     const adminClient = createAdminClient();
     const supabase = adminClient || createClient();
 
-    if (supabase) {
-      const insertPayload: BookingInsert = {
-        booking_ref: candidateRef,
-        customer_name: sanitizedName,
-        customer_phone: cleanPhone,
-        service_address: sanitizedAddress,
-        service_type,
-        system_type,
-        preferred_date,
-        arrival_window,
-        status: 'queued' as BookingStatus,
-        notes: notes ? String(notes).trim() : null,
-      };
+    if (!supabase) {
+      console.error(
+        'Supabase configuration missing: NEXT_PUBLIC_SUPABASE_URL and API key not configured.'
+      );
+      return NextResponse.json(
+        {
+          error:
+            'Service reservation system is temporarily unconfigured. Please configure database credentials.',
+        },
+        { status: 503 }
+      );
+    }
 
-      const { data, error } = await (supabase as any)
+    // 3. Generate unique ID and reference code
+    const bookingId = crypto.randomUUID();
+    const bookingRef = generateFallbackRef();
+
+    const insertPayload: BookingInsert = {
+      id: bookingId,
+      booking_ref: bookingRef,
+      customer_name: sanitizedName,
+      customer_phone: cleanPhone,
+      service_address: sanitizedAddress,
+      service_type,
+      system_type,
+      preferred_date,
+      arrival_window,
+      status: 'queued' as BookingStatus,
+      notes: notes ? String(notes).trim() : null,
+    };
+
+    // 4. Insert into Supabase
+    // If using service role key, perform .select().single()
+    // If using publishable/anon key, PostgreSQL RLS permits INSERT but restricts SELECT for customer privacy
+    const hasServiceRole = Boolean(process.env.SUPABASE_SERVICE_ROLE_KEY);
+
+    let savedBooking: any = null;
+    let insertError: any = null;
+
+    if (hasServiceRole) {
+      const res = await (supabase as any)
         .from('bookings')
         .insert(insertPayload)
         .select()
         .single();
-
-      if (error) {
-        console.error('Supabase booking insert error:', error);
-        return NextResponse.json(
-          {
-            error: error.message || 'Unable to schedule booking in database. Please try again.',
-            code: error.code,
-          },
-          { status: 500 }
-        );
+      savedBooking = res.data;
+      insertError = res.error;
+    } else {
+      const res = await (supabase as any)
+        .from('bookings')
+        .insert(insertPayload);
+      insertError = res.error;
+      if (!insertError) {
+        savedBooking = {
+          ...insertPayload,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        };
       }
-
-      return NextResponse.json(
-        {
-          success: true,
-          booking: data,
-          message: 'Service reservation queued successfully.',
-        },
-        { status: 201 }
-      );
     }
 
-    // Fallback if Supabase credentials are not yet configured in local environment
-    console.warn(
-      'Notice: Supabase environment variables not configured. Returning simulated reservation.'
-    );
+    if (insertError) {
+      console.error('Supabase booking insert error:', insertError);
+      return NextResponse.json(
+        {
+          error:
+            insertError.message ||
+            'Unable to schedule booking in database. Please verify details and try again.',
+          code: insertError.code,
+        },
+        { status: 500 }
+      );
+    }
 
     return NextResponse.json(
       {
         success: true,
-        booking: {
-          id: 'simulated-' + Date.now(),
-          booking_ref: candidateRef,
-          customer_name: sanitizedName,
-          customer_phone: cleanPhone,
-          service_address: sanitizedAddress,
-          service_type,
-          system_type,
-          preferred_date,
-          arrival_window,
-          status: 'queued' as BookingStatus,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        },
-        notice: 'Database unconfigured: Simulated response',
+        booking: savedBooking,
+        message: 'Service reservation queued successfully.',
       },
       { status: 201 }
     );
