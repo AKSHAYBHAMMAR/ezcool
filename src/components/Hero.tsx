@@ -11,24 +11,44 @@ export default function Hero() {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
+    // 768px matches Tailwind 'md' breakpoint and existing project conventions
+    const mobileQuery = window.matchMedia('(max-width: 767px)');
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-    setReducedMotion(mq.matches);
-    const handler = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
-    mq.addEventListener('change', handler);
+    setIsMobile(mobileQuery.matches);
+    setReducedMotion(motionQuery.matches);
+    setMounted(true);
+
+    const handleMediaChange = (e: MediaQueryListEvent) => {
+      setIsMobile(e.matches);
+      setIsVideoPlaying(false);
+    };
+
+    const handleMotionChange = (e: MediaQueryListEvent) => {
+      setReducedMotion(e.matches);
+    };
+
+    const handleOrientationChange = () => {
+      // Short delay allows browser to update viewport dimensions after rotation
+      setTimeout(() => {
+        setIsMobile(window.innerWidth < 768);
+        setIsVideoPlaying(false);
+      }, 50);
+    };
+
+    mobileQuery.addEventListener('change', handleMediaChange);
+    motionQuery.addEventListener('change', handleMotionChange);
+    window.addEventListener('orientationchange', handleOrientationChange);
+
     return () => {
-      window.removeEventListener('resize', checkMobile);
-      mq.removeEventListener('change', handler);
+      mobileQuery.removeEventListener('change', handleMediaChange);
+      motionQuery.removeEventListener('change', handleMotionChange);
+      window.removeEventListener('orientationchange', handleOrientationChange);
     };
   }, []);
 
   useEffect(() => {
+    if (!mounted) return;
     const video = videoRef.current;
     if (!video) return;
 
@@ -43,7 +63,7 @@ export default function Hero() {
     } else {
       video.pause();
     }
-  }, [reducedMotion]);
+  }, [mounted, reducedMotion, isMobile]);
 
   const handlePlaying = () => {
     setIsVideoPlaying(true);
@@ -68,9 +88,10 @@ export default function Hero() {
         />
       </picture>
 
-      {/* 2. Video Element: Smoothly fades in once playing, eliminating black/blank flash */}
-      {!videoError && !reducedMotion && (
+      {/* 2. Responsive Video Element: Only downloads the video matched for current device */}
+      {mounted && !videoError && !reducedMotion && (
         <video
+          key={isMobile ? 'mobile-hero' : 'desktop-hero'}
           ref={videoRef}
           autoPlay
           muted
@@ -78,37 +99,28 @@ export default function Hero() {
           playsInline
           preload="auto"
           onPlaying={handlePlaying}
+          onWaiting={() => setIsVideoPlaying(false)}
           onError={() => setVideoError(true)}
           className={`hero-video z-[1] transition-opacity duration-700 ease-out ${
             isVideoPlaying ? 'opacity-100' : 'opacity-0'
           }`}
           poster={isMobile ? '/hero-poster-mobile.jpg' : '/hero-poster.jpg'}
         >
-          {/* Mobile-optimized 720x1560 portrait video */}
-          <source
-            src="/videos/hero-mobile.mp4"
-            type="video/mp4"
-            media="(max-width: 767px)"
-          />
-          <source
-            src="/hero-mobile.mp4"
-            type="video/mp4"
-            media="(max-width: 767px)"
-          />
-          {/* Desktop original 1280x720 landscape video */}
-          <source
-            src="/videos/hero section video.mp4"
-            type="video/mp4"
-            media="(min-width: 768px)"
-          />
-          <source
-            src="/hero section video.mp4"
-            type="video/mp4"
-            media="(min-width: 768px)"
-          />
-          {/* Standard fallbacks */}
-          <source src="/hero section video.mp4" type="video/mp4" />
-          <source src="/videos/hero.mp4" type="video/mp4" />
+          {isMobile ? (
+            <>
+              {/* Newly generated mobile-specific portrait video (1080x1920) */}
+              <source src="/videos/mobile_video.mp4" type="video/mp4" />
+              <source src="/mobile_video.mp4" type="video/mp4" />
+            </>
+          ) : (
+            <>
+              {/* Original desktop landscape video (1280x720) */}
+              <source src="/videos/hero%20section%20video.mp4" type="video/mp4" />
+              <source src="/videos/hero section video.mp4" type="video/mp4" />
+              <source src="/videos/hero.mp4" type="video/mp4" />
+              <source src="/hero section video.mp4" type="video/mp4" />
+            </>
+          )}
         </video>
       )}
 
