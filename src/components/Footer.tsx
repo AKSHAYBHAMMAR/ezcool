@@ -11,13 +11,16 @@ export default function Footer() {
       const element =
         document.getElementById(targetId) ||
         (targetId === 'systems' ? document.getElementById('services') : null) ||
-        (targetId === 'engineering' || targetId === 'about'
-          ? document.getElementById('why-choose-us')
+        (targetId === 'engineering' ? document.getElementById('why-choose-us') : null) ||
+        (targetId === 'about'
+          ? document.getElementById('about') || document.getElementById('testimonials')
           : null) ||
-        (targetId === 'contact' ? document.getElementById('booking') : null);
+        (targetId === 'contact'
+          ? document.getElementById('contact') || document.getElementById('booking')
+          : null);
 
       if (element) {
-        const navOffset = 100;
+        const navOffset = window.innerWidth >= 640 ? 120 : 85;
         const elementPosition = element.getBoundingClientRect().top;
         const offsetPosition = elementPosition + window.pageYOffset - navOffset;
         window.scrollTo({

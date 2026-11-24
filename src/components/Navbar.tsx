@@ -4,9 +4,8 @@ import React, { useState, useEffect } from 'react';
 
 const navItems = [
   { label: 'Home', href: '#hero', sectionId: 'hero' },
-  { label: 'Systems', href: '#systems', sectionId: 'systems' },
-  { label: 'Engineering', href: '#engineering', sectionId: 'engineering' },
   { label: 'Services', href: '#services', sectionId: 'services' },
+  { label: 'Why Choose Us', href: '#why-choose-us', sectionId: 'why-choose-us' },
   { label: 'About', href: '#about', sectionId: 'about' },
   { label: 'Contact', href: '#contact', sectionId: 'contact' },
 ];
@@ -22,28 +21,41 @@ export default function Navbar() {
       const scrollY = window.scrollY;
       setScrolled(scrollY > 40);
 
+      // Bottom of page check
+      if (
+        window.innerHeight + scrollY >=
+        document.documentElement.scrollHeight - 60
+      ) {
+        setActiveSection('contact');
+        return;
+      }
+
+      // Top of page check
+      if (scrollY < 120) {
+        setActiveSection('hero');
+        return;
+      }
+
       // Section order from top to bottom
       const sections = [
         { id: 'hero', key: 'hero' },
-        { id: 'services', key: 'systems' },
-        { id: 'why-choose-us', key: 'engineering' },
-        { id: 'how-it-works', key: 'services' },
-        { id: 'testimonials', key: 'about' },
-        { id: 'booking', key: 'contact' },
+        { id: 'services', key: 'services' },
+        { id: 'why-choose-us', key: 'why-choose-us' },
+        { id: 'about', key: 'about' },
+        { id: 'contact', key: 'contact' },
       ];
 
-      const scrollPosition = scrollY + 160;
-
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const el = document.getElementById(sections[i].id);
+      let currentSection = 'hero';
+      for (const s of sections) {
+        const el = document.getElementById(s.id);
         if (el) {
-          const top = el.offsetTop;
-          if (scrollPosition >= top) {
-            setActiveSection(sections[i].key);
-            break;
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= 180) {
+            currentSection = s.key;
           }
         }
       }
+      setActiveSection(currentSection);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -65,9 +77,13 @@ export default function Navbar() {
     const handleHashChange = () => {
       const hash = window.location.hash.replace('#', '');
       if (hash) {
-        const targetElement = document.getElementById(hash);
+        const targetElement =
+          document.getElementById(hash) ||
+          (hash === 'about' ? document.getElementById('testimonials') : null) ||
+          (hash === 'contact' ? document.getElementById('booking') : null);
+
         if (targetElement) {
-          const navOffset = 100;
+          const navOffset = window.innerWidth >= 640 ? 120 : 85;
           const elementPosition = targetElement.getBoundingClientRect().top;
           const offsetPosition = elementPosition + window.pageYOffset - navOffset;
           window.scrollTo({
@@ -97,14 +113,11 @@ export default function Navbar() {
     const targetElement =
       document.getElementById(rawId) ||
       document.getElementById(sectionId) ||
-      (sectionId === 'systems' ? document.getElementById('services') : null) ||
-      (sectionId === 'engineering' || sectionId === 'about'
-        ? document.getElementById('why-choose-us')
-        : null) ||
+      (sectionId === 'about' ? document.getElementById('testimonials') : null) ||
       (sectionId === 'contact' ? document.getElementById('booking') : null);
 
     if (targetElement) {
-      const navOffset = 100;
+      const navOffset = window.innerWidth >= 640 ? 120 : 85;
       const elementPosition = targetElement.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - navOffset;
 
@@ -124,14 +137,10 @@ export default function Navbar() {
   return (
     <header className="fixed top-0 inset-x-0 z-[1000] flex justify-center pt-2.5 xs:pt-3 sm:pt-6 px-2.5 xs:px-3 sm:px-8 pointer-events-none transition-all duration-300">
       <div
-        className={`pointer-events-auto w-[96%] sm:w-[92%] md:w-[90%] lg:w-[84%] max-w-[1300px] transition-all duration-300 shadow-2xl ${
+        className={`pointer-events-auto w-[96%] sm:w-[92%] md:w-[90%] lg:w-[84%] max-w-[1300px] liquid-glass transition-all duration-300 shadow-2xl ${
           mobileMenuOpen
             ? 'rounded-[26px] sm:rounded-[36px]'
             : 'rounded-full'
-        } ${
-          scrolled
-            ? 'bg-white/90 backdrop-blur-2xl border border-[#bae6fd]/90 shadow-[0_12px_36px_-4px_rgba(2,132,199,0.18),0_4px_16px_0_rgba(56,189,248,0.12)]'
-            : 'liquid-glass'
         }`}
       >
         <div className="flex justify-between items-center px-3.5 xs:px-5 sm:px-8 md:px-10 h-14 xs:h-16 sm:h-20 md:h-[84px] w-full">
@@ -180,10 +189,10 @@ export default function Navbar() {
                   className={`px-2.5 md:px-3 lg:px-4 py-1.5 md:py-2 rounded-full text-xs lg:text-[13px] font-mono tracking-wider uppercase transition-all duration-200 ${
                     isActive
                       ? scrolled
-                        ? 'bg-[#e0f2fe] text-[#0284c7] font-semibold border border-[#bae6fd]'
+                        ? 'bg-[#0284c7]/15 text-[#0284c7] font-semibold border border-[#0284c7]/30 shadow-sm'
                         : 'bg-white/25 text-white font-semibold border border-white/40 shadow-sm'
                       : scrolled
-                      ? 'text-[#334e68] font-medium hover:text-[#0284c7] hover:bg-[#f0f7fc]'
+                      ? 'text-[#1e3a5f] font-medium hover:text-[#0284c7] hover:bg-white/30'
                       : 'text-white/90 font-medium hover:text-white hover:bg-white/[0.14] [text-shadow:_0_1px_3px_rgba(0,0,0,0.7)]'
                   }`}
                 >
@@ -218,7 +227,7 @@ export default function Navbar() {
 
         {/* Mobile Dropdown Menu with 44px tap targets & safe viewport scroll */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-t border-[#bae6fd]/50 bg-white/95 backdrop-blur-2xl px-4 xs:px-6 sm:px-8 py-3 xs:py-3.5 sm:py-5 rounded-b-[26px] sm:rounded-b-[34px] shadow-2xl max-h-[calc(100svh-5.5rem)] overflow-y-auto">
+          <div className="md:hidden border-t border-white/20 bg-white/90 backdrop-blur-2xl px-4 xs:px-6 sm:px-8 py-3 xs:py-3.5 sm:py-5 rounded-b-[26px] sm:rounded-b-[34px] shadow-2xl max-h-[calc(100svh-5.5rem)] overflow-y-auto">
             <nav className="flex flex-col space-y-1 font-mono text-xs uppercase">
               {navItems.map((item) => {
                 const isActive = activeSection === item.sectionId;

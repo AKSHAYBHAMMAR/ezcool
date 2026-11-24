@@ -23,9 +23,10 @@ const testimonials = [
 export default function Testimonials() {
   return (
     <section
-      id="testimonials"
+      id="about"
       className="py-16 sm:py-24 relative bg-[#f4f9fd] border-t border-[#d0e6f7] scroll-mt-24 sm:scroll-mt-28"
     >
+      <div id="testimonials" className="scroll-mt-24 sm:scroll-mt-28 absolute -top-20 sm:-top-24 pointer-events-none" />
       <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 sm:mb-16 gap-4 sm:gap-6">
           <div>
