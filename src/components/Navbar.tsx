@@ -42,6 +42,8 @@ export default function Navbar() {
         { id: 'services', key: 'services' },
         { id: 'why-choose-us', key: 'why-choose-us' },
         { id: 'about', key: 'about' },
+        { id: 'how-it-works', key: 'about' },
+        { id: 'testimonials', key: 'about' },
         { id: 'contact', key: 'contact' },
       ];
 
@@ -79,7 +81,6 @@ export default function Navbar() {
       if (hash) {
         const targetElement =
           document.getElementById(hash) ||
-          (hash === 'about' ? document.getElementById('testimonials') : null) ||
           (hash === 'contact' ? document.getElementById('booking') : null);
 
         if (targetElement) {
@@ -113,7 +114,6 @@ export default function Navbar() {
     const targetElement =
       document.getElementById(rawId) ||
       document.getElementById(sectionId) ||
-      (sectionId === 'about' ? document.getElementById('testimonials') : null) ||
       (sectionId === 'contact' ? document.getElementById('booking') : null);
 
     if (targetElement) {

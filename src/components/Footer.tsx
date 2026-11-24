@@ -12,9 +12,7 @@ export default function Footer() {
         document.getElementById(targetId) ||
         (targetId === 'systems' ? document.getElementById('services') : null) ||
         (targetId === 'engineering' ? document.getElementById('why-choose-us') : null) ||
-        (targetId === 'about'
-          ? document.getElementById('about') || document.getElementById('testimonials')
-          : null) ||
+        (targetId === 'about' ? document.getElementById('about') : null) ||
         (targetId === 'contact'
           ? document.getElementById('contact') || document.getElementById('booking')
           : null);
