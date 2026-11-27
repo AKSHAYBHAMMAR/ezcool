@@ -5,14 +5,11 @@ import React, { useState } from 'react';
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function BookingSection() {
-  const [selectedService, setSelectedService] = useState('AC Servicing');
-  const [systemType, setSystemType] = useState('Ducted Central / VRF');
-  const [date, setDate] = useState('');
-  const [timeSlot, setTimeSlot] = useState('09:00 - 11:00 AM');
   const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
   const [address, setAddress] = useState('');
+  const [date, setDate] = useState('');
   const [bookingSuccess, setBookingSuccess] = useState(false);
   const [bookingRef, setBookingRef] = useState('');
   const [emailDeliveryStatus, setEmailDeliveryStatus] = useState<{
@@ -22,15 +19,47 @@ export default function BookingSection() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
+  // Minimum selectable date: today in local browser
+  const todayStr = new Date().toISOString().split('T')[0];
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitError(null);
 
-    // Client-side email validation
+    // 1. Full Name validation
+    if (!name.trim() || name.trim().length < 2) {
+      setSubmitError('Please enter your full name (minimum 2 characters).');
+      setIsSubmitting(false);
+      return;
+    }
+
+    // 2. Contact Number validation (10 digits)
+    const cleanPhone = phone.replace(/\D/g, '');
+    if (cleanPhone.length !== 10) {
+      setSubmitError('Please enter a valid 10-digit mobile number.');
+      setIsSubmitting(false);
+      return;
+    }
+
+    // 3. Email validation
     const trimmedEmail = email.trim().toLowerCase();
     if (!trimmedEmail || !EMAIL_REGEX.test(trimmedEmail)) {
       setSubmitError('Please enter a valid email address for confirmation.');
+      setIsSubmitting(false);
+      return;
+    }
+
+    // 4. Room Address validation
+    if (!address.trim() || address.trim().length < 5) {
+      setSubmitError('Please enter a complete room / property address.');
+      setIsSubmitting(false);
+      return;
+    }
+
+    // 5. Preferred Service Date validation
+    if (!date || isNaN(Date.parse(date))) {
+      setSubmitError('Please select a valid preferred service date.');
       setIsSubmitting(false);
       return;
     }
@@ -43,13 +72,10 @@ export default function BookingSection() {
         },
         body: JSON.stringify({
           name: name.trim(),
+          phone: cleanPhone,
           email: trimmedEmail,
-          phone,
           address: address.trim(),
-          service_type: selectedService,
-          system_type: systemType,
           preferred_date: date,
-          arrival_window: timeSlot,
         }),
       });
 
@@ -82,11 +108,11 @@ export default function BookingSection() {
 
   const handleReset = () => {
     setBookingSuccess(false);
-    setDate('');
     setName('');
-    setEmail('');
     setPhone('');
+    setEmail('');
     setAddress('');
+    setDate('');
     setBookingRef('');
     setEmailDeliveryStatus(null);
     setSubmitError(null);
@@ -117,9 +143,7 @@ export default function BookingSection() {
         </h2>
 
         <p className="font-sans text-xs xs:text-sm sm:text-base md:text-lg text-[#486581] max-w-2xl mx-auto mb-8 sm:mb-12 font-normal leading-relaxed px-1">
-          Book your AC service today and experience the difference of surgical
-          climate calibration, whisper-quiet performance, and certified pure
-          air.
+          Schedule your service appointment online. Select your preferred date, and our concierge team will confirm your reservation and assign a certified master technician.
         </p>
 
         {/* Quick CTA Options */}
@@ -147,7 +171,7 @@ export default function BookingSection() {
         {/* Interactive Booking Console */}
         <div
           id="booking-form"
-          className="glass-card rounded-2xl sm:rounded-3xl p-3.5 xs:p-5 sm:p-8 md:p-10 border border-[#d0e6f7] bg-white/95 max-w-3xl mx-auto text-left relative shadow-[0_20px_50px_-10px_rgba(2,132,199,0.14)]"
+          className="glass-card rounded-2xl sm:rounded-3xl p-3.5 xs:p-5 sm:p-8 md:p-10 border border-[#d0e6f7] bg-white/95 max-w-2xl mx-auto text-left relative shadow-[0_20px_50px_-10px_rgba(2,132,199,0.14)]"
         >
           {bookingSuccess ? (
             <div className="py-6 sm:py-8 text-center space-y-5 sm:space-y-6">
@@ -161,10 +185,10 @@ export default function BookingSection() {
                   DISPATCH CONFIRMATION
                 </span>
                 <h3 className="font-headline text-xl xs:text-2xl sm:text-3xl text-[#0f2744] font-medium mt-1">
-                  Concierge Service Scheduled
+                  Service Request Received
                 </h3>
                 <p className="font-sans text-xs sm:text-sm text-[#486581] max-w-md mx-auto mt-2 font-normal">
-                  A master thermodynamic technician has been confirmed for your appointment.
+                  Your reservation is queued. Our concierge team will review your request and confirm your appointment date.
                 </p>
               </div>
 
@@ -179,20 +203,20 @@ export default function BookingSection() {
                   <span className="text-[#0f2744] font-medium text-right">{name}</span>
                 </div>
                 <div className="flex justify-between gap-2">
+                  <span className="text-[#627d98]">CONTACT:</span>
+                  <span className="text-[#0f2744] font-medium text-right">{phone}</span>
+                </div>
+                <div className="flex justify-between gap-2">
                   <span className="text-[#627d98]">EMAIL:</span>
                   <span className="text-[#0f2744] font-medium text-right">{email}</span>
                 </div>
                 <div className="flex justify-between gap-2">
-                  <span className="text-[#627d98]">SERVICE:</span>
-                  <span className="text-[#0f2744] font-medium text-right">{selectedService}</span>
+                  <span className="text-[#627d98]">ROOM ADDRESS:</span>
+                  <span className="text-[#0f2744] font-medium text-right">{address}</span>
                 </div>
                 <div className="flex justify-between gap-2">
-                  <span className="text-[#627d98]">SYSTEM:</span>
-                  <span className="text-[#0f2744] font-medium text-right">{systemType}</span>
-                </div>
-                <div className="flex justify-between gap-2">
-                  <span className="text-[#627d98]">WINDOW:</span>
-                  <span className="text-[#0f2744] font-medium text-right">{timeSlot}</span>
+                  <span className="text-[#627d98]">SERVICE DATE:</span>
+                  <span className="text-[#0f2744] font-medium text-right">{date}</span>
                 </div>
                 <div className="flex justify-between gap-2">
                   <span className="text-[#627d98]">STATUS:</span>
@@ -241,7 +265,7 @@ export default function BookingSection() {
                     Priority Service Reservation
                   </h3>
                   <p className="font-sans text-xs sm:text-sm text-[#486581] font-normal">
-                    Direct access to master thermodynamic engineers.
+                    Schedule with our master thermodynamic engineers.
                   </p>
                 </div>
                 <span className="font-mono text-[9px] xs:text-[10px] text-[#0284c7] bg-[#e0f2fe] px-2.5 xs:px-3 py-1 rounded-full border border-[#bae6fd] font-semibold self-start sm:self-auto">
@@ -259,105 +283,16 @@ export default function BookingSection() {
                 </div>
               )}
 
-              {/* Step 1: Service Type Selection */}
-              <div>
-                <label className="block font-mono text-[10px] xs:text-[11px] sm:text-xs text-[#0369a1] uppercase tracking-wider mb-2 font-semibold">
-                  1. Select Architectural Service
-                </label>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-2.5">
-                  {[
-                    'AC Servicing',
-                    'AC Repair',
-                    'AC Installation',
-                    'Gas Refill & Clean',
-                  ].map((srv) => (
-                    <button
-                      key={srv}
-                      type="button"
-                      onClick={() => setSelectedService(srv)}
-                      className={`min-h-[44px] p-2 xs:p-2.5 sm:p-3 rounded-xl border text-[11px] sm:text-xs font-mono text-center font-medium transition-all flex items-center justify-center leading-tight break-words ${
-                        selectedService === srv
-                          ? 'bg-[#0284c7] border-[#0284c7] text-white shadow-[0_2px_10px_rgba(2,132,199,0.3)]'
-                          : 'bg-[#f4f9fd] border-[#d0e6f7] text-[#334e68] hover:border-[#0284c7]/50 hover:bg-white'
-                      }`}
-                    >
-                      <span>{srv}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Step 2: System Type */}
-              <div>
-                <label className="block font-mono text-[10px] xs:text-[11px] sm:text-xs text-[#0369a1] uppercase tracking-wider mb-2 font-semibold">
-                  2. System Configuration
-                </label>
-                <div className="grid grid-cols-2 sm:grid-cols-6 gap-2 sm:gap-2.5">
-                  {[
-                    { name: 'Ducted Central / VRF', span: 'col-span-1 sm:col-span-2' },
-                    { name: 'High-Wall Split', span: 'col-span-1 sm:col-span-2' },
-                    { name: 'Multi-Zone Split', span: 'col-span-1 sm:col-span-2' },
-                    { name: 'Concealed Cassette', span: 'col-span-1 sm:col-span-3' },
-                    { name: 'Other / Not Sure', span: 'col-span-2 sm:col-span-3' },
-                  ].map((sys) => (
-                    <button
-                      key={sys.name}
-                      type="button"
-                      onClick={() => setSystemType(sys.name)}
-                      className={`min-h-[44px] p-2 xs:p-2.5 rounded-xl border text-[10px] xs:text-[11px] sm:text-xs font-mono text-center font-medium transition-all flex items-center justify-center leading-snug break-words ${sys.span} ${
-                        systemType === sys.name
-                          ? 'bg-[#0284c7] border-[#0284c7] text-white shadow-[0_2px_10px_rgba(2,132,199,0.3)]'
-                          : 'bg-[#f4f9fd] border-[#d0e6f7] text-[#334e68] hover:border-[#0284c7]/50 hover:bg-white'
-                      }`}
-                    >
-                      <span className="px-0.5">{sys.name}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Step 3: Date & Time Window */}
+              {/* Field 1 & 2: Full Name & Contact Number */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
                 <div>
                   <label className="block font-mono text-[10px] xs:text-[11px] sm:text-xs text-[#0369a1] uppercase tracking-wider mb-1.5 sm:mb-2 font-semibold">
-                    Preferred Date
-                  </label>
-                  <input
-                    type="date"
-                    required
-                    value={date}
-                    onChange={(e) => setDate(e.target.value)}
-                    className="w-full min-w-0 max-w-full min-h-[44px] px-3 xs:px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-[#f8fbfe] border border-[#d0e6f7] text-[#0f2744] font-sans text-xs xs:text-sm focus:outline-none focus:border-[#0284c7] focus:ring-1 focus:ring-[#0284c7] focus:bg-white transition-colors"
-                  />
-                </div>
-                <div>
-                  <label className="block font-mono text-[10px] xs:text-[11px] sm:text-xs text-[#0369a1] uppercase tracking-wider mb-1.5 sm:mb-2 font-semibold">
-                    Arrival Window
-                  </label>
-                  <select
-                    value={timeSlot}
-                    onChange={(e) => setTimeSlot(e.target.value)}
-                    className="w-full min-w-0 max-w-full min-h-[44px] px-3 xs:px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-[#f8fbfe] border border-[#d0e6f7] text-[#0f2744] font-sans text-xs xs:text-sm focus:outline-none focus:border-[#0284c7] focus:ring-1 focus:ring-[#0284c7] focus:bg-white transition-colors"
-                  >
-                    <option value="09:00 - 11:00 AM">09:00 - 11:00 AM (Morning)</option>
-                    <option value="11:00 - 01:00 PM">11:00 AM - 01:00 PM (Midday)</option>
-                    <option value="02:00 - 04:00 PM">02:00 - 04:00 PM (Afternoon)</option>
-                    <option value="04:00 - 06:00 PM">04:00 - 06:00 PM (Evening)</option>
-                    <option value="EMERGENCY">Emergency ASAP Dispatch (&lt; 90 min)</option>
-                  </select>
-                </div>
-              </div>
-
-              {/* Step 4: Contact Information */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
-                <div>
-                  <label className="block font-mono text-[10px] xs:text-[11px] sm:text-xs text-[#0369a1] uppercase tracking-wider mb-1.5 sm:mb-2 font-semibold">
-                    Full Name
+                    1. Full Name <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
                     required
-                    placeholder="Enter your name"
+                    placeholder="e.g. John Doe"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     className="w-full min-w-0 max-w-full min-h-[44px] px-3 xs:px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-[#f8fbfe] border border-[#d0e6f7] text-[#0f2744] placeholder-[#87929a] font-sans text-xs xs:text-sm focus:outline-none focus:border-[#0284c7] focus:ring-1 focus:ring-[#0284c7] focus:bg-white transition-colors"
@@ -365,7 +300,7 @@ export default function BookingSection() {
                 </div>
                 <div>
                   <label className="block font-mono text-[10px] xs:text-[11px] sm:text-xs text-[#0369a1] uppercase tracking-wider mb-1.5 sm:mb-2 font-semibold">
-                    Phone Number (SMS Telemetry)
+                    2. Contact Number <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="tel"
@@ -386,9 +321,10 @@ export default function BookingSection() {
                 </div>
               </div>
 
+              {/* Field 3: Email Address */}
               <div>
                 <label className="block font-mono text-[10px] xs:text-[11px] sm:text-xs text-[#0369a1] uppercase tracking-wider mb-1.5 sm:mb-2 font-semibold">
-                  Email Address (Confirmation &amp; Dispatch Receipt)
+                  3. Email Address <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="email"
@@ -400,18 +336,37 @@ export default function BookingSection() {
                 />
               </div>
 
+              {/* Field 4: Room Address */}
               <div>
                 <label className="block font-mono text-[10px] xs:text-[11px] sm:text-xs text-[#0369a1] uppercase tracking-wider mb-1.5 sm:mb-2 font-semibold">
-                  Service Property Address
+                  4. Room Address <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
                   required
-                  placeholder="Apartment / Villa / Penthouse, Street, City"
+                  placeholder="Room / Flat / Villa No., Building, Street, City"
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
                   className="w-full min-w-0 max-w-full min-h-[44px] px-3 xs:px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-[#f8fbfe] border border-[#d0e6f7] text-[#0f2744] placeholder-[#87929a] font-sans text-xs xs:text-sm focus:outline-none focus:border-[#0284c7] focus:ring-1 focus:ring-[#0284c7] focus:bg-white transition-colors"
                 />
+              </div>
+
+              {/* Field 5: Preferred Service Date */}
+              <div>
+                <label className="block font-mono text-[10px] xs:text-[11px] sm:text-xs text-[#0369a1] uppercase tracking-wider mb-1.5 sm:mb-2 font-semibold">
+                  5. Preferred Service Date <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="date"
+                  required
+                  min={todayStr}
+                  value={date}
+                  onChange={(e) => setDate(e.target.value)}
+                  className="w-full min-w-0 max-w-full min-h-[44px] px-3 xs:px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-[#f8fbfe] border border-[#d0e6f7] text-[#0f2744] font-sans text-xs xs:text-sm focus:outline-none focus:border-[#0284c7] focus:ring-1 focus:ring-[#0284c7] focus:bg-white transition-colors"
+                />
+                <p className="mt-1 text-[11px] text-[#627d98] font-sans">
+                  Technician dispatch schedule will be confirmed by concierge management.
+                </p>
               </div>
 
               <button
