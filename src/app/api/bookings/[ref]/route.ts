@@ -40,7 +40,7 @@ export async function GET(
     const { data, error } = await supabase
       .from('bookings')
       .select(
-        'booking_ref, customer_name, service_type, system_type, preferred_date, arrival_window, status, created_at'
+        'booking_ref, customer_name, customer_email, service_type, system_type, preferred_date, arrival_window, status, email_status, created_at'
       )
       .eq('booking_ref', bookingRef)
       .eq('customer_phone', phone)

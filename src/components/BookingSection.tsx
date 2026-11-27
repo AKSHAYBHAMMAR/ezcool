@@ -2,16 +2,23 @@
 
 import React, { useState } from 'react';
 
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 export default function BookingSection() {
   const [selectedService, setSelectedService] = useState('AC Servicing');
   const [systemType, setSystemType] = useState('Ducted Central / VRF');
   const [date, setDate] = useState('');
   const [timeSlot, setTimeSlot] = useState('09:00 - 11:00 AM');
   const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
   const [bookingSuccess, setBookingSuccess] = useState(false);
   const [bookingRef, setBookingRef] = useState('');
+  const [emailDeliveryStatus, setEmailDeliveryStatus] = useState<{
+    sent: boolean;
+    message: string;
+  } | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
@@ -20,6 +27,14 @@ export default function BookingSection() {
     setIsSubmitting(true);
     setSubmitError(null);
 
+    // Client-side email validation
+    const trimmedEmail = email.trim().toLowerCase();
+    if (!trimmedEmail || !EMAIL_REGEX.test(trimmedEmail)) {
+      setSubmitError('Please enter a valid email address for confirmation.');
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
       const response = await fetch('/api/bookings', {
         method: 'POST',
@@ -27,9 +42,10 @@ export default function BookingSection() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          name,
+          name: name.trim(),
+          email: trimmedEmail,
           phone,
-          address,
+          address: address.trim(),
           service_type: selectedService,
           system_type: systemType,
           preferred_date: date,
@@ -43,8 +59,17 @@ export default function BookingSection() {
         throw new Error(data.error || 'Failed to schedule reservation. Please try again.');
       }
 
-      const confirmedRef = data.booking?.booking_ref || `EZCOOL-${Math.floor(100000 + Math.random() * 900000)}`;
+      // Display actual database-persisted booking reference returned by API
+      const confirmedRef = data.booking?.booking_ref;
+      if (!confirmedRef) {
+        throw new Error('Service did not return an authorized booking reference. Please contact concierge support.');
+      }
+
       setBookingRef(confirmedRef);
+      setEmailDeliveryStatus({
+        sent: Boolean(data.emailDelivery?.sent),
+        message: data.emailDelivery?.message || (data.emailDelivery?.sent ? 'Confirmation email sent.' : 'Confirmation notification queued.'),
+      });
       setBookingSuccess(true);
     } catch (err: unknown) {
       console.error('Booking submission error:', err);
@@ -59,8 +84,11 @@ export default function BookingSection() {
     setBookingSuccess(false);
     setDate('');
     setName('');
+    setEmail('');
     setPhone('');
     setAddress('');
+    setBookingRef('');
+    setEmailDeliveryStatus(null);
     setSubmitError(null);
     setIsSubmitting(false);
   };
@@ -136,15 +164,23 @@ export default function BookingSection() {
                   Concierge Service Scheduled
                 </h3>
                 <p className="font-sans text-xs sm:text-sm text-[#486581] max-w-md mx-auto mt-2 font-normal">
-                  A master thermodynamic technician has been tentatively queued.
-                  You will receive SMS tracking telemetry 30 minutes prior to arrival.
+                  A master thermodynamic technician has been confirmed for your appointment.
                 </p>
               </div>
 
+              {/* Booking Summary Card */}
               <div className="p-3.5 sm:p-4 rounded-xl bg-[#f4f9fd] border border-[#d0e6f7] max-w-md mx-auto font-mono text-[10px] xs:text-[11px] sm:text-xs space-y-2 text-left">
                 <div className="flex justify-between gap-2">
                   <span className="text-[#627d98]">DISPATCH REF:</span>
                   <span className="text-[#0284c7] font-semibold">{bookingRef}</span>
+                </div>
+                <div className="flex justify-between gap-2">
+                  <span className="text-[#627d98]">CUSTOMER:</span>
+                  <span className="text-[#0f2744] font-medium text-right">{name}</span>
+                </div>
+                <div className="flex justify-between gap-2">
+                  <span className="text-[#627d98]">EMAIL:</span>
+                  <span className="text-[#0f2744] font-medium text-right">{email}</span>
                 </div>
                 <div className="flex justify-between gap-2">
                   <span className="text-[#627d98]">SERVICE:</span>
@@ -163,6 +199,31 @@ export default function BookingSection() {
                   <span className="text-emerald-600 font-semibold text-right">QUEUED // DISPATCH READY</span>
                 </div>
               </div>
+
+              {/* Email Notification Status Message */}
+              {emailDeliveryStatus && (
+                <div className="max-w-md mx-auto">
+                  {emailDeliveryStatus.sent ? (
+                    <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-center gap-2.5 text-left">
+                      <span className="material-symbols-outlined text-[20px] text-emerald-600 flex-shrink-0">
+                        mark_email_read
+                      </span>
+                      <span className="font-sans leading-normal">
+                        A detailed confirmation receipt has been emailed to <strong>{email}</strong>.
+                      </span>
+                    </div>
+                  ) : (
+                    <div className="p-3 rounded-xl bg-sky-50 border border-sky-200 text-sky-800 text-xs flex items-center gap-2.5 text-left">
+                      <span className="material-symbols-outlined text-[20px] text-sky-600 flex-shrink-0">
+                        info
+                      </span>
+                      <span className="font-sans leading-normal">
+                        Your reservation is safely confirmed under reference <strong>{bookingRef}</strong>. (Email notice: {emailDeliveryStatus.message})
+                      </span>
+                    </div>
+                  )}
+                </div>
+              )}
 
               <button
                 type="button"
@@ -312,7 +373,7 @@ export default function BookingSection() {
                     pattern="[0-9]{10}"
                     maxLength={10}
                     required
-                    placeholder="Enter your mobile number"
+                    placeholder="10-digit mobile number"
                     value={phone}
                     onChange={(e) => {
                       const digitsOnly = e.target.value.replace(/\D/g, '');
@@ -323,6 +384,20 @@ export default function BookingSection() {
                     className="w-full min-w-0 max-w-full min-h-[44px] px-3 xs:px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-[#f8fbfe] border border-[#d0e6f7] text-[#0f2744] placeholder-[#87929a] font-sans text-xs xs:text-sm focus:outline-none focus:border-[#0284c7] focus:ring-1 focus:ring-[#0284c7] focus:bg-white transition-colors"
                   />
                 </div>
+              </div>
+
+              <div>
+                <label className="block font-mono text-[10px] xs:text-[11px] sm:text-xs text-[#0369a1] uppercase tracking-wider mb-1.5 sm:mb-2 font-semibold">
+                  Email Address (Confirmation &amp; Dispatch Receipt)
+                </label>
+                <input
+                  type="email"
+                  required
+                  placeholder="name@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full min-w-0 max-w-full min-h-[44px] px-3 xs:px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-[#f8fbfe] border border-[#d0e6f7] text-[#0f2744] placeholder-[#87929a] font-sans text-xs xs:text-sm focus:outline-none focus:border-[#0284c7] focus:ring-1 focus:ring-[#0284c7] focus:bg-white transition-colors"
+                />
               </div>
 
               <div>

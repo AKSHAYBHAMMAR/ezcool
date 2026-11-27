@@ -13,6 +13,8 @@ export type BookingStatus =
   | 'completed'
   | 'cancelled';
 
+export type EmailStatus = 'pending' | 'sent' | 'failed';
+
 export type ServiceType =
   | 'AC Servicing'
   | 'AC Repair'
@@ -31,6 +33,7 @@ export interface Booking {
   id: string;
   booking_ref: string;
   customer_name: string;
+  customer_email: string;
   customer_phone: string;
   service_address: string;
   service_type: ServiceType;
@@ -38,6 +41,10 @@ export interface Booking {
   preferred_date: string; // ISO date string (YYYY-MM-DD)
   arrival_window: string;
   status: BookingStatus;
+  email_status: EmailStatus;
+  email_sent_at?: string | null;
+  email_message_id?: string | null;
+  email_error?: string | null;
   notes?: string | null;
   created_at: string;
   updated_at: string;
@@ -47,6 +54,7 @@ export interface BookingInsert {
   id?: string;
   booking_ref?: string;
   customer_name: string;
+  customer_email: string;
   customer_phone: string;
   service_address: string;
   service_type: ServiceType;
@@ -54,6 +62,10 @@ export interface BookingInsert {
   preferred_date: string;
   arrival_window: string;
   status?: BookingStatus;
+  email_status?: EmailStatus;
+  email_sent_at?: string | null;
+  email_message_id?: string | null;
+  email_error?: string | null;
   notes?: string | null;
   created_at?: string;
   updated_at?: string;
@@ -62,6 +74,7 @@ export interface BookingInsert {
 export interface BookingUpdate {
   booking_ref?: string;
   customer_name?: string;
+  customer_email?: string;
   customer_phone?: string;
   service_address?: string;
   service_type?: ServiceType;
@@ -69,6 +82,10 @@ export interface BookingUpdate {
   preferred_date?: string;
   arrival_window?: string;
   status?: BookingStatus;
+  email_status?: EmailStatus;
+  email_sent_at?: string | null;
+  email_message_id?: string | null;
+  email_error?: string | null;
   notes?: string | null;
   updated_at?: string;
 }
@@ -95,6 +112,7 @@ export interface Database {
       booking_status: BookingStatus;
       service_type: ServiceType;
       system_configuration: SystemConfiguration;
+      email_status: EmailStatus;
     };
     CompositeTypes: {
       [_ in never]: never;

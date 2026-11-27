@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createAdminClient } from '@/lib/supabase/admin';
-import { createClient } from '@/lib/supabase/server';
-import { ServiceType, SystemConfiguration, BookingStatus, BookingInsert } from '@/types/database';
+import { sendBookingConfirmationEmail } from '@/lib/email';
+import { ServiceType, SystemConfiguration, BookingStatus } from '@/types/database';
 
 const VALID_SERVICES: ServiceType[] = [
   'AC Servicing',
@@ -15,12 +15,11 @@ const VALID_SYSTEMS: SystemConfiguration[] = [
   'High-Wall Split',
   'Multi-Zone Split',
   'Concealed Cassette',
+  'Chiller System',
   'Other / Not Sure',
 ];
 
-function generateFallbackRef(): string {
-  return `EZCOOL-${Math.floor(100000 + Math.random() * 900000)}`;
-}
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export async function POST(request: NextRequest) {
   try {
@@ -28,6 +27,7 @@ export async function POST(request: NextRequest) {
 
     const {
       name,
+      email,
       phone,
       address,
       service_type,
@@ -37,10 +37,17 @@ export async function POST(request: NextRequest) {
       notes,
     } = body;
 
-    // 1. Server-side validation
+    // 1. Server-side validation and sanitization
     if (!name || typeof name !== 'string' || name.trim().length < 2) {
       return NextResponse.json(
         { error: 'Please provide a valid full name (minimum 2 characters).' },
+        { status: 400 }
+      );
+    }
+
+    if (!email || typeof email !== 'string' || !EMAIL_REGEX.test(email.trim())) {
+      return NextResponse.json(
+        { error: 'Please provide a valid email address for booking confirmation.' },
         { status: 400 }
       );
     }
@@ -89,16 +96,15 @@ export async function POST(request: NextRequest) {
     }
 
     const sanitizedName = name.trim();
+    const sanitizedEmail = email.trim().toLowerCase();
     const sanitizedAddress = address.trim();
-    const candidateRef = generateFallbackRef();
 
-    // 2. Resolve Supabase Client
+    // 2. Resolve Server-side Supabase Service-Role Client
     const adminClient = createAdminClient();
-    const supabase = adminClient || createClient();
 
-    if (!supabase) {
+    if (!adminClient) {
       console.error(
-        'Supabase configuration missing: NEXT_PUBLIC_SUPABASE_URL and API key not configured.'
+        'Supabase configuration error: SUPABASE_SERVICE_ROLE_KEY is not configured.'
       );
       return NextResponse.json(
         {
@@ -109,71 +115,106 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 3. Generate unique ID and reference code
-    const bookingId = crypto.randomUUID();
-    const bookingRef = generateFallbackRef();
+    // 3. Insert into Supabase
+    // Note: booking_ref is omitted so the database trigger tr_set_booking_ref
+    // executes public.generate_booking_ref() natively for uniqueness and consistency.
+    const { data: savedBooking, error: insertError } = await (adminClient as any)
+      .from('bookings')
+      .insert({
+        customer_name: sanitizedName,
+        customer_email: sanitizedEmail,
+        customer_phone: cleanPhone,
+        service_address: sanitizedAddress,
+        service_type,
+        system_type,
+        preferred_date,
+        arrival_window,
+        status: 'queued',
+        email_status: 'pending',
+        notes: notes ? String(notes).trim() : null,
+      })
+      .select()
+      .single();
 
-    const insertPayload: BookingInsert = {
-      id: bookingId,
-      booking_ref: bookingRef,
-      customer_name: sanitizedName,
-      customer_phone: cleanPhone,
-      service_address: sanitizedAddress,
-      service_type,
-      system_type,
-      preferred_date,
-      arrival_window,
-      status: 'queued' as BookingStatus,
-      notes: notes ? String(notes).trim() : null,
-    };
-
-    // 4. Insert into Supabase
-    // If using service role key, perform .select().single()
-    // If using publishable/anon key, PostgreSQL RLS permits INSERT but restricts SELECT for customer privacy
-    const hasServiceRole = Boolean(process.env.SUPABASE_SERVICE_ROLE_KEY);
-
-    let savedBooking: any = null;
-    let insertError: any = null;
-
-    if (hasServiceRole) {
-      const res = await (supabase as any)
-        .from('bookings')
-        .insert(insertPayload)
-        .select()
-        .single();
-      savedBooking = res.data;
-      insertError = res.error;
-    } else {
-      const res = await (supabase as any)
-        .from('bookings')
-        .insert(insertPayload);
-      insertError = res.error;
-      if (!insertError) {
-        savedBooking = {
-          ...insertPayload,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        };
-      }
-    }
-
-    if (insertError) {
+    if (insertError || !savedBooking) {
       console.error('Supabase booking insert error:', insertError);
       return NextResponse.json(
         {
           error:
-            insertError.message ||
             'Unable to schedule booking in database. Please verify details and try again.',
-          code: insertError.code,
         },
         { status: 500 }
       );
     }
 
+    // 4. Attempt email delivery only AFTER database insert succeeds
+    const emailResult = await sendBookingConfirmationEmail({
+      bookingRef: savedBooking.booking_ref,
+      customerName: savedBooking.customer_name,
+      customerEmail: savedBooking.customer_email,
+      serviceType: savedBooking.service_type,
+      systemType: savedBooking.system_type,
+      preferredDate: savedBooking.preferred_date,
+      arrivalWindow: savedBooking.arrival_window,
+      serviceAddress: savedBooking.service_address,
+      status: savedBooking.status,
+    });
+
+    // 5. Record email delivery status in Supabase
+    if (emailResult.success) {
+      const sentAt = new Date().toISOString();
+      await (adminClient as any)
+        .from('bookings')
+        .update({
+          email_status: 'sent',
+          email_sent_at: sentAt,
+          email_message_id: emailResult.messageId || null,
+          email_error: null,
+        })
+        .eq('id', savedBooking.id);
+
+      savedBooking.email_status = 'sent';
+      savedBooking.email_sent_at = sentAt;
+      savedBooking.email_message_id = emailResult.messageId;
+    } else {
+      await (adminClient as any)
+        .from('bookings')
+        .update({
+          email_status: 'failed',
+          email_error: emailResult.error || 'Delivery failed',
+        })
+        .eq('id', savedBooking.id);
+
+      savedBooking.email_status = 'failed';
+      savedBooking.email_error = emailResult.error;
+    }
+
+    // 6. Return response containing persisted booking and email delivery status
     return NextResponse.json(
       {
         success: true,
-        booking: savedBooking,
+        booking: {
+          id: savedBooking.id,
+          booking_ref: savedBooking.booking_ref,
+          customer_name: savedBooking.customer_name,
+          customer_email: savedBooking.customer_email,
+          customer_phone: savedBooking.customer_phone,
+          service_address: savedBooking.service_address,
+          service_type: savedBooking.service_type,
+          system_type: savedBooking.system_type,
+          preferred_date: savedBooking.preferred_date,
+          arrival_window: savedBooking.arrival_window,
+          status: savedBooking.status,
+          email_status: savedBooking.email_status,
+          created_at: savedBooking.created_at,
+        },
+        emailDelivery: {
+          sent: emailResult.success,
+          status: savedBooking.email_status,
+          message: emailResult.success
+            ? 'Confirmation email sent successfully.'
+            : 'Booking confirmed. Note: confirmation email could not be sent.',
+        },
         message: 'Service reservation queued successfully.',
       },
       { status: 201 }
@@ -189,13 +230,13 @@ export async function POST(request: NextRequest) {
 
 export async function GET(request: NextRequest) {
   try {
-    // Enforce Requirement 10: Protect customer booking records from public access
     const authHeader = request.headers.get('authorization') || '';
     const adminApiKey = request.headers.get('x-admin-key') || '';
     const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
 
     const isAuthorized =
-      (serviceRoleKey && (authHeader === `Bearer ${serviceRoleKey}` || adminApiKey === serviceRoleKey));
+      Boolean(serviceRoleKey) &&
+      (authHeader === `Bearer ${serviceRoleKey}` || adminApiKey === serviceRoleKey);
 
     if (!isAuthorized) {
       return NextResponse.json(
