@@ -3,26 +3,32 @@ import { createAdminClient } from '@/lib/supabase/admin';
 import { createClient } from '@/lib/supabase/server';
 import {
   sendBookingStatusConfirmedEmail,
+  sendTechnicianAssignedEmail,
+  sendServiceDayReminderEmail,
+  sendBookingCompletedEmail,
   sendBookingCancellationEmail,
   isDeliverableCustomerEmail,
   EmailDispatchResult,
 } from '@/lib/email';
 import { BookingStatus, NotificationType } from '@/types/database';
+import { getKolkataDateTime } from '@/lib/timezone';
 
 const VALID_STATUSES: BookingStatus[] = [
   'queued',
   'confirmed',
-  'in_progress',
+  'technician_assigned',
   'completed',
   'cancelled',
+  'in_progress', // Historical backwards compatibility
 ];
 
 const ALLOWED_TRANSITIONS: Record<BookingStatus, BookingStatus[]> = {
   queued: ['confirmed', 'cancelled', 'queued'],
-  confirmed: ['in_progress', 'completed', 'cancelled', 'confirmed'],
-  in_progress: ['completed', 'cancelled', 'in_progress'],
-  completed: ['completed'], // Terminal state
-  cancelled: ['cancelled'], // Terminal state
+  confirmed: ['technician_assigned', 'cancelled', 'confirmed'],
+  technician_assigned: ['completed', 'cancelled', 'technician_assigned'],
+  completed: ['completed'], // Terminal
+  cancelled: ['cancelled'], // Terminal
+  in_progress: ['completed', 'cancelled', 'in_progress'], // Legacy terminal or completion
 };
 
 export async function GET(
@@ -42,8 +48,15 @@ export async function GET(
     const { searchParams } = new URL(request.url);
     const phone = searchParams.get('phone')?.replace(/\D/g, '');
 
-    // Enforce customer phone verification to prevent unauthorized enumeration
-    if (!phone || phone.length !== 10) {
+    const authHeader = request.headers.get('authorization') || '';
+    const adminApiKey = request.headers.get('x-admin-key') || '';
+    const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
+    const isAdmin =
+      Boolean(serviceRoleKey) &&
+      (authHeader === `Bearer ${serviceRoleKey}` || adminApiKey === serviceRoleKey);
+
+    // If not authenticated as admin, require customer phone verification
+    if (!isAdmin && (!phone || phone.length !== 10)) {
       return NextResponse.json(
         { error: 'Valid 10-digit registered phone number is required to verify booking details.' },
         { status: 400 }
@@ -60,14 +73,16 @@ export async function GET(
       );
     }
 
-    const { data, error } = await supabase
+    let query = supabase
       .from('bookings')
-      .select(
-        'booking_ref, customer_name, customer_email, service_type, system_type, preferred_date, arrival_window, status, email_status, created_at, assigned_technician, notes'
-      )
-      .eq('booking_ref', bookingRef)
-      .eq('customer_phone', phone)
-      .maybeSingle();
+      .select('*')
+      .eq('booking_ref', bookingRef);
+
+    if (!isAdmin && phone) {
+      query = query.eq('customer_phone', phone);
+    }
+
+    const { data, error } = await query.maybeSingle();
 
     if (error) {
       console.error('Error querying booking by ref:', error);
@@ -96,8 +111,8 @@ export async function GET(
 
 /**
  * PATCH /api/bookings/[ref]
- * Secure Administrative endpoint to update booking status, notes, or assigned technician.
- * Idempotently triggers lifecycle customer emails on state transitions.
+ * Secure Administrative endpoint to update booking status, technician, scheduling, or notes.
+ * Idempotently triggers lifecycle customer emails and immediate service-day reminders.
  */
 export async function PATCH(
   request: NextRequest,
@@ -140,7 +155,17 @@ export async function PATCH(
 
     // 3. Parse and validate payload
     const body = await request.json().catch(() => ({}));
-    const { status, notes, assigned_technician, cancellation_reason, retry_notification } = body;
+    const {
+      status,
+      notes,
+      technician_name,
+      technician_phone,
+      assigned_technician,
+      scheduled_service_date,
+      service_date,
+      cancellation_reason,
+      retry_notification,
+    } = body;
 
     if (status !== undefined && !VALID_STATUSES.includes(status)) {
       return NextResponse.json(
@@ -185,11 +210,26 @@ export async function PATCH(
     };
     if (status) updatePayload.status = status;
     if (notes !== undefined) updatePayload.notes = notes ? String(notes).trim() : null;
-    if (assigned_technician !== undefined) {
-      updatePayload.assigned_technician = assigned_technician
-        ? String(assigned_technician).trim()
-        : null;
+
+    const resolvedTechName =
+      technician_name !== undefined
+        ? (technician_name ? String(technician_name).trim() : null)
+        : (assigned_technician !== undefined ? (assigned_technician ? String(assigned_technician).trim() : null) : undefined);
+
+    if (resolvedTechName !== undefined) {
+      updatePayload.technician_name = resolvedTechName;
+      updatePayload.assigned_technician = resolvedTechName;
     }
+
+    if (technician_phone !== undefined) {
+      updatePayload.technician_phone = technician_phone ? String(technician_phone).trim() : null;
+    }
+
+    const resolvedServiceDate = scheduled_service_date || service_date;
+    if (resolvedServiceDate !== undefined) {
+      updatePayload.scheduled_service_date = resolvedServiceDate ? String(resolvedServiceDate).trim() : null;
+    }
+
     if (cancellation_reason !== undefined) {
       updatePayload.cancellation_reason = cancellation_reason
         ? String(cancellation_reason).trim()
@@ -211,29 +251,34 @@ export async function PATCH(
       );
     }
 
-    // 7. Determine if a lifecycle notification is needed
-    // Genuine transition triggers:
-    // - queued -> confirmed => 'status_confirmed'
-    // - any -> cancelled => 'status_cancelled'
-    // Or retry_notification === true on existing status
+    // 7. Determine primary lifecycle notification
     let notificationType: NotificationType | null = null;
     const isTransition = currentStatus !== nextStatus;
+    const isTechAssignmentUpdate =
+      nextStatus === 'technician_assigned' &&
+      resolvedTechName &&
+      resolvedTechName !== currentBooking.technician_name;
 
     if (isTransition) {
       if (nextStatus === 'confirmed') {
         notificationType = 'status_confirmed';
+      } else if (nextStatus === 'technician_assigned') {
+        notificationType = 'technician_assigned';
+      } else if (nextStatus === 'completed') {
+        notificationType = 'status_completed';
       } else if (nextStatus === 'cancelled') {
         notificationType = 'status_cancelled';
       }
+    } else if (isTechAssignmentUpdate) {
+      notificationType = 'technician_assigned';
     } else if (retry_notification === true) {
-      if (nextStatus === 'confirmed') {
-        notificationType = 'status_confirmed';
-      } else if (nextStatus === 'cancelled') {
-        notificationType = 'status_cancelled';
-      }
+      if (nextStatus === 'confirmed') notificationType = 'status_confirmed';
+      else if (nextStatus === 'technician_assigned') notificationType = 'technician_assigned';
+      else if (nextStatus === 'completed') notificationType = 'status_completed';
+      else if (nextStatus === 'cancelled') notificationType = 'status_cancelled';
     }
 
-    // 8. Handle Notification Dispatching with Idempotency Constraints
+    // 8. Dispatch Primary Notification with Idempotency Constraints
     let notificationResult = {
       sent: false,
       skipped: true,
@@ -244,7 +289,6 @@ export async function PATCH(
     };
 
     if (notificationType) {
-      // Check existing notifications audit table for idempotency
       let existingNotification: any = null;
       try {
         const { data: existing } = await (adminClient as any)
@@ -255,12 +299,14 @@ export async function PATCH(
           .maybeSingle();
         existingNotification = existing;
       } catch (checkErr) {
-        // Table might not exist yet if migration hasn't been run
         console.warn('Could not query booking_notifications table:', checkErr);
       }
 
-      if (existingNotification && existingNotification.notification_status === 'sent') {
-        // Idempotency: Prevent duplicate notifications when an admin saves the same status again
+      if (
+        existingNotification &&
+        existingNotification.notification_status === 'sent' &&
+        !retry_notification
+      ) {
         notificationResult = {
           sent: false,
           skipped: true,
@@ -268,7 +314,6 @@ export async function PATCH(
           message: `Notification '${notificationType}' was already sent on ${existingNotification.sent_at}. Duplicate dispatch prevented.`,
         };
       } else if (!isDeliverableCustomerEmail(updatedBooking.customer_email)) {
-        // Ensure legacy bookings with placeholder emails never receive notifications
         notificationResult = {
           sent: false,
           skipped: true,
@@ -276,7 +321,6 @@ export async function PATCH(
           message: 'Customer email is invalid or a legacy placeholder (@ezcool.local). Notification skipped.',
         };
 
-        // Record skipped/failed in audit table if table exists
         try {
           if (!existingNotification) {
             await (adminClient as any).from('booking_notifications').insert({
@@ -292,7 +336,6 @@ export async function PATCH(
           // Ignore table insert error if migration pending
         }
       } else {
-        // Reserve / lock pending notification record in audit table
         let notificationRecordId = existingNotification?.id;
         try {
           if (!existingNotification) {
@@ -309,7 +352,6 @@ export async function PATCH(
               .single();
 
             if (lockError && lockError.code === '23505') {
-              // Unique constraint caught a race condition!
               return NextResponse.json({
                 success: true,
                 booking: updatedBooking,
@@ -324,35 +366,73 @@ export async function PATCH(
             notificationRecordId = insertedNotif?.id;
           }
         } catch (lockErr) {
-          console.warn('Audit lock insert error (table may not exist yet):', lockErr);
+          console.warn('Audit lock insert error:', lockErr);
         }
 
         // Dispatch email via Resend
         let dispatchRes: EmailDispatchResult;
-        if (notificationType === 'status_confirmed') {
-          dispatchRes = await sendBookingStatusConfirmedEmail({
-            bookingRef: updatedBooking.booking_ref,
-            customerName: updatedBooking.customer_name,
-            customerEmail: updatedBooking.customer_email,
-            serviceType: updatedBooking.service_type,
-            systemType: updatedBooking.system_type,
-            preferredDate: updatedBooking.preferred_date,
-            arrivalWindow: updatedBooking.arrival_window,
-            serviceAddress: updatedBooking.service_address,
-            assignedTechnician: updatedBooking.assigned_technician,
-            notes: updatedBooking.notes,
-          });
-        } else {
-          dispatchRes = await sendBookingCancellationEmail({
-            bookingRef: updatedBooking.booking_ref,
-            customerName: updatedBooking.customer_name,
-            customerEmail: updatedBooking.customer_email,
-            serviceType: updatedBooking.service_type,
-            systemType: updatedBooking.system_type,
-            preferredDate: updatedBooking.preferred_date,
-            arrivalWindow: updatedBooking.arrival_window,
-            cancellationReason: updatedBooking.cancellation_reason,
-          });
+        const activeServiceDate =
+          updatedBooking.scheduled_service_date || updatedBooking.preferred_date;
+
+        switch (notificationType) {
+          case 'status_confirmed':
+            dispatchRes = await sendBookingStatusConfirmedEmail({
+              bookingRef: updatedBooking.booking_ref,
+              customerName: updatedBooking.customer_name,
+              customerEmail: updatedBooking.customer_email,
+              serviceType: updatedBooking.service_type,
+              systemType: updatedBooking.system_type,
+              preferredDate: activeServiceDate,
+              arrivalWindow: updatedBooking.arrival_window,
+              serviceAddress: updatedBooking.service_address,
+              assignedTechnician: updatedBooking.technician_name || updatedBooking.assigned_technician,
+              notes: updatedBooking.notes,
+            });
+            break;
+
+          case 'technician_assigned':
+            dispatchRes = await sendTechnicianAssignedEmail({
+              bookingRef: updatedBooking.booking_ref,
+              customerName: updatedBooking.customer_name,
+              customerEmail: updatedBooking.customer_email,
+              serviceType: updatedBooking.service_type,
+              systemType: updatedBooking.system_type,
+              serviceDate: activeServiceDate,
+              serviceAddress: updatedBooking.service_address,
+              technicianName: updatedBooking.technician_name || updatedBooking.assigned_technician || 'Certified EZCOOL Specialist',
+              technicianPhone: updatedBooking.technician_phone,
+              arrivalWindow: updatedBooking.arrival_window,
+              notes: updatedBooking.notes,
+            });
+            break;
+
+          case 'status_completed':
+            dispatchRes = await sendBookingCompletedEmail({
+              bookingRef: updatedBooking.booking_ref,
+              customerName: updatedBooking.customer_name,
+              customerEmail: updatedBooking.customer_email,
+              serviceType: updatedBooking.service_type,
+              systemType: updatedBooking.system_type,
+              serviceDate: activeServiceDate,
+              serviceAddress: updatedBooking.service_address,
+              technicianName: updatedBooking.technician_name || updatedBooking.assigned_technician,
+              notes: updatedBooking.notes,
+            });
+            break;
+
+          case 'status_cancelled':
+          default:
+            dispatchRes = await sendBookingCancellationEmail({
+              bookingRef: updatedBooking.booking_ref,
+              customerName: updatedBooking.customer_name,
+              customerEmail: updatedBooking.customer_email,
+              serviceType: updatedBooking.service_type,
+              systemType: updatedBooking.system_type,
+              preferredDate: activeServiceDate,
+              arrivalWindow: updatedBooking.arrival_window,
+              cancellationReason: updatedBooking.cancellation_reason,
+            });
+            break;
         }
 
         if (dispatchRes.success) {
@@ -371,7 +451,7 @@ export async function PATCH(
             }
             await (adminClient as any)
               .from('bookings')
-              .update({ email_status: 'sent', email_sent_at: sentAt })
+              .update({ email_status: 'sent', email_sent_at: sentAt, email_message_id: dispatchRes.messageId || null })
               .eq('id', updatedBooking.id);
           } catch (dbUpdateErr) {
             console.error('Error updating notification status in DB:', dbUpdateErr);
@@ -384,7 +464,6 @@ export async function PATCH(
             message: 'Status notification email dispatched successfully.',
           };
         } else {
-          // Failure handling: Booking status is preserved, failure is recorded
           try {
             if (notificationRecordId) {
               await (adminClient as any)
@@ -395,6 +474,10 @@ export async function PATCH(
                 })
                 .eq('id', notificationRecordId);
             }
+            await (adminClient as any)
+              .from('bookings')
+              .update({ email_status: 'failed', email_error: dispatchRes.error || 'Delivery failed' })
+              .eq('id', updatedBooking.id);
           } catch (dbUpdateErr) {
             console.error('Error updating failed notification status in DB:', dbUpdateErr);
           }
@@ -409,10 +492,128 @@ export async function PATCH(
       }
     }
 
+    // 9. Immediate Service-Day Reminder Rule:
+    // If technician assigned/active on the service date after 8:00 AM IST, dispatch reminder immediately.
+    let reminderResult: any = null;
+    const effectiveServiceDate =
+      updatedBooking.scheduled_service_date || updatedBooking.preferred_date;
+
+    if (
+      nextStatus === 'technician_assigned' &&
+      isDeliverableCustomerEmail(updatedBooking.customer_email)
+    ) {
+      const { dateStr: kolkataToday, hour: kolkataHour } = getKolkataDateTime();
+
+      if (effectiveServiceDate === kolkataToday && kolkataHour >= 8) {
+        // Check if reminder was already sent for today
+        let existingReminder: any = null;
+        try {
+          const { data: remCheck } = await (adminClient as any)
+            .from('booking_notifications')
+            .select('*')
+            .eq('booking_id', updatedBooking.id)
+            .eq('notification_type', 'service_day_reminder')
+            .eq('service_date', kolkataToday)
+            .maybeSingle();
+          existingReminder = remCheck;
+        } catch {
+          // Table check
+        }
+
+        if (existingReminder && existingReminder.notification_status === 'sent') {
+          reminderResult = {
+            sent: false,
+            skipped: true,
+            message: 'Service-day reminder was already sent for today.',
+          };
+        } else {
+          // Dispatch immediate reminder
+          let reminderRecordId = existingReminder?.id;
+          try {
+            if (!existingReminder) {
+              const { data: insertedRem } = await (adminClient as any)
+                .from('booking_notifications')
+                .insert({
+                  booking_id: updatedBooking.id,
+                  booking_ref: updatedBooking.booking_ref,
+                  notification_type: 'service_day_reminder',
+                  recipient_email: updatedBooking.customer_email,
+                  notification_status: 'pending',
+                  service_date: kolkataToday,
+                })
+                .select()
+                .single();
+              reminderRecordId = insertedRem?.id;
+            }
+          } catch (remLockErr) {
+            console.warn('Reminder lock insert error:', remLockErr);
+          }
+
+          const remDispatch = await sendServiceDayReminderEmail({
+            bookingRef: updatedBooking.booking_ref,
+            customerName: updatedBooking.customer_name,
+            customerEmail: updatedBooking.customer_email,
+            serviceType: updatedBooking.service_type,
+            systemType: updatedBooking.system_type,
+            serviceDate: kolkataToday,
+            serviceAddress: updatedBooking.service_address,
+            technicianName: updatedBooking.technician_name || updatedBooking.assigned_technician,
+            technicianPhone: updatedBooking.technician_phone,
+            arrivalWindow: updatedBooking.arrival_window,
+          });
+
+          if (remDispatch.success) {
+            const sentAt = new Date().toISOString();
+            try {
+              if (reminderRecordId) {
+                await (adminClient as any)
+                  .from('booking_notifications')
+                  .update({
+                    notification_status: 'sent',
+                    sent_at: sentAt,
+                    provider_message_id: remDispatch.messageId || null,
+                  })
+                  .eq('id', reminderRecordId);
+              }
+            } catch (remDbErr) {
+              console.error('Error updating reminder sent status:', remDbErr);
+            }
+
+            reminderResult = {
+              sent: true,
+              skipped: false,
+              message: 'Immediate service-day reminder sent successfully (assigned after 8:00 AM IST on service date).',
+            };
+          } else {
+            try {
+              if (reminderRecordId) {
+                await (adminClient as any)
+                  .from('booking_notifications')
+                  .update({
+                    notification_status: 'failed',
+                    error_message: remDispatch.error || 'Failed',
+                  })
+                  .eq('id', reminderRecordId);
+              }
+            } catch (remDbErr) {
+              console.error('Error updating reminder failed status:', remDbErr);
+            }
+
+            reminderResult = {
+              sent: false,
+              skipped: false,
+              message: `Immediate service-day reminder failed: ${remDispatch.error}`,
+            };
+          }
+        }
+      }
+    }
+
     return NextResponse.json({
       success: true,
       booking: updatedBooking,
       notification: notificationResult,
+      ...(reminderResult ? { reminder_notification: reminderResult } : {}),
       message: 'Booking status updated successfully.',
     });
   } catch (err: unknown) {
