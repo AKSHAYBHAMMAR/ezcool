@@ -15,6 +15,13 @@ export type BookingStatus =
 
 export type EmailStatus = 'pending' | 'sent' | 'failed';
 
+export type NotificationType =
+  | 'booking_created'
+  | 'status_confirmed'
+  | 'status_cancelled';
+
+export type NotificationStatus = 'pending' | 'sent' | 'failed';
+
 export type ServiceType =
   | 'AC Servicing'
   | 'AC Repair'
@@ -45,6 +52,8 @@ export interface Booking {
   email_sent_at?: string | null;
   email_message_id?: string | null;
   email_error?: string | null;
+  assigned_technician?: string | null;
+  cancellation_reason?: string | null;
   notes?: string | null;
   created_at: string;
   updated_at: string;
@@ -66,6 +75,8 @@ export interface BookingInsert {
   email_sent_at?: string | null;
   email_message_id?: string | null;
   email_error?: string | null;
+  assigned_technician?: string | null;
+  cancellation_reason?: string | null;
   notes?: string | null;
   created_at?: string;
   updated_at?: string;
@@ -86,8 +97,47 @@ export interface BookingUpdate {
   email_sent_at?: string | null;
   email_message_id?: string | null;
   email_error?: string | null;
+  assigned_technician?: string | null;
+  cancellation_reason?: string | null;
   notes?: string | null;
   updated_at?: string;
+}
+
+export interface BookingNotification {
+  id: string;
+  booking_id: string;
+  booking_ref: string;
+  notification_type: NotificationType;
+  recipient_email: string;
+  notification_status: NotificationStatus;
+  provider_message_id?: string | null;
+  error_message?: string | null;
+  created_at: string;
+  sent_at?: string | null;
+}
+
+export interface BookingNotificationInsert {
+  id?: string;
+  booking_id: string;
+  booking_ref: string;
+  notification_type: NotificationType;
+  recipient_email: string;
+  notification_status?: NotificationStatus;
+  provider_message_id?: string | null;
+  error_message?: string | null;
+  created_at?: string;
+  sent_at?: string | null;
+}
+
+export interface BookingNotificationUpdate {
+  booking_id?: string;
+  booking_ref?: string;
+  notification_type?: NotificationType;
+  recipient_email?: string;
+  notification_status?: NotificationStatus;
+  provider_message_id?: string | null;
+  error_message?: string | null;
+  sent_at?: string | null;
 }
 
 export interface Database {
@@ -97,6 +147,11 @@ export interface Database {
         Row: Booking;
         Insert: BookingInsert;
         Update: BookingUpdate;
+      };
+      booking_notifications: {
+        Row: BookingNotification;
+        Insert: BookingNotificationInsert;
+        Update: BookingNotificationUpdate;
       };
     };
     Views: {
